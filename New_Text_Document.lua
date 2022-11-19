@@ -449,11 +449,13 @@ function click73()
 end
 
 function click71()
+    if _G.click71 then
     while _G.click71 do
     task.wait()
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = TargetWalkspeed
     end
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 15
+    end
 end
 
 function farmupgrade()
