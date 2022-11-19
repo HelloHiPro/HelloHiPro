@@ -77,7 +77,9 @@ _G.SettingsTable = {
     autojoin = false,
     mode = "",
     storylevel = "",
-    inflevel = ""
+    inflevel = "",
+    hidenick = false,
+    shiftlock = false
 }
 
 for i,v in pairs(_G.SettingsTable) do
@@ -730,18 +732,87 @@ if _G.SettingsTable.autojoin then
 SaveSettings()
 coroutine.resume(coroutine.create(function()
 while not game:IsLoaded() do
-    wait(10)
+    wait(15)
 end
+if _G.SettingsTable.mode == "Infinite Mode" then
+    if _G.SettingsTable.inflevel == "Regular One Piece" then
+        pcall(function()
+            autojoinmap = "-1"
+        end)
+    end
+    if _G.SettingsTable.inflevel == "Regular Food" then
+        pcall(function()
+            autojoinmap = "-1.7"
+        end)
+    end
+    if _G.SettingsTable.inflevel == "Category" then
+        pcall(function()
+            autojoinmap = "-1.1"
+        end)
+    end
+    if _G.SettingsTable.inflevel == "Air" then
+        pcall(function()
+            autojoinmap = "-1.3"
+        end)
+    end
+    if _G.SettingsTable.inflevel == "Double Path" then
+        pcall(function()
+            autojoinmap = "-1.5"
+        end)
+    end
+    if _G.SettingsTable.inflevel == "Training Mode" then
+        pcall(function()
+            if game:GetService("Workspace").Queue["Lobby World 2"] then
+                autojoinmap = "-98"
+            end
+        end)
+    end
+    pcall(function()
+        autojoinstart = "InfiniteModeStart"
+        autojoinmode = "InfiniteModeInfLevel"
+    end)
+    local a3 = pcall(function()
+        if game:GetService("Workspace").Queue["Lobby World 2"] then
+            autojoincframe = "-316.5, 20007, -23426, 0, 0, 1, 0, 1, -0, -1, 0, 0"
+            autojoinpath = game:GetService("Workspace").Queue.Joinables.InfiniteMode.SurfaceGui.Frame.TextLabel.Text
+        end
+    end)
+    if a3 == false then
+        pcall(function()
+            autojoincframe = "-188.03125, 1390.00732, 845.793701, 0.382687271, -0, -0.923877954, 0, 1, -0, 0.923877954, 0, 0.382687271"
+            autojoinpath = game:GetService("Workspace").Queue.Infinite.InfiniteMode.SurfaceGui.Frame.TextLabel.Text
+        end)
+    end
+end
+if _G.SettingsTable.mode == "Story Mode" then
+    autojoinmap = _G.SettingsTable.storylevel
+    local a1 = pcall(function()
+        if game:GetService("Workspace").Queue["Lobby World 2"] then
+            autojoinstart = "StoryModeStart"
+            autojoinmode = "StoryModeLevel"
+            autojoincframe = "-2402.04199, 20009, -20313.877, 1, 0, 0, 0, 1, 0, 0, 0, 1"
+            autojoinpath = game:GetService("Workspace").Queue.Joinables.StoryMode.SurfaceGui.Frame.TextLabel.Text
+        end
+    end)
+    if a1 == false then
+        autojoinstart = "Part1Start"
+        autojoinmode = "Part1Level"
+        autojoincframe = "30.9335938, 1390.00732, 872.758545, 0.923881531, -0, -0.382678568, 0, 1, -0, 0.382678568, 0, 0.923881531"
+        autojoinpath = game:GetService("Workspace").Queue.Story.Part1.SurfaceGui.Frame.TextLabel.Text
+    end
+end
+
 pcall(function()
 local Event = game:GetService("ReplicatedStorage").Remotes.Input
 while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
     if autojoinpath == "Empty" then
         Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(StringToCFrame(autojoincframe))
+        wait(1)
         repeat wait()
         Event:FireServer(autojoinmode, autojoinmap, false)
-        wait()
+        wait(.5)
         Event:FireServer(autojoinstart)
-        wait()
+        wait(.5)
         until autojoinpath == "Empty"
         break
     end
@@ -914,9 +985,6 @@ LobbyTab:AddToggle({
 	Default = _G.SettingsTable.autojoin,
 	Callback = function(Value)
 	    _G.SettingsTable.autojoin = Value
-	    if _G.SettingsTable.mode == "Story Mode" then
-            autojoinmap = _G.SettingsTable.storylevel
-	    end
         autojoin()
 	end    
 })
@@ -926,51 +994,9 @@ LobbyTab:AddDropdown({
     Default = _G.SettingsTable.mode,
     Options = {"Story Mode", "Infinite Mode"},
     Callback = function(Value)
-    _G.SettingsTable.mode = Value
-    SaveSettings()
-    if _G.SettingsTable.mode == "Story Mode" then
-        local a1 = pcall(function()
-            if game:GetService("Workspace").Queue["Lobby World 2"] then
-                autojoinstart = "StoryModeStart"
-                autojoinmode = "StoryModeLevel"
-            end
-        end)
-        if a1 == false then
-            autojoinstart = "Part1Start"
-            autojoinmode = "Part1Level"
-        end
-        local a2 = pcall(function()
-            if game:GetService("Workspace").Queue["Lobby World 2"] then
-                autojoincframe = "-2402.04199, 20009, -20313.877, 1, 0, 0, 0, 1, 0, 0, 0, 1"
-                autojoinpath = game:GetService("Workspace").Queue.Joinables.StoryMode.SurfaceGui.Frame.TextLabel.Text
-            end
-        end)
-        if a2 == false then
-            pcall(function()
-                autojoincframe = "-316.5, 20007, -23426, 0, 0, 1, 0, 1, -0, -1, 0, 0"
-                autojoinpath = game:GetService("Workspace").Queue.Joinables.InfiniteMode.SurfaceGui.Frame.TextLabel.Text
-            end)
-        end
+        _G.SettingsTable.mode = Value
+        SaveSettings()
     end
-    if _G.SettingsTable.mode == "Infinite Mode" then
-        pcall(function()
-            autojoinstart = "InfiniteModeStart"
-            autojoinmode = "InfiniteModeInfLevel"
-        end)
-        local a3 = pcall(function()
-            if game:GetService("Workspace").Queue["Lobby World 2"] then
-                autojoincframe = "-316.5, 20007, -23426, 0, 0, 1, 0, 1, -0, -1, 0, 0"
-                autojoinpath = game:GetService("Workspace").Queue.Joinables.InfiniteMode.SurfaceGui.Frame.TextLabel.Text
-            end
-        end)
-        if a3 == false then
-            pcall(function()
-                autojoincframe = "-188.03125, 1390.00732, 845.793701, 0.382687271, -0, -0.923877954, 0, 1, -0, 0.923877954, 0, 0.382687271"
-                autojoinpath = game:GetService("Workspace").Queue.Infinite.InfiniteMode.SurfaceGui.Frame.TextLabel.Text
-            end)
-        end
-    end
-end
 })
 
 LobbyTab:AddTextbox({
@@ -989,42 +1015,8 @@ LobbyTab:AddDropdown({
     Default = _G.SettingsTable.inflevel,
     Options = {"Regular One Piece", "Regular Food", "Category", "Air", "Double Path", "Training Mode"},
     Callback = function(Value)
-    _G.SettingsTable.inflevel = Value
-    SaveSettings()
-    if _G.SettingsTable.mode == "Infinite Mode" then
-    if _G.SettingsTable.inflevel == "Regular One Piece" then
-        pcall(function()
-            autojoinmap = "-1"
-        end)
-    end
-    if _G.SettingsTable.inflevel == "Regular Food" then
-        pcall(function()
-            autojoinmap = "-1.7"
-        end)
-    end
-    if _G.SettingsTable.inflevel == "Category" then
-        pcall(function()
-            autojoinmap = "-1.1"
-        end)
-    end
-    if _G.SettingsTable.inflevel == "Air" then
-        pcall(function()
-            autojoinmap = "-1.3"
-        end)
-    end
-    if _G.SettingsTable.inflevel == "Double Path" then
-        pcall(function()
-            autojoinmap = "-1.5"
-        end)
-    end
-    if _G.SettingsTable.inflevel == "Training Mode" then
-        pcall(function()
-            if game:GetService("Workspace").Queue["Lobby World 2"] then
-                autojoinmap = "-98"
-            end
-        end)
-    end
-end
+        _G.SettingsTable.inflevel = Value
+        SaveSettings()
     end
 })
 
@@ -1474,21 +1466,30 @@ SettingsTab:AddSlider({
 
 SettingsTab:AddToggle({
 	Name = "Destroy Name (Hides Name)",
-	Default = false,
+	Default = _G.SettingsTable.hidenick,
 	Callback = function(Value)
+	    _G.SettingsTable.hidenick = Value
+	    SaveSettings()
 	    if Value then
-            game:GetService("Workspace").Camera[game.Players.LocalPlayer.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("TextLabel"):Destroy()
-            game:GetService("Workspace").Camera[game.Players.LocalPlayer.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("ImageLabel"):Destroy()
-            game:GetService("Workspace").Camera[game.Players.LocalPlayer.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("NameFrame"):WaitForChild("TextLabel"):Destroy()
-            game:GetService("Workspace").Camera[game.Players.LocalPlayer.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("Top"):WaitForChild("ImageLabel"):Destroy()
+	        coroutine.resume(coroutine.create(function()
+	                pcall(function()
+	                    repeat wait() until #game:GetService("Workspace"):WaitForChild("Camera"):GetChildren() > 0
+                        game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("TextLabel"):Destroy()
+                        game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("ImageLabel"):Destroy()
+                        game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("NameFrame"):WaitForChild("TextLabel"):Destroy()
+                        game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("Top"):WaitForChild("ImageLabel"):Destroy()
+	                end)
+	        end))
         end
-	end    
+    end
 })
 
 SettingsTab:AddToggle({
 	Name = "Shift-Lock",
-	Default = false,
+	Default = _G.SettingsTable.shiftlock,
 	Callback = function(Value)
+	    _G.SettingsTable.shiftlock = Value
+	    SaveSettings()
 	    if Value then
             game:GetService('Players').LocalPlayer.DevEnableMouseLock = true
         else 
