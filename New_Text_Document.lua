@@ -3,8 +3,8 @@ repeat wait() until game:IsLoaded()
 local timer = 0
 
 --Local Stuff
-local order1 = {6, 4, 8, 1, 5, 3, 7, 2}
-local order2 = {8, 1, 5, 3, 7, 2, 6, 4}
+local order1 = {4, 8, 1, 5, 3, 7, 2, 6}
+local order2 = {1, 5, 3, 7, 2, 6, 4, 8}
 local bx = 0
 local by = 0
 local ex = 0
@@ -79,7 +79,8 @@ _G.SettingsTable = {
     storylevel = "",
     inflevel = "",
     hidenick = false,
-    shiftlock = false
+    shiftlock = false,
+    autobufftoggle = false
 }
 
 for i,v in pairs(_G.SettingsTable) do
@@ -242,87 +243,102 @@ end)
 end
 
 
-function autobrook()
-    if _G.autobrook == true then
-        table.clear(Brook)
-        for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
-            if v.Name == 'Brook6' and v.Owner.Value == me then
-                table.insert(Brook, v)
-            end
-            if v.Name == 'Brook6' and v.Owner.Value == me then wait()
-                while v.Head.EffectBBGUI.Frame.AttackImage.Visible == false do wait()
-                    table.insert(BDamage, v.Damage.Value)
-                    wait(0.1)
-                    break
+function autobrookerwin()
+ SaveSettings()
+    if _G.SettingsTable.autobufftoggle then
+        SaveSettings()
+        repeat wait() until game:IsLoaded()
+        wait(1)
+        local x = 1
+        local y = 0
+        local okand = 0
+        local buff = false
+        local sound = Instance.new("Sound")
+        local mano = false
+        a1 = 29
+        okand = 0
+        joe = 2
+        local Brook = {}
+        local Damage = {}
+        coroutine.resume(coroutine.create(function()
+        repeat wait()
+            table.clear(Brook)
+            for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+                if v.Name == 'Erwin' and v:WaitForChild("Owner").Value == me and v:WaitForChild("UpgradeTag").Value == 2 then
+                    table.insert(Brook, v)
+                end
+                if v.Name == 'Brook6' and v:WaitForChild("Owner").Value == me and v:WaitForChild("UpgradeTag").Value == 8 then
+                    table.insert(Brook, v)
                 end
             end
-        end
-        if #Brook < 8 then bab = 28
-        else bab = 14 end
-        if #Brook < 8 then bx2 = 2
-        else bx2 = 1 end
-        while _G.autobrook do
-            bx = bx + bx2
-            repeat wait(.05) until Brook[order1[bx]].Damage.Value < tonumber(BDamage[1]) + 1
-            repeat remote:FireServer('UseSpecialMove', Brook[order2[bx]]) wait(.05) until Brook[order2[bx]].SpecialMove.Special_Enabled2.Value
-            repeat by = by + 1 
-                if game.ReplicatedStorage.SpeedUP.Value == 2 then 
-                    wait(.25) 
-                end 
-                if game.ReplicatedStorage.SpeedUP.Value == 1 then 
-                    wait(.5) 
-                end
-            until by == bab
-            by = 0
-            if bx > 7 then
-                bx = 0
-            end
-        end
-    end
-end
-
-function autoerwin()
-    if _G.autoerwin == true then
-        table.clear(Erwin)
-        for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
-            if v.Name == 'Erwin' and v.Owner.Value == me then
-                table.insert(Erwin, v)
-            end
-            if v.Name == 'Erwin' and v.Owner.Value == me and v:WaitForChild("UpgradeTag").Value == v.MaxUpgradeTag.Value then wait()
-                local success = pcall(function()
-                    while v.Head.EffectBBGUI.Frame.AttackImage.Visible == false do wait()
-                        table.insert(EDamage, v.Damage.Value)
-                        wait(0.1)
-                        break
+        until #Brook > 3 or _G.SettingsTable.autobufftoggle == false
+                if #Brook > 7 then joe = 1 a1 = 15 mano = true end
+                for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+                    if v.Name == 'Erwin' and v.Owner.Value == me and v:WaitForChild("UpgradeTag").Value == 2 or v:WaitForChild("UpgradeTag").Value == 8 then wait()
+                        local success = pcall(function()
+                            while v.Head.EffectBBGUI.Frame.AttackImage.Visible == false do wait()
+                                table.insert(Damage, v.Damage.Value)
+                                wait(0.1)
+                                break
+                            end
+                        end)
+                        if success == false then
+                            table.insert(Damage, v.Damage.Value)
+                        end
                     end
-                end)
-                if success == false then
-                    table.insert(EDamage, v.Damage.Value)
+                if v.Name == 'Brook6' and v.Owner.Value == me and v:WaitForChild("UpgradeTag").Value == 8 or v:WaitForChild("UpgradeTag").Value == 8 then wait()
+                            while v.Head.EffectBBGUI.Frame.AttackImage.Visible == false do wait()
+                                table.insert(Damage, v.Damage.Value)
+                                wait(0.1)
+                                break
+                            end
                 end
-            end
-        end
-        if #Erwin < 8 then baab = 28
-        else baab = 14 end
-        if #Erwin < 8 then ex2 = 2
-        else ex2 = 1 end
-        while _G.autoerwin do
-            ex = ex + ex2
-            repeat wait(.05) until Erwin[order1[ex]].Damage.Value < tonumber(EDamage[1]) + 1
-            repeat remote:FireServer('UseSpecialMove', Erwin[order2[ex]]) wait(.05) until Erwin[order2[ex]].SpecialMove.Special_Enabled2.Value
-            repeat ey = ey + 1 
-                if game.ReplicatedStorage.SpeedUP.Value == 2 then 
-                    wait(.25) 
-                end 
-                if game.ReplicatedStorage.SpeedUP.Value == 1 then 
-                    wait(.5) 
                 end
-            until ey == baab
-            ey = 0
-            if ex > 7 then
-                ex = 0
+                while _G.SettingsTable.autobufftoggle do
+                if mano == false then table.clear(Brook) end
+                for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+                    if mano == true then break end
+                    if v.Name == 'Erwin' and v:WaitForChild("Owner").Value == me and v:WaitForChild("UpgradeTag").Value == 2 then
+                        table.insert(Brook, v)
+                    end
+                    if v.Name == 'Brook6' and v:WaitForChild("Owner").Value == me and v:WaitForChild("UpgradeTag").Value == 8 then
+                        table.insert(Brook, v)
+                    end
+                    if #Brook > 7 then okand = 0 joe = 1 a1 = 15 mano = true end
+                end
+                    pcall(function()
+                    repeat wait() until Brook[order2[x]].SpecialMove.Special_Enabled2.Value == false
+                    repeat wait(.05) until Brook[order1[x]].Damage.Value < tonumber(Damage[1]) + 1
+                    repeat remote:FireServer('UseSpecialMove', Brook[order2[x]]) wait(.05) until Brook[order2[x]].SpecialMove.Special_Enabled2.Value
+                    end)
+                    if #Brook > 7 then
+                    okand = okand + 1
+                    else
+                    okand = okand + 2
+                    end
+        if okand > 8 then  
+            if #Brook > 7 then
+                a1 = 12
+            else
+                a1 = 27
             end
+        end      
+        repeat y = y + 1
+            if game.ReplicatedStorage.SpeedUP.Value == 2 then 
+                wait(.25) 
+            end 
+            if game.ReplicatedStorage.SpeedUP.Value == 1 then 
+                wait(.5) 
+            end
+        until y == a1 or _G.SettingsTable.autobufftoggle == false
+        y = 0
+        x = x + joe
+        if x > 8 then
+            x = 1
         end
-    end
+        end
+    end))
+end
 end
 
 workspace.Unit.ChildAdded:Connect(function(child)
@@ -1190,29 +1206,16 @@ MacroTab:AddTextbox({
 --BuffTab
 
 BuffTab:AddToggle({
-	Name = "Brook",
-	Default = false,
+	Name = "Brook/Erwin",
+	Default = _G.SettingsTable.autobufftoggle,
 	Callback = function(Value)
-        _G.autobrook = Value
-        autobrook()
+        _G.SettingsTable.autobufftoggle = Value
+        autobrookerwin()
 	end    
 })
 
 BuffTab:AddSection({
-	Name = "  Works for 4 or 8 Brooks, Order: 1324"
-})
-
-BuffTab:AddToggle({
-	Name = "Erwin",
-	Default = false,
-	Callback = function(Value)
-        _G.autoerwin = Value
-        autoerwin()
-	end    
-})
-
-BuffTab:AddSection({
-	Name = "  Works for 4 or 8 Erwins, Order: 1324"
+	Name = "  Works for 4 or 8 Brooks/Erwins, Order: 1324"
 })
 
 --UpgradeTab
