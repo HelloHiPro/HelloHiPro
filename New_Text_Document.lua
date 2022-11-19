@@ -1473,6 +1473,31 @@ SettingsTab:AddSlider({
 })
 
 SettingsTab:AddToggle({
+	Name = "Destroy Name (Hides Name)",
+	Default = false,
+	Callback = function(Value)
+	    if Value then
+            game:GetService("Workspace").Camera[game.Players.LocalPlayer.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("TextLabel"):Destroy()
+            game:GetService("Workspace").Camera[game.Players.LocalPlayer.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("ImageLabel"):Destroy()
+            game:GetService("Workspace").Camera[game.Players.LocalPlayer.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("NameFrame"):WaitForChild("TextLabel"):Destroy()
+            game:GetService("Workspace").Camera[game.Players.LocalPlayer.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("Top"):WaitForChild("ImageLabel"):Destroy()
+        end
+	end    
+})
+
+SettingsTab:AddToggle({
+	Name = "Shift-Lock",
+	Default = false,
+	Callback = function(Value)
+	    if Value then
+            game:GetService('Players').LocalPlayer.DevEnableMouseLock = true
+        else 
+            game:GetService('Players').LocalPlayer.DevEnableMouseLock = false
+        end
+	end    
+})
+
+SettingsTab:AddToggle({
 	Name = "Mouse Teleport",
 	Default = false,
 	Callback = function(Value)
