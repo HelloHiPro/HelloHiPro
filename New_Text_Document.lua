@@ -5,16 +5,8 @@ local timer = 0
 --Local Stuff
 local order1 = {4, 8, 1, 5, 3, 7, 2, 6}
 local order2 = {1, 5, 3, 7, 2, 6, 4, 8}
-local bx = 0
-local by = 0
-local ex = 0
-local ey = 0
 local me = game.Players.LocalPlayer
 local remote = game:WaitForChild("ReplicatedStorage"):WaitForChild("Remotes").Input
-local Erwin = {}
-local EDamage = {}
-local Brook = {}
-local BDamage = {}
 local mobslider
 local mobslider1
 local TargetWalkspeed
@@ -22,10 +14,8 @@ local upgrade = {}
 local summonmax = {}
 local Summon = {}
 local httpservice = game:GetService("HttpService")
-local StarterGui = game:GetService("StarterGui")
 local Event = game:GetService("ReplicatedStorage").Remotes.Input
 local unit = game.Workspace.Unit
-local macro_default = 0
 local macro_file = "macro"
 function StringToCFrame(String) local Split = string.split(String, ",") return Split[1], Split[2], Split[3] end
 local macrolist = {}
@@ -80,7 +70,8 @@ _G.SettingsTable = {
     inflevel = "",
     hidenick = false,
     shiftlock = false,
-    autobufftoggle = false
+    autobufftoggle = false,
+    automerlintoggle = false
 }
 
 for i,v in pairs(_G.SettingsTable) do
@@ -242,6 +233,59 @@ end
 end)
 end
 
+function automerlin()
+    SaveSettings()
+    if _G.SettingsTable.automerlintoggle then
+        SaveSettings()
+        repeat wait() until game:IsLoaded()
+        wait(1)
+        local order2 = {2, 4, 1, 3}
+        local x = 1
+        local y = 0
+        local mano = false
+        local a1 = 60
+        local joe = 2
+        local Brook = {}
+        coroutine.resume(coroutine.create(function()
+        repeat wait()
+            table.clear(Brook)
+            for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+                if v.Name == 'Merlin' and v:WaitForChild("Owner").Value == me and v:WaitForChild("UpgradeTag").Value == v.MaxUpgradeTag.Value then
+                    table.insert(Brook, v)
+                end
+            end
+        until #Brook > 1 or _G.SettingsTable.automerlintoggle == false
+                if #Brook > 3 then joe = 1 a1 = 30 mano = true end
+                while _G.SettingsTable.automerlintoggle do
+                if mano == false then table.clear(Brook) end
+                for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+                    if mano == true then break end
+                    if v.Name == 'Merlin' and v:WaitForChild("Owner").Value == me and v:WaitForChild("UpgradeTag").Value == v.MaxUpgradeTag.Value then
+                        table.insert(Brook, v)
+                    end
+                    if #Brook > 3 then joe = 1 a1 = 30 mano = true end
+                end
+                    pcall(function()
+                    repeat wait() until Brook[order2[x]].SpecialMove.Special_Enabled2.Value == false
+                    repeat remote:FireServer('UseSpecialMove', Brook[order2[x]]) wait(.05) until Brook[order2[x]].SpecialMove.Special_Enabled2.Value
+                    end)
+        repeat y = y + 1
+            if game.ReplicatedStorage.SpeedUP.Value == 2 then 
+                wait(.25) 
+            end 
+            if game.ReplicatedStorage.SpeedUP.Value == 1 then 
+                wait(.5) 
+            end
+        until y == a1 or _G.SettingsTable.automerlintoggle == false
+        y = 0
+        x = x + joe
+        if x > 4 then
+            x = 1
+        end
+        end
+    end))
+end
+end
 
 function autobrookerwin()
  SaveSettings()
@@ -255,9 +299,9 @@ function autobrookerwin()
         local buff = false
         local sound = Instance.new("Sound")
         local mano = false
-        a1 = 29
-        okand = 0
-        joe = 2
+        local a1 = 29
+        local okand = 0
+        local joe = 2
         local Brook = {}
         local Damage = {}
         coroutine.resume(coroutine.create(function()
@@ -1211,6 +1255,15 @@ BuffTab:AddToggle({
 	Callback = function(Value)
         _G.SettingsTable.autobufftoggle = Value
         autobrookerwin()
+	end    
+})
+
+BuffTab:AddToggle({
+	Name = "Merlin",
+	Default = _G.SettingsTable.automerlintoggle,
+	Callback = function(Value)
+        _G.SettingsTable.automerlintoggle = Value
+        automerlin()
 	end    
 })
 
