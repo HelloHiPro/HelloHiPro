@@ -21,7 +21,7 @@ function StringToCFrame(String) local Split = string.split(String, ",") return S
 local macrolist = {}
 local a2 = 0
 local a1 = 0
-local file_settings = "ASTDsettings" .. game.Players.LocalPlayer.Name .. ".txt"
+local file_settings = "Bobsettings" .. game.Players.LocalPlayer.Name .. ".txt"
 local wave69 = game:GetService("ReplicatedStorage").WaveValue.Value
 local mouse1 = me:GetMouse()
 local checkautosell = false
@@ -37,7 +37,7 @@ local Mouse = game.Players.LocalPlayer:GetMouse()
 --Orion Stuff
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({IntroText = "ASTD HUB",Name = "All Star Tower Defence", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionStar"})
+local Window = OrionLib:MakeWindow({IntroText = "BOB HUB",Name = "Bob Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionStar"})
 
 -- Macro list
 
@@ -52,6 +52,8 @@ if success == false then
     a2 = 0
 end
 -- autofv
+if game:GetService("ReplicatedStorage").Lobby.Value == false then
+pcall(function()
 local part = Instance.new("Part")
 part.Parent = game.Workspace
 part.Name = "BasePart"
@@ -77,6 +79,8 @@ remote = game.ReplicatedStorage.Remotes.Input
 game:GetService("Workspace").BasePart1.CanCollide = false
 game:GetService("Workspace").BasePart1.Touched:Connect(function()
 end)
+end)
+end
 -- SaveSettings
 
 _G.SettingsTable = {
@@ -911,6 +915,7 @@ SaveSettings()
 if _G.SettingsTable.autofv then
     SaveSettings()
 coroutine.resume(coroutine.create(function()
+pcall(function()
 repeat wait()
 for i,v in pairs(game:GetService("Workspace").BasePart:GetTouchingParts()) do
     if v.Parent.Parent.Name == "Enemies" then
@@ -922,8 +927,10 @@ for i,v in pairs(game:GetService("Workspace").BasePart:GetTouchingParts()) do
     end
 end
 until false or _G.SettingsTable.autofv == false
+end)
 end))
 coroutine.resume(coroutine.create(function()
+pcall(function()
 repeat wait()
 for i,v in pairs(game:GetService("Workspace").BasePart1:GetTouchingParts()) do
     if v.Parent.Parent.Name == "Enemies" then
@@ -940,6 +947,7 @@ print('3')
     end
 end
 until false or _G.SettingsTable.autofv == false
+end)
 end))
 end
 end
