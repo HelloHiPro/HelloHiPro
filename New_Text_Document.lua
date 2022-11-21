@@ -31,6 +31,7 @@ local autojoinpath = nil
 local autojoinmap = nil
 local autojoinmode = nil
 local autojoinstart = nil
+local Mouse = game.Players.LocalPlayer:GetMouse()
 
 
 --Orion Stuff
@@ -50,7 +51,32 @@ end)
 if success == false then
     a2 = 0
 end
-
+-- autofv
+local part = Instance.new("Part")
+part.Parent = game.Workspace
+part.Name = "BasePart"
+part.Size = Vector3.new(8, 8, 8)
+part.CFrame = CFrame.new(game:GetService("Workspace").TowerHP.Position)
+part.Anchored = true
+part.Transparency = 1
+part.CollisionGroupId = 1
+remote = game.ReplicatedStorage.Remotes.Input
+game:GetService("Workspace").TowerHP.Transparency = 1
+game:GetService("Workspace").BasePart.CanCollide = false
+game:GetService("Workspace").BasePart.Touched:Connect(function()
+end)
+local part1 = Instance.new("Part")
+part1.Parent = game.Workspace
+part1.Name = "BasePart1"
+part1.Size = Vector3.new(40, 10, 40)
+part1.CFrame = CFrame.new(game:GetService("Workspace").TowerHP.Position)
+part1.Anchored = true
+part1.Transparency = 1
+part1.CollisionGroupId = 1
+remote = game.ReplicatedStorage.Remotes.Input
+game:GetService("Workspace").BasePart1.CanCollide = false
+game:GetService("Workspace").BasePart1.Touched:Connect(function()
+end)
 -- SaveSettings
 
 _G.SettingsTable = {
@@ -71,7 +97,8 @@ _G.SettingsTable = {
     hidenick = false,
     shiftlock = false,
     autobufftoggle = false,
-    automerlintoggle = false
+    automerlintoggle = false,
+    autofv = false
 }
 
 for i,v in pairs(_G.SettingsTable) do
@@ -879,6 +906,44 @@ end))
 end
 end
 
+function autofv()
+SaveSettings()
+if _G.SettingsTable.autofv then
+    SaveSettings()
+coroutine.resume(coroutine.create(function()
+repeat wait()
+for i,v in pairs(game:GetService("Workspace").BasePart:GetTouchingParts()) do
+    if v.Parent.Parent.Name == "Enemies" then
+        for _, v in pairs(game.Workspace.Unit:GetChildren()) do
+            if v.Name == "Funny Valentine" and v:WaitForChild("UpgradeTag").Value == v.MaxUpgradeTag.Value and v.SpecialMove["Special_Enabled2"].Value == false then
+                repeat wait() remote:FireServer("UseSpecialMove", v) until v.SpecialMove["Special_Enabled2"].Value
+            end
+        end
+    end
+end
+until false or _G.SettingsTable.autofv == false
+end))
+coroutine.resume(coroutine.create(function()
+repeat wait()
+for i,v in pairs(game:GetService("Workspace").BasePart1:GetTouchingParts()) do
+    if v.Parent.Parent.Name == "Enemies" then
+        print('1')
+basesize = v.Parent.SpeedValue.Value
+print('2')
+if game:GetService("ReplicatedStorage").SpeedUP.Value == 1 then
+game:GetService("Workspace").BasePart.Size = Vector3.new(basesize/2 + 4, 10, basesize/2 + 4)
+end
+if game:GetService("ReplicatedStorage").SpeedUP.Value == 2 then
+game:GetService("Workspace").BasePart.Size = Vector3.new(basesize/1.5 + 5, 10, basesize/2 + 5)
+end
+print('3')
+    end
+end
+until false or _G.SettingsTable.autofv == false
+end))
+end
+end
+
 --Values
 
 _G.autobrook = false
@@ -897,7 +962,7 @@ _G.auto2x = false
 --Tabs
 
 local BuffTab = Window:MakeTab({
-	Name = "Auto Buff",
+	Name = "Auto Support",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
@@ -1242,7 +1307,7 @@ MacroTab:AddTextbox({
 })
 
 
---BuffTab
+--SupportTab
 
 BuffTab:AddToggle({
 	Name = "Brook/Erwin",
@@ -1265,6 +1330,16 @@ BuffTab:AddToggle({
 BuffTab:AddSection({
 	Name = "  Works for 4 or 8 Brooks/Erwins, Order: 1324"
 })
+
+BuffTab:AddToggle({
+	Name = "Auto FV",
+	Default = _G.SettingsTable.autofv,
+	Callback = function(Value)
+        _G.SettingsTable.autofv = Value
+        autofv()
+	end    
+})
+
 
 --UpgradeTab
 
