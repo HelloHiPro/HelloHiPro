@@ -934,16 +934,13 @@ pcall(function()
 repeat wait()
 for i,v in pairs(game:GetService("Workspace").BasePart1:GetTouchingParts()) do
     if v.Parent.Parent.Name == "Enemies" then
-        print('1')
 basesize = v.Parent.SpeedValue.Value
-print('2')
 if game:GetService("ReplicatedStorage").SpeedUP.Value == 1 then
 game:GetService("Workspace").BasePart.Size = Vector3.new(basesize/2 + 4, 10, basesize/2 + 4)
 end
 if game:GetService("ReplicatedStorage").SpeedUP.Value == 2 then
-game:GetService("Workspace").BasePart.Size = Vector3.new(basesize/1.5 + 5, 10, basesize/2 + 5)
+game:GetService("Workspace").BasePart.Size = Vector3.new(basesize + 6, 10, basesize + 6)
 end
-print('3')
     end
 end
 until false or _G.SettingsTable.autofv == false
