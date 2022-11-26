@@ -344,7 +344,7 @@ function autobrookerwin()
         until #Brook > 3 or _G.SettingsTable.autobufftoggle == false
                 if #Brook > 7 then joe = 1 a1 = 15 mano = true end
                 for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
-                    if v.Name == 'Erwin' and v.Owner.Value == me and v:WaitForChild("UpgradeTag").Value == 2 or v:WaitForChild("UpgradeTag").Value == 8 then wait()
+                    if v.Name == 'Erwin' and v.Owner.Value == me and v:WaitForChild("UpgradeTag").Value == 2 then wait()
                         local success = pcall(function()
                             while v.Head.EffectBBGUI.Frame.AttackImage.Visible == false do wait()
                                 table.insert(Damage, v.Damage.Value)
@@ -356,7 +356,7 @@ function autobrookerwin()
                             table.insert(Damage, v.Damage.Value)
                         end
                     end
-                if v.Name == 'Brook6' and v.Owner.Value == me and v:WaitForChild("UpgradeTag").Value == 8 or v:WaitForChild("UpgradeTag").Value == 8 then wait()
+                if v.Name == 'Brook6' and v.Owner.Value == me and v:WaitForChild("UpgradeTag").Value == 8 then wait()
                             while v.Head.EffectBBGUI.Frame.AttackImage.Visible == false do wait()
                                 table.insert(Damage, v.Damage.Value)
                                 wait(0.1)
