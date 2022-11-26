@@ -334,51 +334,32 @@ function autobrookerwin()
         repeat wait()
             table.clear(Brook)
             for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
-                if v.Name == 'Erwin' and v:WaitForChild("Owner").Value == me and v:WaitForChild("UpgradeTag").Value == 2 then
+                if v.Name == 'Erwin' and v:WaitForChild("Owner").Value == me then
                     table.insert(Brook, v)
                 end
-                if v.Name == 'Brook6' and v:WaitForChild("Owner").Value == me and v:WaitForChild("UpgradeTag").Value == 8 then
+                if v.Name == 'Brook6' and v:WaitForChild("Owner").Value == me then
                     table.insert(Brook, v)
                 end
             end
         until #Brook > 3 or _G.SettingsTable.autobufftoggle == false
                 if #Brook > 7 then joe = 1 a1 = 15 mano = true end
-                for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
-                    if v.Name == 'Erwin' and v.Owner.Value == me and v:WaitForChild("UpgradeTag").Value == 2 then wait()
-                        local success = pcall(function()
-                            while v.Head.EffectBBGUI.Frame.AttackImage.Visible == false do wait()
-                                table.insert(Damage, v.Damage.Value)
-                                wait(0.1)
-                                break
-                            end
-                        end)
-                        if success == false then
-                            table.insert(Damage, v.Damage.Value)
-                        end
-                    end
-                if v.Name == 'Brook6' and v.Owner.Value == me and v:WaitForChild("UpgradeTag").Value == 8 then wait()
-                            while v.Head.EffectBBGUI.Frame.AttackImage.Visible == false do wait()
-                                table.insert(Damage, v.Damage.Value)
-                                wait(0.1)
-                                break
-                            end
-                end
-                end
                 while _G.SettingsTable.autobufftoggle do
                 if mano == false then table.clear(Brook) end
                 for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
                     if mano == true then break end
-                    if v.Name == 'Erwin' and v:WaitForChild("Owner").Value == me and v:WaitForChild("UpgradeTag").Value == 2 then
+                    if v.Name == 'Erwin' and v:WaitForChild("Owner").Value == me then
                         table.insert(Brook, v)
                     end
-                    if v.Name == 'Brook6' and v:WaitForChild("Owner").Value == me and v:WaitForChild("UpgradeTag").Value == 8 then
+                    if v.Name == 'Brook6' and v:WaitForChild("Owner").Value == me then
                         table.insert(Brook, v)
                     end
                     if #Brook > 7 then okand = 0 joe = 1 a1 = 15 mano = true end
                 end
                     pcall(function()
                     repeat wait() until Brook[order2[x]].SpecialMove.Special_Enabled2.Value == false
-                    repeat wait(.05) until Brook[order1[x]].Damage.Value < tonumber(Damage[1]) + 1
+                    pcall(function()
+                    repeat wait(.05) until Brook[order1[x]].Head.EffectBBGUI.Frame.AttackImage.Visible == false
+                    end)
                     repeat remote:FireServer('UseSpecialMove', Brook[order2[x]]) wait(.05) until Brook[order2[x]].SpecialMove.Special_Enabled2.Value
                     end)
                     if #Brook > 7 then
