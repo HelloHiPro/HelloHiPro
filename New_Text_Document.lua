@@ -1,15 +1,21 @@
 repeat wait() until game:IsLoaded()
 --Macro timer
-local timer
+local timer = 0
+local checkplayback = false
 coroutine.resume(coroutine.create(function()
 function StartTimer()
-    local startTime = tick() -- float representing when the timer was started
+    startTime = tick() -- float representing when the timer was started
     while tick() do -- run until 'secondsToRun' seconds have passed
         game:GetService("RunService").Heartbeat:Wait() -- this waits until the heartbeat event is triggered, which happens 60 times a second
-        local timeSinceStart = tick() - startTime
+        if checkplayback then 
+            timeSinceStart = tick() - startTime + 0.5
+        else
+            timeSinceStart = tick() - startTime
+        end
         timer = string.format("%0.2f", tostring(timeSinceStart)) -- 0.2 represents two decimals
     end
 end
+repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('HUD').ModeVoteFrame.Seconds.Text == "1 Second(s)"
 StartTimer()
 end))
 
@@ -139,12 +145,11 @@ SaveSettings()
 
 pcall(function()
 unit.ChildAdded:Connect(function(child)
-wait(.5)
 if _G.record then
     table.insert(Summon, {
     ["time"] = timer,
 	["Rotation"] = 0,
-	["cframe"] = tostring(child.HumanoidRootPart.Position), 
+	["cframe"] = tostring(child:WaitForChild("HumanoidRootPart").Position), 
 	["Unit"] = child.Name,
 	["UpgradeValue"] = child:WaitForChild("UpgradeTag").Value,
 	["PriorityValue"] = child:WaitForChild("PriorityAttack").Value
@@ -170,6 +175,7 @@ pcall(function()
 
 function record()
 if _G.record then
+checkplayback = false
 coroutine.resume(coroutine.create(function()
 repeat wait() until game:IsLoaded()
             table.clear(Summon)
@@ -241,7 +247,11 @@ function playback()
                 Time = 3
             })
 local playbackended = false
+checkplayback = true
 coroutine.resume(coroutine.create(function()
+repeat wait() until tonumber(timer) > 0
+print(timer)
+print(timer)
 repeat wait()
 for i = 1, #Summon do
 if Summon[i]["Rotation"] then
@@ -252,6 +262,7 @@ for i, v in pairs(game.Workspace.Unit:GetChildren()) do
         table.insert(numunit, 1)
     end
 end
+print(timer)
 repeat wait() until tonumber(timer) >= tonumber(Summon[i]["time"])
 repeat wait()
 table.clear(countunit)
