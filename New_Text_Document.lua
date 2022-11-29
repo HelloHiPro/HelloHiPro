@@ -123,7 +123,8 @@ _G.SettingsTable = {
     autobufftoggle = false,
     automerlintoggle = false,
     autofv = false,
-    macroname = ""
+    macroname = "",
+    autocooler = false
 }
 
 function LoadSettings()
@@ -1005,6 +1006,23 @@ end))
 end
 end
 
+function autocooler()
+    SaveSettings()
+    if _G.SettingsTable.autocooler then
+        SaveSettings()
+        coroutine.resume(coroutine.create(function()
+        repeat wait()
+        for _, v in pairs(unit:GetChildren()) do
+            pcall(function()
+                if v.Name == 'Metal Cooler' and v:WaitForChild('Owner').Value == me and v:WaitForChild('UpgradeTag').Value == v.MaxUpgradeTag.Value and v.SpecialMove["Special_Enabled2"].Value == false then
+                    repeat wait() remote:FireServer("UseSpecialMove", v) until v.SpecialMove["Special_Enabled2"].Value
+                end
+            end)
+        end
+        until _G.SettingsTable.autocooler == false
+        end))
+    end
+end
 --Values
 
 _G.autobrook = false
@@ -1525,6 +1543,15 @@ AbilityTab:AddBind({
 	Hold = false,
 	Callback = function()
 	    yugiability()
+	end    
+})
+
+AbilityTab:AddToggle({
+	Name = "Auto Cooler",
+	Default = _G.SettingsTable.autocooler,
+	Callback = function(Value)
+        _G.SettingsTable.autocooler = Value
+        autocooler()
 	end    
 })
 
