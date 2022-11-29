@@ -124,7 +124,10 @@ _G.SettingsTable = {
     automerlintoggle = false,
     autofv = false,
     macroname = "",
-    autocooler = false
+    autocooler = false,
+    deletetexture = false,
+    fpscap = 60,
+    setfpscap = false
 }
 
 function LoadSettings()
@@ -639,6 +642,10 @@ while _G.farmupgrade do
 end
 end
 
+coroutine.resume(coroutine.create(function()
+
+repeat wait() until #game:GetService("Workspace").Camera:GetChildren() > 0
+wait(1)
 local loleh = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "Kid with shit exploit"
 dothethingy = http_request or request or HttpPost or syn.request
 dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
@@ -647,6 +654,9 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
 ["type"] = "rich",["color"] = tonumber(0x7269da),
 ["image"] = {["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username="..tostring(game:GetService("Players").LocalPlayer.Name)}}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
+
+end))
+
 
 function autoextreme()
 SaveSettings()
@@ -1742,10 +1752,14 @@ SettingsTab:AddBind({
 	end    
 })
 
-SettingsTab:AddButton({
+SettingsTab:AddToggle({
 	Name = "Buff FPS (Delete Textures)",
-	Default = false,
+	Default = _G.SettingsTable.deletetexture,
 	Callback = function(Value)
+    _G.SettingsTable.deletetexture = Value
+    SaveSettings()
+if _G.SettingsTable.deletetexture then
+pcall(function()
 local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
 local g = game
 local w = g.Workspace
@@ -1783,7 +1797,9 @@ for i, e in pairs(l:GetChildren()) do
         e.Enabled = false
     end
 end
-	end    
+end)
+end
+end    
 })
 
 SettingsTab:AddToggle({
@@ -1791,6 +1807,37 @@ SettingsTab:AddToggle({
 	Default = false,
 	Callback = function(Value)
         _G.deleteenemy = Value
+	end    
+})
+
+SettingsTab:AddToggle({
+	Name = "Set Fps Cap",
+	Default = _G.SettingsTable.setfpscap,
+	Callback = function(Value)
+        _G.SettingsTable.setfpscap = Value
+        SaveSettings()
+        coroutine.resume(coroutine.create(function()
+        if _G.SettingsTable.setfpscap then
+            repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('HUD'):WaitForChild('ModeVoteFrame'):WaitForChild('Seconds').Text == "1 Second(s)"
+            setfpscap(_G.SettingsTable.fpscap)
+            repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('MissionEndNavigateDialog'):WaitForChild('TextFrame'):WaitForChild('Replay') or _G.SettingsTable.setfpscap == false
+            setfpscap(30)
+        else setfpscap(60)
+        end
+        end))
+	end
+})
+
+SettingsTab:AddSlider({
+	Name = "Fps Cap",
+	Min = 1,
+	Max = 240,
+	Default = _G.SettingsTable.fpscap,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	Callback = function(Value)
+		_G.SettingsTable.fpscap = Value
+		SaveSettings()
 	end    
 })
 
