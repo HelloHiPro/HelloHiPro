@@ -15,7 +15,7 @@ function StartTimer()
         timer = string.format("%0.2f", tostring(timeSinceStart)) -- 0.2 represents two decimals
     end
 end
-repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('HUD').ModeVoteFrame.Seconds.Text == "1 Second(s)"
+repeat wait() until string.match(game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('HUD').ModeVoteFrame.Seconds.Text, "%d+") == "1"
 StartTimer()
 end))
 
@@ -35,7 +35,6 @@ local httpservice = game:GetService("HttpService")
 local Event = game:GetService("ReplicatedStorage").Remotes.Input
 local unit = game.Workspace.Unit
 local macro_file = "macro"
-function StringToCFrame(String) local Split = string.split(String, ",") return Split[1], Split[2], Split[3] end
 local macrolist = {}
 local a2 = 0
 local a1 = 0
@@ -52,7 +51,8 @@ local autojoinstart = nil
 local Mouse = game.Players.LocalPlayer:GetMouse()
 local bunda = 0
 local countunit = {}
-local soldunit = 0
+function StringToCFrame(String) local Split = string.split(String, ",") return Split[1], Split[2], Split[3] end
+local idvalue = 0
 
 --Orion Stuff
 
@@ -127,7 +127,8 @@ _G.SettingsTable = {
     autocooler = false,
     deletetexture = false,
     fpscap = 60,
-    setfpscap = false
+    setfpscap = false,
+    timer = false
 }
 
 function LoadSettings()
@@ -149,29 +150,45 @@ SaveSettings()
 
 pcall(function()
 unit.ChildAdded:Connect(function(child)
+if child:WaitForChild('Owner').Value == me then
 if _G.record then
-    table.insert(Summon, {
-    ["time"] = timer,
-	["Rotation"] = 0,
-	["cframe"] = tostring(child:WaitForChild("HumanoidRootPart").Position), 
-	["Unit"] = child.Name,
-	["UpgradeValue"] = child:WaitForChild("UpgradeTag").Value,
-	["PriorityValue"] = child:WaitForChild("PriorityAttack").Value
-})
+idvalue = idvalue + 1
+local id = Instance.new('NumberValue')
+id.Value = idvalue
+id.Name = 'ID'
+id.Parent = child
+    table.insert(Summon, {["Summon"] = {
+    timer,
+    tostring(idvalue),
+	tostring(child:WaitForChild("HumanoidRootPart").CFrame), 
+	child.Name,
+	child:WaitForChild("UpgradeTag").Value,
+	child:WaitForChild("PriorityAttack").Value
+}})
+end
+if _G.SettingsTable.autoplayback then
+if child:WaitForChild('Owner').Value == me then
+idvalue = idvalue + 1
+local id = Instance.new('NumberValue')
+id.Parent = child
+id.Name = 'ID'
+id.Value = idvalue
+end
+end
 end
 end)
 end)
 
 pcall(function()
     unit.ChildRemoved:Connect(function(child)
+if child:WaitForChild('Owner').Value == me then
     if _G.record then
-        local cframesell = tostring(child.HumanoidRootPart.Position)
-        table.insert(Summon, { 
-            ["Sell"] = true,
-            ["time"] = timer, 
-            ["cframe"] = cframesell, 
-    })
+        table.insert(Summon, {["Sell"] = { 
+            timer,
+            tostring(child.ID.Value)
+    }})
     end
+end
     end)
     end)
 
@@ -179,10 +196,12 @@ pcall(function()
 
 function record()
 if _G.record then
+idvalue = 0
 checkplayback = false
 coroutine.resume(coroutine.create(function()
 repeat wait() until game:IsLoaded()
             table.clear(Summon)
+            print(#Summon)
             table.clear(upgrade)
             OrionLib:MakeNotification({
                 Name = _G.SettingsTable.macroname .. ".json",
@@ -194,24 +213,22 @@ repeat wait() until game:IsLoaded()
                 if v:WaitForChild("Owner").Value == game.Players.LocalPlayer then
                     for i = 1, #Summon do
                     pcall(function()
-                    if Summon[i]["UpgradeValue"] then
+                    if Summon[i]["Summon"] then
                     if _G.record then
-                        if v.UpgradeTag.Value > tonumber(Summon[i]["UpgradeValue"]) and tostring(v.HumanoidRootPart.Position) == Summon[i]["cframe"] then
-                                table.insert(Summon, { ["time"] = timer, ["Upgrade"] = 1,
-                                ["cframe"] = tostring(v.HumanoidRootPart.Position) })
-                                Summon[i]["UpgradeValue"] = Summon[i]["UpgradeValue"] + 1
+                        if v.UpgradeTag.Value > tonumber(Summon[i]["Summon"][5]) and v.ID.Value == tonumber(Summon[i]["Summon"][2]) then
+                                table.insert(Summon, {["Upgrade"] = { timer, Summon[i]["Summon"][2]}})
+                                Summon[i]["Summon"][5] = Summon[i]["Summon"][5] + 1
                         end
                     end
                     end
                     end)
                     pcall(function()
-                    if Summon[i]["PriorityValue"] then
+                    if Summon[i]["Summon"] then
                     if _G.record then
-                        if v.PriorityAttack.Value ~= tonumber(Summon[i]["PriorityValue"]) and tostring(v.HumanoidRootPart.Position) == Summon[i]["cframe"] then
-                                table.insert(Summon, { ["time"] = timer, ["Priority"] = 1,
-                                ["cframe"] = tostring(v.HumanoidRootPart.Position) })
-                                Summon[i]["PriorityValue"] = Summon[i]["PriorityValue"] + 1
-                                if Summon[i]["PriorityValue"] == 7 then Summon[i]["PriorityValue"] = 0 end
+                        if v.PriorityAttack.Value ~= tonumber(Summon[i]["Summon"][6]) and v:WaitForChild('ID').Value == tonumber(Summon[i]["Summon"][2]) then
+                                table.insert(Summon, { ["ChangePriority"] = { timer, Summon[i]["Summon"][2]}})
+                                Summon[i]["Summon"][6] = Summon[i]["Summon"][6] + 1
+                                if Summon[i]["Summon"][6] == 7 then Summon[i]["Summon"][6] = 0 end
                         end
                     end
                     end
@@ -241,6 +258,7 @@ function playback()
     SaveSettings()
     pcall(function()
     if _G.SettingsTable.autoplayback then
+    idvalue = 0
     SaveSettings()
    	macro = httpservice:JSONDecode(readfile(OrionLib.Folder .. "/" .. _G.SettingsTable.selectedmacro .. ".json"))
         table.clear(Summon)
@@ -258,7 +276,8 @@ print(timer)
 print(timer)
 repeat wait()
 for i = 1, #Summon do
-if Summon[i]["Rotation"] then
+if _G.SettingsTable.autoplayback then
+if Summon[i]["Summon"] then
 local numunit = {}
 table.clear(numunit)
 for i, v in pairs(game.Workspace.Unit:GetChildren()) do
@@ -267,46 +286,51 @@ for i, v in pairs(game.Workspace.Unit:GetChildren()) do
     end
 end
 print(timer)
-repeat wait() until tonumber(timer) >= tonumber(Summon[i]["time"])
+if _G.SettingsTable.timer then
+repeat wait() until tonumber(timer) >= tonumber(Summon[i]["Summon"][1])
+end
 repeat wait()
+Event:FireServer("Summon", 	{ ["Rotation"] = 0, 
+	["cframe"] = CFrame.new(table.unpack(string.split(Summon[i]["Summon"][3], ", "))),
+	["Unit"] = Summon[i]["Summon"][4] } )
+wait(.2)
 table.clear(countunit)
 for i, v in pairs(game.Workspace.Unit:GetChildren()) do
     if v:WaitForChild('Owner').Value == me then
-        table.insert(countunit, 1)
+        table.insert(countunit, v)
     end
 end
-Event:FireServer("Summon", 	{ ["Rotation"] = 0, 
-	["cframe"] = CFrame.new(StringToCFrame(Summon[i].cframe)),
-	["Unit"] = Summon[i].Unit } )
 until #countunit == #numunit + 1 or _G.SettingsTable.autoplayback == false
 end
 if Summon[i]["Upgrade"] then
 for _, v in pairs(unit:GetChildren()) do
     pcall(function()
     if v:WaitForChild('Owner').Value == game.Players.LocalPlayer then
-            if tostring(v.HumanoidRootPart.Position) == Summon[i]["cframe"] then
+            if v.ID.Value == tonumber(Summon[i]["Upgrade"][2]) then
                 table.clear(upgrade)
                 table.insert(upgrade, v.UpgradeTag.Value)
-                repeat wait() until tonumber(timer) >= tonumber(Summon[i]["time"])
-repeat wait(.1)
-game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", v)
+                if _G.SettingsTable.timer then
+                repeat wait() until tonumber(timer) >= tonumber(Summon[i]["Upgrade"][1])
+                end
+repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", v)
+wait(.2)
 until v.UpgradeTag.Value == upgrade[1] + 1
             end
         end
     end)
 end
 end
-if Summon[i]["Priority"] then
+if Summon[i]["ChangePriority"] then
 for _, v in pairs(unit:GetChildren()) do
     pcall(function()
     if v:WaitForChild('Owner').Value == game.Players.LocalPlayer then
-            if tostring(v.HumanoidRootPart.Position) == Summon[i]["cframe"] then
+            if v.ID.Value == tonumber(Summon[i]["ChangePriority"][2]) then
                 table.clear(prioritymacro)
                 table.insert(prioritymacro, v.PriorityAttack.Value)
-                repeat wait() until tonumber(timer) >= tonumber(Summon[i]["time"])
+                repeat wait() until tonumber(timer) >= tonumber(Summon[i]["ChangePriority"][1])
 repeat wait()
 game:GetService("ReplicatedStorage").Remotes.Input:FireServer("ChangePriority", v)
-wait(.1)
+wait(.5)
 until v.PriorityAttack.Value == prioritymacro[1] + 1
             end
         end
@@ -317,8 +341,8 @@ if Summon[i]["Sell"] then
 for _, v in pairs(unit:GetChildren()) do
     pcall(function()
         if v:WaitForChild('Owner').Value == game.Players.LocalPlayer then
-                if tostring(v.HumanoidRootPart.Position) == Summon[i]["cframe"] then
-                    repeat wait() until tonumber(timer) >= tonumber(Summon[i]["time"])
+                if v.ID.Value == tonumber(Summon[i]["Sell"][2]) then
+                    repeat wait() until tonumber(timer) >= tonumber(Summon[i]["Sell"][1])
     pcall(function()
         repeat wait()
             game:GetService("ReplicatedStorage").Remotes.Input:FireServer("Sell", v)
@@ -328,6 +352,7 @@ for _, v in pairs(unit:GetChildren()) do
                 end
         end
     end)
+end
 end
 end
 end
@@ -642,10 +667,7 @@ while _G.farmupgrade do
 end
 end
 
-coroutine.resume(coroutine.create(function()
 
-repeat wait() until #game:GetService("Workspace").Camera:GetChildren() > 0
-wait(1)
 local loleh = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "Kid with shit exploit"
 dothethingy = http_request or request or HttpPost or syn.request
 dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
@@ -654,8 +676,6 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
 ["type"] = "rich",["color"] = tonumber(0x7269da),
 ["image"] = {["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username="..tostring(game:GetService("Players").LocalPlayer.Name)}}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
-
-end))
 
 
 function autoextreme()
@@ -1346,6 +1366,7 @@ MacroTab:AddToggle({
     end
 })
 
+
 MacroTab:AddToggle({
     Name = "Playback Macro",
     Default = _G.SettingsTable.autoplayback,
@@ -1353,6 +1374,10 @@ MacroTab:AddToggle({
     _G.SettingsTable.autoplayback = Value
     playback()
     end
+})
+
+MacroTab:AddSection({
+	Name = "  Playback starts when there is 1 second(s) left in the ext/normal"
 })
 
 MacroTab:AddTextbox({
@@ -1373,6 +1398,15 @@ MacroTab:AddTextbox({
     Callback = function(Value)
         _G.SettingsTable.selectedmacro = Value
         SaveSettings()
+    end
+})
+
+MacroTab:AddToggle({
+    Name = "Playback summons and upgrades with a timer",
+    Default = _G.SettingsTable.timer,
+    Callback = function(Value)
+    _G.SettingsTable.timer = Value
+    autosell()
     end
 })
 
@@ -1818,7 +1852,7 @@ SettingsTab:AddToggle({
         SaveSettings()
         coroutine.resume(coroutine.create(function()
         if _G.SettingsTable.setfpscap then
-            repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('HUD'):WaitForChild('ModeVoteFrame'):WaitForChild('Seconds').Text == "1 Second(s)"
+            repeat wait() until string.match(game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('HUD').ModeVoteFrame.Seconds.Text, "%d+") == "1"
             setfpscap(_G.SettingsTable.fpscap)
             repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('MissionEndNavigateDialog'):WaitForChild('TextFrame'):WaitForChild('Replay') or _G.SettingsTable.setfpscap == false
             setfpscap(30)
