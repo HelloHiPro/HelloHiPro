@@ -7,15 +7,12 @@ function StartTimer()
     startTime = tick() -- float representing when the timer was started
     while tick() do -- run until 'secondsToRun' seconds have passed
         game:GetService("RunService").Heartbeat:Wait() -- this waits until the heartbeat event is triggered, which happens 60 times a second
-        if checkplayback then 
-            timeSinceStart = tick() - startTime + 0.5
-        else
-            timeSinceStart = tick() - startTime
-        end
+        timeSinceStart = tick() - startTime
         timer = string.format("%0.2f", tostring(timeSinceStart)) -- 0.2 represents two decimals
     end
 end
-repeat wait() until string.match(game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('HUD').ModeVoteFrame.Seconds.Text, "%d+") == "1"
+repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('HUD').ModeVoteFrame.Visible
+repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('HUD').ModeVoteFrame.Visible == false
 StartTimer()
 end))
 
@@ -39,6 +36,7 @@ local macrolist = {}
 local a2 = 0
 local a1 = 0
 local file_settings = "Bobsettings" .. game.Players.LocalPlayer.Name .. ".txt"
+local macrolistfile = "macrolist" .. game.Players.LocalPlayer.Name .. ".txt"
 local wave69 = game:GetService("ReplicatedStorage").WaveValue.Value
 local mouse1 = me:GetMouse()
 local checkautosell = false
@@ -59,18 +57,6 @@ local idvalue = 0
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({IntroText = "BOB HUB",Name = "Bob Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionStar"})
 
--- Macro list
-
-local success = pcall(function()
-repeat wait() a2 = a2 + 1
-httpservice:JSONDecode(readfile(OrionLib.Folder .. "/" .. macro_file .. tostring(a2) .. ".json"))
-table.insert(macrolist, macro_file .. tostring(a2) .. ".json")
-until false
-end)
-
-if success == false then
-    a2 = 0
-end
 -- autofv
 if game:GetService("ReplicatedStorage").Lobby.Value == false then
 pcall(function()
@@ -135,6 +121,9 @@ function LoadSettings()
     if (readfile and isfile and isfile(file_settings)) then
         _G.SettingsTable = httpservice:JSONDecode(readfile(file_settings))
     end
+    if (readfile and isfile and isfile(macrolistfile)) then
+        macrolist = httpservice:JSONDecode(readfile(macrolistfile))
+    end
 end
 LoadSettings()
 function SaveSettings()
@@ -142,14 +131,17 @@ function SaveSettings()
     if (writefile) then
         json = httpservice:JSONEncode(_G.SettingsTable)
         writefile(file_settings, json)
+        if #macrolist > 0 then
+        writefile(macrolistfile, httpservice:JSONEncode(macrolist))
+        end
     end
 end
-SaveSettings()
 
 --Macro ChildAdded
 
 pcall(function()
 unit.ChildAdded:Connect(function(child)
+timer2 = timer
 if child:WaitForChild('Owner').Value == me then
 if _G.record then
 idvalue = idvalue + 1
@@ -158,7 +150,7 @@ id.Value = idvalue
 id.Name = 'ID'
 id.Parent = child
     table.insert(Summon, {["Summon"] = {
-    timer,
+    timer2,
     tostring(idvalue),
 	tostring(child:WaitForChild("HumanoidRootPart").CFrame), 
 	child.Name,
@@ -181,10 +173,11 @@ end)
 
 pcall(function()
     unit.ChildRemoved:Connect(function(child)
+        timer2 = timer
 if child:WaitForChild('Owner').Value == me then
     if _G.record then
         table.insert(Summon, {["Sell"] = { 
-            timer,
+            timer2,
             tostring(child.ID.Value)
     }})
     end
@@ -204,7 +197,7 @@ repeat wait() until game:IsLoaded()
             print(#Summon)
             table.clear(upgrade)
             OrionLib:MakeNotification({
-                Name = _G.SettingsTable.macroname .. ".json",
+                Name = _G.SettingsTable.selectedmacro .. ".json",
                 Content = "Recording...",
                 Time = 3
             })
@@ -212,6 +205,7 @@ repeat wait() until game:IsLoaded()
             for _, v in pairs(unit:GetChildren()) do
                 if v:WaitForChild("Owner").Value == game.Players.LocalPlayer then
                     for i = 1, #Summon do
+                    coroutine.resume(coroutine.create(function()
                     pcall(function()
                     if Summon[i]["Summon"] then
                     if _G.record then
@@ -222,6 +216,7 @@ repeat wait() until game:IsLoaded()
                     end
                     end
                     end)
+                    end))
                     pcall(function()
                     if Summon[i]["Summon"] then
                     if _G.record then
@@ -238,9 +233,9 @@ repeat wait() until game:IsLoaded()
             end
             until _G.record == false
             
-writefile(OrionLib.Folder .. "/" .. _G.SettingsTable.macroname .. ".json",httpservice:JSONEncode(Summon))
+writefile(OrionLib.Folder .. "/" .. _G.SettingsTable.selectedmacro .. ".json",httpservice:JSONEncode(Summon))
 OrionLib:MakeNotification({
-    Name = _G.SettingsTable.macroname .. ".json",
+    Name = _G.SettingsTable.selectedmacro .. ".json",
     Content = "Saved",
     Time = 3
 })
@@ -272,39 +267,67 @@ local playbackended = false
 checkplayback = true
 coroutine.resume(coroutine.create(function()
 repeat wait() until tonumber(timer) > 0
-print(timer)
-print(timer)
 repeat wait()
+coroutine.resume(coroutine.create(function()
+for i = 1, #Summon do
+if Summon[i]["ChangePriority"] then
+repeat wait() until tonumber(timer) >= tonumber(Summon[i]["ChangePriority"][1])
+print('recordedtimer' .. tonumber(Summon[i]["ChangePriority"][1]))
+for _, v in pairs(unit:GetChildren()) do
+    pcall(function()
+    if v:WaitForChild('Owner').Value == game.Players.LocalPlayer then
+            if v.ID.Value == tonumber(Summon[i]["ChangePriority"][2]) then
+                table.clear(prioritymacro)
+                table.insert(prioritymacro, v.PriorityAttack.Value)
+repeat 
+game:GetService("ReplicatedStorage").Remotes.Input:FireServer("ChangePriority", v)
+wait(.5)
+until v.PriorityAttack.Value == prioritymacro[1] + 1
+print('playbacktimerpriority' .. timer)
+            end
+        end
+    end)
+end
+end
+if Summon[i]["Sell"] then
+repeat wait() until tonumber(timer) >= tonumber(Summon[i]["Sell"][1])
+print('recordedtimer' .. tonumber(Summon[i]["Sell"][1]))
+for _, v in pairs(unit:GetChildren()) do
+    pcall(function()
+        if v:WaitForChild('Owner').Value == game.Players.LocalPlayer then
+                if v.ID.Value == tonumber(Summon[i]["Sell"][2]) then
+    pcall(function()
+        repeat
+            game:GetService("ReplicatedStorage").Remotes.Input:FireServer("Sell", v)
+            wait()
+        until v.SoldBoolean.Value
+    end)
+    print('playbacktimersell' .. timer)
+                end
+        end
+    end)
+end
+end
+end
+end))
 for i = 1, #Summon do
 if _G.SettingsTable.autoplayback then
+repeat wait()
 if Summon[i]["Summon"] then
-local numunit = {}
-table.clear(numunit)
-for i, v in pairs(game.Workspace.Unit:GetChildren()) do
-    if v:WaitForChild('Owner').Value == me then
-        table.insert(numunit, 1)
-    end
-end
-print(timer)
 if _G.SettingsTable.timer then
 repeat wait() until tonumber(timer) >= tonumber(Summon[i]["Summon"][1])
 end
-repeat wait()
+repeat
 Event:FireServer("Summon", 	{ ["Rotation"] = 0, 
 	["cframe"] = CFrame.new(table.unpack(string.split(Summon[i]["Summon"][3], ", "))),
 	["Unit"] = Summon[i]["Summon"][4] } )
-wait(.2)
-table.clear(countunit)
-for i, v in pairs(game.Workspace.Unit:GetChildren()) do
-    if v:WaitForChild('Owner').Value == me then
-        table.insert(countunit, v)
-    end
-end
-until #countunit == #numunit + 1 or _G.SettingsTable.autoplayback == false
+wait(.1)
+until idvalue == tonumber(Summon[i]["Summon"][2]) or _G.SettingsTable.autoplayback == false
+break
 end
 if Summon[i]["Upgrade"] then
 for _, v in pairs(unit:GetChildren()) do
-    pcall(function()
+
     if v:WaitForChild('Owner').Value == game.Players.LocalPlayer then
             if v.ID.Value == tonumber(Summon[i]["Upgrade"][2]) then
                 table.clear(upgrade)
@@ -314,46 +337,15 @@ for _, v in pairs(unit:GetChildren()) do
                 end
 repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", v)
 wait(.2)
-until v.UpgradeTag.Value == upgrade[1] + 1
+until v.UpgradeTag.Value >= upgrade[1] + 1
             end
         end
-    end)
+
 end
+break
 end
-if Summon[i]["ChangePriority"] then
-for _, v in pairs(unit:GetChildren()) do
-    pcall(function()
-    if v:WaitForChild('Owner').Value == game.Players.LocalPlayer then
-            if v.ID.Value == tonumber(Summon[i]["ChangePriority"][2]) then
-                table.clear(prioritymacro)
-                table.insert(prioritymacro, v.PriorityAttack.Value)
-                repeat wait() until tonumber(timer) >= tonumber(Summon[i]["ChangePriority"][1])
-repeat wait()
-game:GetService("ReplicatedStorage").Remotes.Input:FireServer("ChangePriority", v)
-wait(.5)
-until v.PriorityAttack.Value == prioritymacro[1] + 1
-            end
-        end
-    end)
-end
-end
-if Summon[i]["Sell"] then
-for _, v in pairs(unit:GetChildren()) do
-    pcall(function()
-        if v:WaitForChild('Owner').Value == game.Players.LocalPlayer then
-                if v.ID.Value == tonumber(Summon[i]["Sell"][2]) then
-                    repeat wait() until tonumber(timer) >= tonumber(Summon[i]["Sell"][1])
-    pcall(function()
-        repeat wait()
-            game:GetService("ReplicatedStorage").Remotes.Input:FireServer("Sell", v)
-            wait(.1)
-        until v.SoldBoolean.Value
-    end)
-                end
-        end
-    end)
-end
-end
+break
+until _G.SettingsTable.autoplayback == false
 end
 end
 playbackended = true
@@ -1358,59 +1350,6 @@ MacroTab:AddToggle({
 })
 
 MacroTab:AddToggle({
-    Name = "Record Macro",
-    Default = false,
-    Callback = function(Value)
-    _G.record = Value
-    record()
-    end
-})
-
-
-MacroTab:AddToggle({
-    Name = "Playback Macro",
-    Default = _G.SettingsTable.autoplayback,
-    Callback = function(Value)
-    _G.SettingsTable.autoplayback = Value
-    playback()
-    end
-})
-
-MacroTab:AddSection({
-	Name = "  Playback starts when there is 1 second(s) left in the ext/normal"
-})
-
-MacroTab:AddTextbox({
-    Name = "Save Macro Name",
-    Default = "DefaultMacro" .. tostring(bunda + 1),
-    TextDisappear = false,
-    Callback = function(Value)
-        _G.SettingsTable.macroname = Value
-        SaveSettings()
-    end
-})
-
-
-MacroTab:AddTextbox({
-    Name = "Enter Macro Name",
-    Default = _G.SettingsTable.macroname,
-    TextDisappear = false,
-    Callback = function(Value)
-        _G.SettingsTable.selectedmacro = Value
-        SaveSettings()
-    end
-})
-
-MacroTab:AddToggle({
-    Name = "Playback summons and upgrades with a timer",
-    Default = _G.SettingsTable.timer,
-    Callback = function(Value)
-    _G.SettingsTable.timer = Value
-    autosell()
-    end
-})
-
-MacroTab:AddToggle({
     Name = "Auto Sell",
     Default = _G.SettingsTable.autosell,
     Callback = function(Value)
@@ -1437,6 +1376,111 @@ MacroTab:AddTextbox({
     Callback = function(Value)
         _G.SettingsTable.autosellspeed = Value
         SaveSettings()
+    end
+})
+
+MacroTab:AddToggle({
+    Name = "Record Macro",
+    Default = false,
+    Callback = function(Value)
+    _G.record = Value
+    record()
+    end
+})
+
+
+MacroTab:AddToggle({
+    Name = "Playback Macro",
+    Default = _G.SettingsTable.autoplayback,
+    Callback = function(Value)
+    _G.SettingsTable.autoplayback = Value
+    playback()
+    end
+})
+
+MacroTab:AddSection({
+	Name = "  Playback starts when there is 1 second(s) left in the ext/normal"
+})
+
+MacroTab:AddToggle({
+    Name = "Playback summons and upgrades with a timer",
+    Default = _G.SettingsTable.timer,
+    Callback = function(Value)
+    _G.SettingsTable.timer = Value
+    autosell()
+    end
+})
+
+MacroTab:AddTextbox({
+    Name = "Save Macro Profile",
+    Default = "DefaultProfile",
+    TextDisappear = false,
+    Callback = function(Value)
+        if Value ~= "" then
+        for i, v in pairs(macrolist) do
+            if v == Value then table.remove(macrolist, i) end
+        end
+            table.insert(macrolist, Value)
+        end
+        writefile(OrionLib.Folder .. '/' .. Value .. '.json', "")
+        for i, v in pairs(game:GetService("CoreGui").Orion:GetDescendants()) do
+            pcall(function()
+            if v.Text == 'Select Macro' then
+                v.Parent.Parent:Destroy()
+            end
+            end)
+        end
+        MacroTab:AddDropdown({
+            Name = "Select Macro",
+            Default = _G.SettingsTable.selectedmacro,
+            Options = macrolist,
+            Callback = function(Value)
+                _G.SettingsTable.selectedmacro = Value
+                SaveSettings()
+            end
+            }) 
+        SaveSettings()
+    end
+})
+
+MacroTab:AddButton({
+	Name = "Delete Selected Macro",
+	Default = false,
+	Callback = function(Value)
+	    for i, v in pairs(macrolist) do
+	        if v == _G.SettingsTable.selectedmacro then
+	            table.remove(macrolist, i)
+	            delfile(OrionLib.Folder .. '/' .. _G.SettingsTable.selectedmacro .. '.json')
+	        end
+	        SaveSettings()
+	    end
+	    for i, v in pairs(game:GetService("CoreGui").Orion:GetDescendants()) do
+            pcall(function()
+            if v.Text == 'Select Macro' then
+                v.Parent.Parent:Destroy()
+            end
+            end)
+        end
+        MacroTab:AddDropdown({
+            Name = "Select Macro",
+            Default = _G.SettingsTable.selectedmacro,
+            Options = macrolist,
+            Callback = function(Value)
+                _G.SettingsTable.selectedmacro = Value
+                SaveSettings()
+            end
+        }) 
+	end
+})
+
+
+
+MacroTab:AddDropdown({
+    Name = "Select Macro",
+    Default = _G.SettingsTable.selectedmacro,
+    Options = macrolist,
+    Callback = function(Value)
+        _G.SettingsTable.selectedmacro = Value
     end
 })
 
