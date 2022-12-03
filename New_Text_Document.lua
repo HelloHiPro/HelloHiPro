@@ -49,6 +49,7 @@ local autojoinstart = nil
 local Mouse = game.Players.LocalPlayer:GetMouse()
 local bunda = 0
 local countunit = {}
+local plrlevel = ""
 function StringToCFrame(String) local Split = string.split(String, ",") return Split[1], Split[2], Split[3] end
 local idvalue = 0
 
@@ -114,7 +115,9 @@ _G.SettingsTable = {
     deletetexture = false,
     fpscap = 60,
     setfpscap = false,
-    timer = false
+    timer = false,
+    WhURL = "",
+    Webhook = false
 }
 
 function LoadSettings()
@@ -662,7 +665,7 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "**Orion Executed**",
 ["description"] = "Username: " .. game.Players.LocalPlayer.Name.." with **"..loleh.."**\n*"..os.date()..",  "..timestamp.." (GMT+1)*",
 ["type"] = "rich",["color"] = tonumber(0x7269da),
-["image"] = {["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username="..tostring(game:GetService("Players").LocalPlayer.Name)}}}}), Method = "POST", Headers = {
+["image"] = {["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username="..tostring(game:GetService("Players").LocalPlayer.UserId)}}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
 
 
@@ -1106,7 +1109,90 @@ local SettingsTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
+local WhTab = Window:MakeTab({
+	Name = "Webhook",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
 --Toggles:
+
+-- WhTab
+
+WhTab:AddTextbox({
+	Name = "Webhook URL",
+	Default = _G.SettingsTable.WhURL,
+	TextDisappear = true,
+	Increment = 1,
+	Callback = function(Value)
+	    if Value ~= "" then
+	    _G.SettingsTable.WhURL = Value
+	    SaveSettings()
+	    OrionLib:MakeNotification({
+            Name = "URL",
+            Content = "Saved",
+            Time = 3
+        })
+        end
+	end    
+})
+
+WhTab:AddButton({
+	Name = "Test webhook URL",
+	Default = false,
+	Callback = function(Value)
+	    pcall(function()
+dothethingy = http_request or request or HttpPost or syn.request
+dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
+["embeds"] = {{["title"] = "**Bob Webhook**",
+["description"] = "Test",
+["type"] = "rich",
+["color"] = tonumber(0x7269da)}}}), 
+Method = "POST", Headers = {
+["content-type"] = "application/json"}})
+        end)
+	end    
+})
+
+WhTab:AddToggle({
+	Name = "Send webhook when match ends",
+	Default = _G.SettingsTable.Webhook,
+	Callback = function(Value)
+	    _G.SettingsTable.Webhook = Value
+        SaveSettings()
+        if _G.SettingsTable.Webhook then
+        coroutine.resume(coroutine.create(function()
+        pcall(function()
+        repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.Wave.Visible
+        repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.Wave.Visible == false
+        pcall(function()
+            plrlevel = game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("TextLabel").Text
+        end)
+        if game:GetService("Workspace").TowerHP.HP.Value > 0 then
+dothethingy = http_request or request or HttpPost or syn.request
+dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
+["embeds"] = {{["title"] = "**Bob Webhook**",
+["description"] = "**Status: WIN**" .. "\n" .. "**Map:** " .. game:GetService("ReplicatedStorage").Map.Value .. "\n" .. "**Username:** " .. game.Players.LocalPlayer.Name .. "\n" .. "**Level:** " .. string.sub(plrlevel, 4) .. "\n" .. "**XP Left:** " .. game:GetService("Players").LocalPlayer.PlayerGui.HUD.Others.XpBar.XP.Text .. "\n" ..  "**Time Elapsed (Macro Timer)**" .. "\n" .. timer .. " Seconds",
+["type"] = "rich",
+["color"] = tonumber(0x7269da)}}}), 
+Method = "POST", Headers = {
+["content-type"] = "application/json"}})
+else
+dothethingy = http_request or request or HttpPost or syn.request
+dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
+["embeds"] = {{["title"] = "**Bob Webhook**",
+["description"] = "**Status: LOST**" .. "\n" .. "**Lost Wave:** " .. game:GetService("ReplicatedStorage").WaveValue.Value .. "\n" .. "**Map:** " .. game:GetService("ReplicatedStorage").Map.Value .. "\n" .. "**Username:** " .. game.Players.LocalPlayer.Name .. "\n" .. "**Level:** " .. string.sub(plrlevel, 4) .. "\n" .. "**XP Left:** " .. game:GetService("Players").LocalPlayer.PlayerGui.HUD.Others.XpBar.XP.Text .. "\n" ..  "**Time Elapsed (Macro Timer)**" .. "\n" .. timer .. " Seconds",
+["type"] = "rich",
+["color"] = tonumber(0x7269da)}}}), 
+Method = "POST", Headers = {
+["content-type"] = "application/json"}})
+end
+end)
+end))
+end
+end    
+})
+
+
 
 --LobbyTab
 
@@ -1810,6 +1896,7 @@ SettingsTab:AddToggle({
 	        coroutine.resume(coroutine.create(function()
 	                pcall(function()
 	                    repeat wait() until #game:GetService("Workspace"):WaitForChild("Camera"):GetChildren() > 0
+                        plrlevel = game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("TextLabel").Text
                         game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("TextLabel"):Destroy()
                         game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("ImageLabel"):Destroy()
                         game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("NameFrame"):WaitForChild("TextLabel"):Destroy()
