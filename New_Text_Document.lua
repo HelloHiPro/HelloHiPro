@@ -1170,7 +1170,7 @@ WhTab:AddToggle({
 	    dothethingy = http_request or request or HttpPost or syn.request
         dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
         ["embeds"] = {{["title"] = "**Bob Webhook**",
-        ["description"] = "**Match Started**" .. "\n" .. "**Map:** " .. game:GetService("ReplicatedStorage").Map.Value .. "\n" .. "**Username:** " .. game.Players.LocalPlayer.Name .. "\n" .. "**Level:** " .. string.sub(plrlevel, 4) .. "\n" .. "**XP Left:** " .. game:GetService("Players").LocalPlayer.PlayerGui.HUD.Others.XpBar.XP.Text .. "\n" ..  "**Gold Amount: **" .. game:GetService("Players").LocalPlayer.PlayerGui.HUD.Others.Coins.Coin.Text,
+        ["description"] = "**Match Started**" .. "\n" .. "**Map:** " .. game:GetService("ReplicatedStorage").Map.Value .. "\n" .. "**Username:** " .. game.Players.LocalPlayer.Name .. "\n" .. "**Level:** " .. string.sub(plrlevel, 4) .. "\n" .. "**XP Left:** " .. game:GetService("Players").LocalPlayer.PlayerGui.HUD.Others.XpBar.XP.Text .. "\n" ..  "**Gold Amount: **" .. game:GetService("Players").LocalPlayer.PlayerGui.HUD.Summon.Gems.Balance.GoldAmount.Text .. "\n" .. "**Gem Amount:** " .. game:GetService("Players").LocalPlayer.PlayerGui.HUD.Summon.Gems.Balance.Amount.Text,
         ["type"] = "rich",
         ["color"] = tonumber(0x7269da)}}}), 
         Method = "POST", Headers = {
