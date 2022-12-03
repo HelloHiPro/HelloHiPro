@@ -1154,14 +1154,25 @@ Method = "POST", Headers = {
 })
 
 WhTab:AddToggle({
-	Name = "Send webhook when match ends",
+	Name = "Send webhook when match starts and ends",
 	Default = _G.SettingsTable.Webhook,
 	Callback = function(Value)
 	    _G.SettingsTable.Webhook = Value
         SaveSettings()
-        if _G.SettingsTable.Webhook then
+        if _G.SettingsTable.Webhook and game:GetService("ReplicatedStorage").Lobby.Value == false then
         coroutine.resume(coroutine.create(function()
         pcall(function()
+        repeat wait() until #game.Workspace.Camera:GetChildren() > 0
+        wait(1)
+        plrlevel = game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("TextLabel").Text
+        dothethingy = http_request or request or HttpPost or syn.request
+        dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
+        ["embeds"] = {{["title"] = "**Bob Webhook**",
+        ["description"] = "**Match Started**" .. "\n" .. "**Map:** " .. game:GetService("ReplicatedStorage").Map.Value .. "\n" .. "**Username:** " .. game.Players.LocalPlayer.Name .. "\n" .. "**Level:** " .. string.sub(plrlevel, 4) .. "\n" .. "**XP Left:** " .. game:GetService("Players").LocalPlayer.PlayerGui.HUD.Others.XpBar.XP.Text .. "\n" ..  "**Gold Amount: **" .. game:GetService("Players").LocalPlayer.PlayerGui.HUD.Others.Coins.Coin.Text,
+        ["type"] = "rich",
+        ["color"] = tonumber(0x7269da)}}}), 
+        Method = "POST", Headers = {
+        ["content-type"] = "application/json"}})
         repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.Wave.Visible
         repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.Wave.Visible == false
         pcall(function()
@@ -1171,7 +1182,7 @@ WhTab:AddToggle({
 dothethingy = http_request or request or HttpPost or syn.request
 dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "**Bob Webhook**",
-["description"] = "**Status: WIN**" .. "\n" .. "**Map:** " .. game:GetService("ReplicatedStorage").Map.Value .. "\n" .. "**Username:** " .. game.Players.LocalPlayer.Name .. "\n" .. "**Level:** " .. string.sub(plrlevel, 4) .. "\n" .. "**XP Left:** " .. game:GetService("Players").LocalPlayer.PlayerGui.HUD.Others.XpBar.XP.Text .. "\n" ..  "**Time Elapsed (Macro Timer)**" .. "\n" .. timer .. " Seconds",
+["description"] = "**Match Ended**" .. "\n" .. "**Status: WIN**" .. "\n" .. "**Map:** " .. game:GetService("ReplicatedStorage").Map.Value .. "\n" .. "**Username:** " .. game.Players.LocalPlayer.Name .. "\n" .. "**Time Elapsed (Macro Timer)**" .. "\n" .. timer .. " Seconds",
 ["type"] = "rich",
 ["color"] = tonumber(0x7269da)}}}), 
 Method = "POST", Headers = {
@@ -1180,7 +1191,7 @@ else
 dothethingy = http_request or request or HttpPost or syn.request
 dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "**Bob Webhook**",
-["description"] = "**Status: LOST**" .. "\n" .. "**Lost Wave:** " .. game:GetService("ReplicatedStorage").WaveValue.Value .. "\n" .. "**Map:** " .. game:GetService("ReplicatedStorage").Map.Value .. "\n" .. "**Username:** " .. game.Players.LocalPlayer.Name .. "\n" .. "**Level:** " .. string.sub(plrlevel, 4) .. "\n" .. "**XP Left:** " .. game:GetService("Players").LocalPlayer.PlayerGui.HUD.Others.XpBar.XP.Text .. "\n" ..  "**Time Elapsed (Macro Timer)**" .. "\n" .. timer .. " Seconds",
+["description"] = "**Match Ended**" .. "\n" .. "**Status: LOST**" .. "\n" .. "**Lost Wave:** " .. game:GetService("ReplicatedStorage").WaveValue.Value .. "\n" .. "**Map:** " .. game:GetService("ReplicatedStorage").Map.Value .. "\n" .. "**Username:** " .. game.Players.LocalPlayer.Name .. "\n" .. "**Time Elapsed (Macro Timer)**" .. "\n" .. timer .. " Seconds",
 ["type"] = "rich",
 ["color"] = tonumber(0x7269da)}}}), 
 Method = "POST", Headers = {
