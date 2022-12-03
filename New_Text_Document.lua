@@ -1164,8 +1164,10 @@ WhTab:AddToggle({
         pcall(function()
         repeat wait() until #game.Workspace.Camera:GetChildren() > 0
         wait(1)
+	    pcall(function()
         plrlevel = game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("TextLabel").Text
-        dothethingy = http_request or request or HttpPost or syn.request
+        end)
+	    dothethingy = http_request or request or HttpPost or syn.request
         dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
         ["embeds"] = {{["title"] = "**Bob Webhook**",
         ["description"] = "**Match Started**" .. "\n" .. "**Map:** " .. game:GetService("ReplicatedStorage").Map.Value .. "\n" .. "**Username:** " .. game.Players.LocalPlayer.Name .. "\n" .. "**Level:** " .. string.sub(plrlevel, 4) .. "\n" .. "**XP Left:** " .. game:GetService("Players").LocalPlayer.PlayerGui.HUD.Others.XpBar.XP.Text .. "\n" ..  "**Gold Amount: **" .. game:GetService("Players").LocalPlayer.PlayerGui.HUD.Others.Coins.Coin.Text,
@@ -1907,6 +1909,7 @@ SettingsTab:AddToggle({
 	        coroutine.resume(coroutine.create(function()
 	                pcall(function()
 	                    repeat wait() until #game:GetService("Workspace"):WaitForChild("Camera"):GetChildren() > 0
+	                    wait(1)
                         plrlevel = game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("TextLabel").Text
                         game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("TextLabel"):Destroy()
                         game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("ImageLabel"):Destroy()
