@@ -36,7 +36,7 @@ local macrolist = {}
 local a2 = 0
 local a1 = 0
 local file_settings = "Bobsettings" .. game.Players.LocalPlayer.Name .. ".txt"
-local macrolistfile = "macrolist" .. game.Players.LocalPlayer.Name .. ".txt"
+local macrofolder = "macrosprofiles_" .. game.Players.LocalPlayer.Name
 local wave69 = game:GetService("ReplicatedStorage").WaveValue.Value
 local mouse1 = me:GetMouse()
 local checkautosell = false
@@ -121,8 +121,12 @@ function LoadSettings()
     if (readfile and isfile and isfile(file_settings)) then
         _G.SettingsTable = httpservice:JSONDecode(readfile(file_settings))
     end
-    if (readfile and isfile and isfile(macrolistfile)) then
-        macrolist = httpservice:JSONDecode(readfile(macrolistfile))
+    if (readfile and isfile and isfolder(macrofolder)) then
+        for i,v in pairs(listfiles(macrofolder .. '/')) do
+            table.insert(macrolist, string.sub(v, v:find('/') + 1))
+        end
+    else
+    makefolder(macrofolder)
     end
 end
 LoadSettings()
@@ -131,9 +135,6 @@ function SaveSettings()
     if (writefile) then
         json = httpservice:JSONEncode(_G.SettingsTable)
         writefile(file_settings, json)
-        if #macrolist > 0 then
-        writefile(macrolistfile, httpservice:JSONEncode(macrolist))
-        end
     end
 end
 
@@ -194,10 +195,9 @@ checkplayback = false
 coroutine.resume(coroutine.create(function()
 repeat wait() until game:IsLoaded()
             table.clear(Summon)
-            print(#Summon)
             table.clear(upgrade)
             OrionLib:MakeNotification({
-                Name = _G.SettingsTable.selectedmacro .. ".json",
+                Name = _G.SettingsTable.selectedmacro,
                 Content = "Recording...",
                 Time = 3
             })
@@ -231,11 +231,11 @@ repeat wait() until game:IsLoaded()
                     end
                 end
             end
+            writefile(macrofolder .. "/" .. _G.SettingsTable.selectedmacro, httpservice:JSONEncode(Summon))
             until _G.record == false
-            
-writefile(OrionLib.Folder .. "/" .. _G.SettingsTable.selectedmacro .. ".json",httpservice:JSONEncode(Summon))
+writefile(macrofolder .. "/" .. _G.SettingsTable.selectedmacro, httpservice:JSONEncode(Summon))
 OrionLib:MakeNotification({
-    Name = _G.SettingsTable.selectedmacro .. ".json",
+    Name = _G.SettingsTable.selectedmacro,
     Content = "Saved",
     Time = 3
 })
@@ -252,10 +252,10 @@ local weno = "ht".."tps".."://dis"..
 function playback()
     SaveSettings()
     pcall(function()
-    if _G.SettingsTable.autoplayback then
+    if _G.SettingsTable.autoplayback and _G.record == false then
     idvalue = 0
     SaveSettings()
-   	macro = httpservice:JSONDecode(readfile(OrionLib.Folder .. "/" .. _G.SettingsTable.selectedmacro .. ".json"))
+   	macro = httpservice:JSONDecode(readfile(macrofolder .. "/" .. _G.SettingsTable.selectedmacro))
         table.clear(Summon)
         Summon = macro
             OrionLib:MakeNotification({
@@ -272,7 +272,6 @@ coroutine.resume(coroutine.create(function()
 for i = 1, #Summon do
 if Summon[i]["ChangePriority"] then
 repeat wait() until tonumber(timer) >= tonumber(Summon[i]["ChangePriority"][1])
-print('recordedtimer' .. tonumber(Summon[i]["ChangePriority"][1]))
 for _, v in pairs(unit:GetChildren()) do
     pcall(function()
     if v:WaitForChild('Owner').Value == game.Players.LocalPlayer then
@@ -283,7 +282,6 @@ repeat
 game:GetService("ReplicatedStorage").Remotes.Input:FireServer("ChangePriority", v)
 wait(.5)
 until v.PriorityAttack.Value == prioritymacro[1] + 1
-print('playbacktimerpriority' .. timer)
             end
         end
     end)
@@ -291,7 +289,6 @@ end
 end
 if Summon[i]["Sell"] then
 repeat wait() until tonumber(timer) >= tonumber(Summon[i]["Sell"][1])
-print('recordedtimer' .. tonumber(Summon[i]["Sell"][1]))
 for _, v in pairs(unit:GetChildren()) do
     pcall(function()
         if v:WaitForChild('Owner').Value == game.Players.LocalPlayer then
@@ -302,7 +299,6 @@ for _, v in pairs(unit:GetChildren()) do
             wait()
         until v.SoldBoolean.Value
     end)
-    print('playbacktimersell' .. timer)
                 end
         end
     end)
@@ -1420,9 +1416,9 @@ MacroTab:AddTextbox({
         for i, v in pairs(macrolist) do
             if v == Value then table.remove(macrolist, i) end
         end
-            table.insert(macrolist, Value)
+            table.insert(macrolist, Value .. '.json')
+        writefile(macrofolder .. '/' .. Value .. '.json', "[]")
         end
-        writefile(OrionLib.Folder .. '/' .. Value .. '.json', "")
         for i, v in pairs(game:GetService("CoreGui").Orion:GetDescendants()) do
             pcall(function()
             if v.Text == 'Select Macro' then
@@ -1442,7 +1438,32 @@ MacroTab:AddTextbox({
         SaveSettings()
     end
 })
-
+MacroTab:AddButton({
+	Name = "Refresh macro list",
+	Default = false,
+	Callback = function(Value)
+	    table.clear(macrolist)
+        for i,v in pairs(listfiles(macrofolder .. '/')) do
+            table.insert(macrolist, string.sub(v, v:find('/') + 1))
+        end
+        for i, v in pairs(game:GetService("CoreGui").Orion:GetDescendants()) do
+            pcall(function()
+            if v.Text == 'Select Macro' then
+                v.Parent.Parent:Destroy()
+            end
+            end)
+        end
+        MacroTab:AddDropdown({
+            Name = "Select Macro",
+            Default = _G.SettingsTable.selectedmacro,
+            Options = macrolist,
+            Callback = function(Value)
+                _G.SettingsTable.selectedmacro = Value
+                SaveSettings()
+            end
+            }) 
+    end
+})
 MacroTab:AddButton({
 	Name = "Delete Selected Macro",
 	Default = false,
@@ -1450,7 +1471,7 @@ MacroTab:AddButton({
 	    for i, v in pairs(macrolist) do
 	        if v == _G.SettingsTable.selectedmacro then
 	            table.remove(macrolist, i)
-	            delfile(OrionLib.Folder .. '/' .. _G.SettingsTable.selectedmacro .. '.json')
+	            delfile(macrofolder .. '/' .. _G.SettingsTable.selectedmacro)
 	        end
 	        SaveSettings()
 	    end
