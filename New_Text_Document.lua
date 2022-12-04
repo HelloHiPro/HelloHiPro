@@ -1165,7 +1165,7 @@ WhTab:AddToggle({
         repeat wait() until #game.Workspace.Camera:GetChildren() > 0
         wait(1)
 	    pcall(function()
-        plrlevel = game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("TextLabel").Text
+        plrlevel = game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame").TextLabel.Text
         end)
 	    dothethingy = http_request or request or HttpPost or syn.request
         dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
@@ -1177,9 +1177,6 @@ WhTab:AddToggle({
         ["content-type"] = "application/json"}})
         repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.Wave.Visible
         repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.Wave.Visible == false
-        pcall(function()
-            plrlevel = game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("TextLabel").Text
-        end)
         if game:GetService("Workspace").TowerHP.HP.Value > 0 then
 dothethingy = http_request or request or HttpPost or syn.request
 dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
