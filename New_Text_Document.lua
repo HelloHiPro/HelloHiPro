@@ -1162,7 +1162,7 @@ WhTab:AddToggle({
         if _G.SettingsTable.Webhook and game:GetService("ReplicatedStorage").Lobby.Value == false then
         coroutine.resume(coroutine.create(function()
         pcall(function()
-        repeat wait() until #game.Workspace.Camera:GetChildren() > 0
+        game.Workspace.Camera:WaitForChild(game.Players.LocalPlayer.Name)
         wait(1)
 	    pcall(function()
         plrlevel = game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame").TextLabel.Text
@@ -1905,7 +1905,7 @@ SettingsTab:AddToggle({
 	    if Value then
 	        coroutine.resume(coroutine.create(function()
 	                pcall(function()
-	                    repeat wait() until #game:GetService("Workspace"):WaitForChild("Camera"):GetChildren() > 0
+	                    game.Workspace.Camera:WaitForChild(game.Players.LocalPlayer.Name)
 	                    wait(1)
                         plrlevel = game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("TextLabel").Text
                         game:GetService("Workspace"):WaitForChild("Camera")[me.Name]:WaitForChild("Head"):WaitForChild("NameLevelBBGUI"):WaitForChild("LevelFrame"):WaitForChild("TextLabel"):Destroy()
