@@ -112,7 +112,6 @@ coroutine.resume(coroutine.create(function()
 if v.Parent.Parent.Parent.Name == 'Camera' then
 if v.Parent.Parent.Name ~= game.Players.LocalPlayer.Name then
 repeat wait() until game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text:sub(22) == '1' or _G.SettingsTable.autojoin == false
-print(FarmLeave2)
 repeat 
 wait(.1)
 remote:FireServer(FarmLeave2)
