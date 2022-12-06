@@ -52,6 +52,8 @@ local countunit = {}
 local plrlevel = ""
 function StringToCFrame(String) local Split = string.split(String, ",") return Split[1], Split[2], Split[3] end
 local idvalue = 0
+local FarmLeave = ""
+local FarmLeave2 = ""
 
 --Orion Stuff
 
@@ -88,6 +90,33 @@ game:GetService("Workspace").BasePart1.Touched:Connect(function()
 end)
 end)
 end
+
+pcall(function()
+game:GetService("Workspace").Queue.Joinables.Farm.Touched:Connect(function(v)
+if v.Parent.Parent.Parent.Name == 'Camera' then
+if v.Parent.Parent.Name ~= game.Players.LocalPlayer.Name then
+repeat wait() until game:GetService("Workspace").Queue.Joinables.Farm.SurfaceGui.TextLabel.Text:find(' 1') ~= nil
+repeat 
+wait(.1)
+remote:FireServer(FarmLeave)
+until game:GetService("Workspace").Queue.Joinables.Farm.SurfaceGui.TextLabel.Text:find('%d+', 22) == nil or _G.SettingsTable.autojoin == false
+end 
+end
+end)
+end)
+pcall(function()
+game:GetService("Workspace").Queue.Farm.Collisions.Part9.Touched:Connect(function(v)
+if v.Parent.Parent.Parent.Name == 'Camera' then
+if v.Parent.Parent.Name ~= game.Players.LocalPlayer.Name then
+repeat wait() until game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text:find(' 1') ~= nil
+repeat 
+wait(.1)
+remote:FireServer(FarmLeave2)
+until game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text:find('%d+', 22) == nil or _G.SettingsTable.autojoin == false
+end 
+end
+end)
+end)
 -- SaveSettings
 
 _G.SettingsTable = {
@@ -117,7 +146,8 @@ _G.SettingsTable = {
     setfpscap = false,
     timer = false,
     WhURL = "",
-    Webhook = false
+    Webhook = false,
+    leavevalue = false
 }
 
 function LoadSettings()
@@ -939,14 +969,12 @@ if _G.SettingsTable.mode == "Infinite Mode" then
     end)
     local a3 = pcall(function()
         if game:GetService("Workspace").Queue["Lobby World 2"] then
-            autojoincframe = "-316.5, 20007, -23426, 0, 0, 1, 0, 1, -0, -1, 0, 0"
-            autojoinpath = game:GetService("Workspace").Queue.Joinables.InfiniteMode.SurfaceGui.Frame.TextLabel.Text
+            autojoinpath = game:GetService("Workspace").Queue.Joinables.InfiniteMode
         end
     end)
     if a3 == false then
         pcall(function()
-            autojoincframe = "-188.03125, 1390.00732, 845.793701, 0.382687271, -0, -0.923877954, 0, 1, -0, 0.923877954, 0, 0.382687271"
-            autojoinpath = game:GetService("Workspace").Queue.Infinite.InfiniteMode.SurfaceGui.Frame.TextLabel.Text
+            autojoinpath = game:GetService("Workspace").Queue.Infinite.InfiniteMode
         end)
     end
 end
@@ -956,23 +984,23 @@ if _G.SettingsTable.mode == "Story Mode" then
         if game:GetService("Workspace").Queue["Lobby World 2"] then
             autojoinstart = "StoryModeStart"
             autojoinmode = "StoryModeLevel"
-            autojoincframe = "-2402.04199, 20009, -20313.877, 1, 0, 0, 0, 1, 0, 0, 0, 1"
-            autojoinpath = game:GetService("Workspace").Queue.Joinables.StoryMode.SurfaceGui.Frame.TextLabel.Text
+            autojoinpath = game:GetService("Workspace").Queue.Joinables.StoryMode
         end
     end)
     if a1 == false then
         autojoinstart = "Part1Start"
         autojoinmode = "Part1Level"
-        autojoincframe = "30.9335938, 1390.00732, 872.758545, 0.923881531, -0, -0.382678568, 0, 1, -0, 0.382678568, 0, 0.923881531"
-        autojoinpath = game:GetService("Workspace").Queue.Story.Part1.SurfaceGui.Frame.TextLabel.Text
+        autojoinpath = game:GetService("Workspace").Queue.Story.part1
     end
 end
 
 pcall(function()
+if _G.SettingsTable.mode ~= 'Orb Farm' then
 local Event = game:GetService("ReplicatedStorage").Remotes.Input
 while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
-    if autojoinpath == "Empty" then
-        Game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(StringToCFrame(autojoincframe))
+    if autojoinpath.SurfaceGui.Frame.TextLabel.Text == "Empty" then
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 0)
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 1)
         wait(1)
         repeat wait()
         Event:FireServer(autojoinmode, autojoinmap, false)
@@ -982,6 +1010,7 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
         until autojoinpath == "Empty"
         break
     end
+end
 end
 end)
 end))
@@ -1300,14 +1329,49 @@ LobbyTab:AddToggle({
 	Default = _G.SettingsTable.autojoin,
 	Callback = function(Value)
 	    _G.SettingsTable.autojoin = Value
+	    coroutine.resume(coroutine.create(function()
+        if _G.SettingsTable.mode == 'Orb Farm' and Value and game:GetService("ReplicatedStorage").Lobby.Value then
+            local a1 = pcall(function()
+            repeat wait()
+            if game:GetService("Workspace").Queue.Joinables.Farm.SurfaceGui.TextLabel.Text == 'Empty' or game:GetService("Workspace").Queue.Joinables.Farm.SurfaceGui.TextLabel.Text:find('%d+', 22) == nil then 
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Joinables.Farm, 0)
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Joinables.Farm, 1)
+            end
+            until _G.SettingsTable.autojoin == false
+            end)
+            if a1 == false then
+            repeat wait()
+            if game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text == 'Empty' or game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text:find('%d+', 22) == nil then 
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Farm.Collisions.Part9, 0)
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Farm.Collisions.Part9, 1)
+            end
+            until _G.SettingsTable.autojoin == false
+            end
+        end
+        end))
         autojoin()
-	end    
+	end
+})
+LobbyTab:AddToggle({
+	Name = "Leave orb farm if someone joins",
+	Default = _G.SettingsTable.leavevalue,
+	Callback = function(Value)
+	    _G.SettingsTable.leavevalue = Value
+	    SaveSettings()
+	    if Value then
+	        FarmLeave = "FarmLeave"
+	        FarmLeave2 = "Part9Leave"
+	    else
+	        FarmLeave = ""
+	        FarmLeave2 = ""
+	    end
+	end
 })
 
 LobbyTab:AddDropdown({
     Name = "Auto Join Mode",
     Default = _G.SettingsTable.mode,
-    Options = {"Story Mode", "Infinite Mode"},
+    Options = {"Story Mode", "Infinite Mode", 'Orb Farm'},
     Callback = function(Value)
         _G.SettingsTable.mode = Value
         SaveSettings()
