@@ -1007,7 +1007,7 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
         wait(.5)
         Event:FireServer(autojoinstart)
         wait(.5)
-        until autojoinpath == "Empty"
+        until autojoinpath.SurfaceGui.Frame.TextLabel.Text == "Empty"
         break
     end
 end
