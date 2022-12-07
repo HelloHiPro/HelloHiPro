@@ -1272,10 +1272,10 @@ LobbyTab:AddToggle({
 	_G.SettingsTable.forcetpdc = Value
     SaveSettings()
 	if _G.SettingsTable.forcetpdc then
-game.Players.PlayerRemoving:connect(function(plr)
-   if plr == game.Players.LocalPlayer then
-     game:GetService('TeleportService'):Teleport(game.PlaceId)
-   end
+local prompt = assert(game:GetService("CoreGui"):FindFirstChild("promptOverlay", true), "Lol it should work :/")
+assert(not prompt:FindFirstChild("ErrorPrompt"), prompt:FindFirstChild("ErrorPrompt") and wait(2) and game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer))
+prompt.ChildAdded:Connect(function(child)
+   assert(child, typeof(child) == "Instance" and child.Name == "ErrorPrompt" and child.ClassName == "Frame" and wait(2) and game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer))
 end)
 end
 end
