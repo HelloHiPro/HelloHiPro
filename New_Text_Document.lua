@@ -151,7 +151,8 @@ _G.SettingsTable = {
     timer = false,
     WhURL = "",
     Webhook = false,
-    leavevalue = false
+    leavevalue = false,
+    forcetp = false
 }
 
 function LoadSettings()
@@ -1507,6 +1508,23 @@ MacroTab:AddToggle({
     _G.SettingsTable.autoreplay = Value
     autoreplay()
     end
+})
+MacroTab:AddToggle({
+    Name = "Force tp lobby if replay tp fails",
+    Default = _G.SettingsTable.forcetp,
+    Callback = function(Value)
+_G.SettingsTable.forcetp = Value
+if _G.SettingsTable.forcetp then
+coroutine.resume(coroutine.create(function()
+game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MissionEndNavigateDialog"):WaitForChild("TextFrame"):WaitForChild("Replay")
+local x = 0
+repeat x = x + 1 wait(1) until x == 60 or _G.SettingsTable.forcetp == false
+if _G.SettingsTable.forcetp then
+game:GetService("TeleportService"):Teleport(4996049426, LocalPlayer)
+end
+end))
+end
+end
 })
 
 MacroTab:AddToggle({
