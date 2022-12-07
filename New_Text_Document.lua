@@ -1035,7 +1035,7 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
         local x = 0
         repeat wait(1) x = x + 1 until x == 60 or _G.SettingsTable.autojoin == false
         if _G.SettingsTable.autojoin then
-        game:GetService("TeleportService"):Teleport(4996049426, LocalPlayer)
+        game:GetService("TeleportService"):Teleport(game.PlaceId, LocalPlayer)
         end
         wait(1)
         break
@@ -1284,7 +1284,7 @@ LobbyTab:AddButton({
 	Default = false,
 	Callback = function(Value)
 	    pcall(function()
-        game:GetService("TeleportService"):Teleport(4996049426, LocalPlayer)
+        game:GetService("TeleportService"):Teleport(game.PlaceId, LocalPlayer)
         end)
 	end    
 })
@@ -1389,7 +1389,7 @@ LobbyTab:AddToggle({
                     local x = 0
                     repeat wait(1) x = x + 1 until x == 30 or _G.SettingsTable.autojoin == false
                     if _G.SettingsTable.autojoin then
-                        game:GetService("TeleportService"):Teleport(4996049426, LocalPlayer)
+                        game:GetService("TeleportService"):Teleport(game.PlaceId, LocalPlayer)
                     end
                 end
             end
@@ -1409,7 +1409,7 @@ LobbyTab:AddToggle({
                     local x = 0
                     repeat wait(1) x = x + 1 until x == 30 or _G.SettingsTable.autojoin == false
                     if _G.SettingsTable.autojoin then
-                        game:GetService("TeleportService"):Teleport(4996049426, LocalPlayer)
+                        game:GetService("TeleportService"):Teleport(game.PlaceId, LocalPlayer)
                     end
                 end
             end
@@ -1585,7 +1585,7 @@ game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MissionEndNavigat
 local x = 0
 repeat x = x + 1 wait(1) until x == 60 or _G.SettingsTable.forcetp == false
 if _G.SettingsTable.forcetp then
-game:GetService("TeleportService"):Teleport(4996049426, LocalPlayer)
+game:GetService("TeleportService"):Teleport(game.PlaceId, LocalPlayer)
 end
 end))
 end
