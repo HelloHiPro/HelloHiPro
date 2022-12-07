@@ -54,15 +54,6 @@ function StringToCFrame(String) local Split = string.split(String, ",") return S
 local idvalue = 0
 local FarmLeave = ""
 local FarmLeave2 = ""
-local vu = game:GetService("VirtualUser")
-
---Anti-AFK
-
-game:GetService("Players").LocalPlayer.Idled:connect(function()
-   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-   wait(1)
-   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-end)
 
 --Orion Stuff
 
@@ -161,7 +152,9 @@ _G.SettingsTable = {
     WhURL = "",
     Webhook = false,
     leavevalue = false,
-    forcetp = false
+    forcetp = false,
+    forcetpdcid = false,
+    forcetpdc = false
 }
 
 function LoadSettings()
@@ -1248,6 +1241,20 @@ end
 
 
 --LobbyTab
+LobbyTab:AddToggle({
+	Name = "Force Lobby TP if dc or kick",
+	Default = _G.SettingsTable.forcetpdc,
+	Callback = function(Value)
+	_G.SettingsTable.forcetpdc = Value
+	if _G.SettingsTable.forcetpdc then
+game.Players.PlayerRemoving:connect(function(plr)
+   if plr == game.Players.LocalPlayer then
+     game:GetService('TeleportService'):Teleport(game.PlaceId)
+   end
+end)
+end
+end
+})
 
 LobbyTab:AddButton({
 	Name = "Force Lobby TP",
