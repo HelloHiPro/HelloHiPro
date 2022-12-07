@@ -169,7 +169,8 @@ _G.SettingsTable = {
     leavevalue = false,
     forcetp = false,
     forcetpdcid = false,
-    forcetpdc = false
+    forcetpdc = false,
+    forcetpw2 = false
 }
 
 function LoadSettings()
@@ -1269,6 +1270,7 @@ LobbyTab:AddToggle({
 	Default = _G.SettingsTable.forcetpdc,
 	Callback = function(Value)
 	_G.SettingsTable.forcetpdc = Value
+    SaveSettings()
 	if _G.SettingsTable.forcetpdc then
 game.Players.PlayerRemoving:connect(function(plr)
    if plr == game.Players.LocalPlayer then
@@ -1277,6 +1279,22 @@ game.Players.PlayerRemoving:connect(function(plr)
 end)
 end
 end
+})
+
+LobbyTab:AddToggle({
+	Name = "Auto Force Lobby TP W2",
+	Default = _G.SettingsTable.forcetpw2,
+	Callback = function(Value)
+        _G.SettingsTable.forcetpw2 = Value
+        SaveSettings()
+
+        if _G.SettingsTable.forcetpw2 then
+            pcall(function()
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World2.World2, 0)
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World2.World2, 1)
+            end)
+        end
+	end    
 })
 
 LobbyTab:AddButton({
@@ -1579,6 +1597,7 @@ MacroTab:AddToggle({
     Default = _G.SettingsTable.forcetp,
     Callback = function(Value)
 _G.SettingsTable.forcetp = Value
+SaveSettings()
 if _G.SettingsTable.forcetp then
 coroutine.resume(coroutine.create(function()
 game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MissionEndNavigateDialog"):WaitForChild("TextFrame"):WaitForChild("Replay")
