@@ -1272,10 +1272,23 @@ LobbyTab:AddToggle({
 	_G.SettingsTable.forcetpdc = Value
     SaveSettings()
 	if _G.SettingsTable.forcetpdc then
-local prompt = assert(game:GetService("CoreGui"):FindFirstChild("promptOverlay", true), "Lol it should work :/")
-assert(not prompt:FindFirstChild("ErrorPrompt"), prompt:FindFirstChild("ErrorPrompt") and wait(2) and game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer))
-prompt.ChildAdded:Connect(function(child)
-   assert(child, typeof(child) == "Instance" and child.Name == "ErrorPrompt" and child.ClassName == "Frame" and wait(2) and game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer))
+game.CoreGui.RobloxPromptGui.promptOverlay.DescendantAdded:Connect(function()
+    local GUI = game.CoreGui.RobloxPromptGui.promptOverlay:FindFirstChild("ErrorPrompt")
+    if GUI then
+        if GUI.TitleFrame.ErrorTitle.Text == "Disconnected" then
+            if #game.Players:GetPlayers() <= 1 then
+                game.Players.LocalPlayer:Kick("\nRejoining...")
+                wait()
+                repeat wait()
+                game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+            	until false
+            else
+            	repeat wait()
+                game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer)
+            	until false
+            end
+        end
+    end
 end)
 end
 end
