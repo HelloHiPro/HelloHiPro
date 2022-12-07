@@ -54,6 +54,15 @@ function StringToCFrame(String) local Split = string.split(String, ",") return S
 local idvalue = 0
 local FarmLeave = ""
 local FarmLeave2 = ""
+local vu = game:GetService("VirtualUser")
+
+--Anti-AFK
+
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
 
 --Orion Stuff
 
