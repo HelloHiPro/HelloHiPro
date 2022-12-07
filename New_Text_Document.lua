@@ -54,6 +54,7 @@ function StringToCFrame(String) local Split = string.split(String, ",") return S
 local idvalue = 0
 local FarmLeave = ""
 local FarmLeave2 = ""
+local checkorbfarm = false
 
 --Anti-AFK
 local vu = game:GetService("VirtualUser")
@@ -104,11 +105,14 @@ game:GetService("Workspace").Queue.Joinables.Farm.Touched:Connect(function(v)
 coroutine.resume(coroutine.create(function()
 if v.Parent.Parent.Parent.Name == 'Camera' then
 if v.Parent.Parent.Name ~= game.Players.LocalPlayer.Name then
+if checkorbfarm then
+checkorbfarm = false
 repeat wait() until game:GetService("Workspace").Queue.Joinables.Farm.SurfaceGui.TextLabel.Text:sub(22) == '1' or _G.SettingsTable.autojoin == false
 repeat 
 wait(.1)
 remote:FireServer(FarmLeave)
 until game:GetService("Workspace").Queue.Joinables.Farm.SurfaceGui.TextLabel.Text:find('%d+', 22) == nil or _G.SettingsTable.autojoin == false
+end
 end 
 end
 end))
@@ -119,12 +123,15 @@ game:GetService("Workspace").Queue.Farm.Collisions.Part9.Touched:Connect(functio
 coroutine.resume(coroutine.create(function()
 if v.Parent.Parent.Parent.Name == 'Camera' then
 if v.Parent.Parent.Name ~= game.Players.LocalPlayer.Name then
+if checkorbfarm then
+checkorbfarm = false
 repeat wait() until game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text:sub(22) == '1' or _G.SettingsTable.autojoin == false
 repeat 
 wait(.1)
 remote:FireServer(FarmLeave2)
 until game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text:find('%d+', 22) == nil or _G.SettingsTable.autojoin == false
 end 
+end
 end
 end))
 end)
@@ -1017,12 +1024,20 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 0)
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 1)
         wait(1)
+        coroutine.resume(coroutine.create(function()
         repeat wait()
         Event:FireServer(autojoinmode, autojoinmap, false)
         wait(.5)
         Event:FireServer(autojoinstart)
         wait(.5)
-        until autojoinpath.SurfaceGui.Frame.TextLabel.Text == "Empty"
+        until _G.SettingsTable.autojoin == false
+        end))
+        local x = 0
+        repeat wait(1) x = x + 1 until x == 60 or _G.SettingsTable.autojoin == false
+        if _G.SettingsTable.autojoin then
+        game:GetService("TeleportService"):Teleport(4996049426, LocalPlayer)
+        end
+        wait(1)
         break
     end
 end
@@ -1363,19 +1378,45 @@ LobbyTab:AddToggle({
             local a1 = pcall(function()
             repeat wait()
             if game:GetService("Workspace").Queue.Joinables.Farm.SurfaceGui.TextLabel.Text == 'Empty' or game:GetService("Workspace").Queue.Joinables.Farm.SurfaceGui.TextLabel.Text:find('%d+', 22) == nil then 
+                wait(5)
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Joinables.Farm, 0)
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Joinables.Farm, 1)
+                checkorbfarm = true
+            end
+            if checkorbfarm then
+                repeat wait() until game:GetService("Workspace").Queue.Joinables.Farm.SurfaceGui.TextLabel.Text:sub(22) == '1' or _G.SettingsTable.autojoin == false or checkorbfarm == false
+                if checkorbfarm and _G.SettingsTable.autojoin then
+                    local x = 0
+                    repeat wait(1) x = x + 1 until x == 30 or _G.SettingsTable.autojoin == false
+                    if _G.SettingsTable.autojoin then
+                        game:GetService("TeleportService"):Teleport(4996049426, LocalPlayer)
+                    end
+                end
             end
             until _G.SettingsTable.autojoin == false
             end)
             if a1 == false then
             repeat wait()
             if game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text == 'Empty' or game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text:find('%d+', 22) == nil then 
+                wait(5)
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Farm.Collisions.Part9, 0)
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Farm.Collisions.Part9, 1)
+                checkorbfarm = true
+            end
+            if checkorbfarm then
+                repeat wait() until game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text:sub(22) == '1' or _G.SettingsTable.autojoin == false or checkorbfarm == false
+                if checkorbfarm and _G.SettingsTable.autojoin then
+                    local x = 0
+                    repeat wait(1) x = x + 1 until x == 30 or _G.SettingsTable.autojoin == false
+                    if _G.SettingsTable.autojoin then
+                        game:GetService("TeleportService"):Teleport(4996049426, LocalPlayer)
+                    end
+                end
             end
             until _G.SettingsTable.autojoin == false
             end
+        else
+        checkorbfarm = false
         end
         end))
         autojoin()
