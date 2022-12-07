@@ -1034,9 +1034,11 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
         until _G.SettingsTable.autojoin == false
         end))
         local x = 0
+        if _G.SettingsTable.autojoin and autojoinpath.SurfaceGui.Frame.TextLabel.Text ~= "Empty" then
         repeat wait(1) x = x + 1 until x == 60 or _G.SettingsTable.autojoin == false
         if _G.SettingsTable.autojoin then
         game:GetService("TeleportService"):Teleport(game.PlaceId, LocalPlayer)
+        end
         end
         wait(1)
         break
