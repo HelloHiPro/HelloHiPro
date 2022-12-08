@@ -1281,13 +1281,11 @@ game.CoreGui.RobloxPromptGui.promptOverlay.DescendantAdded:Connect(function()
     if GUI then
         if GUI.TitleFrame.ErrorTitle.Text == "Disconnected" then
             if x == 0 then
+	    x = x + 1
             repeat wait() until game.CoreGui.RobloxPromptGui.promptOverlay.ErrorPrompt:WaitForChild('MessageArea'):WaitForChild('ErrorFrame'):WaitForChild('ErrorMessage').Text ~= 'Label'
 	    _G.SettingsTable.messageerror = game.CoreGui.RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage.Text
             SaveSettings()
-            end
-            if x == 0 then
             local queue_on_teleport = queue_on_teleport or syn and syn.queue_on_teleport [[loadstring(game:HttpGet('https://raw.githubusercontent.com/948265/ax/main/dcwh.lua'))()]]
-            end
             x = x + 1
             if #game.Players:GetPlayers() <= 1 then
                 game.Players.LocalPlayer:Kick("\nRejoining...")
@@ -1300,6 +1298,7 @@ game.CoreGui.RobloxPromptGui.promptOverlay.DescendantAdded:Connect(function()
                 game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer)
             	until false
             end
+	  end
         end
     end
 end)
