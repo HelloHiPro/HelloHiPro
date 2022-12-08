@@ -1281,7 +1281,8 @@ game.CoreGui.RobloxPromptGui.promptOverlay.DescendantAdded:Connect(function()
     if GUI then
         if GUI.TitleFrame.ErrorTitle.Text == "Disconnected" then
             if x == 0 then
-            _G.SettingsTable.messageerror = game.CoreGui.RobloxPromptGui.promptOverlay.ErrorPrompt:WaitForChild('MessageArea'):WaitForChild('ErrorFrame'):WaitForChild('ErrorMessage').Text
+            repeat wait() until game.CoreGui.RobloxPromptGui.promptOverlay.ErrorPrompt:WaitForChild('MessageArea'):WaitForChild('ErrorFrame'):WaitForChild('ErrorMessage').Text ~= 'Label'
+	    _G.SettingsTable.messageerror = game.CoreGui.RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage.Text
             SaveSettings()
             end
             if x == 0 then
