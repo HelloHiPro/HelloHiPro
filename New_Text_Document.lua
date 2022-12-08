@@ -170,7 +170,8 @@ _G.SettingsTable = {
     forcetp = false,
     forcetpdcid = false,
     forcetpdc = false,
-    forcetpw2 = false
+    forcetpw2 = false,
+    messageerror = ""
 }
 
 function LoadSettings()
@@ -1274,10 +1275,19 @@ LobbyTab:AddToggle({
 	_G.SettingsTable.forcetpdc = Value
     SaveSettings()
 	if _G.SettingsTable.forcetpdc then
+	    local x = 0
 game.CoreGui.RobloxPromptGui.promptOverlay.DescendantAdded:Connect(function()
     local GUI = game.CoreGui.RobloxPromptGui.promptOverlay:FindFirstChild("ErrorPrompt")
     if GUI then
         if GUI.TitleFrame.ErrorTitle.Text == "Disconnected" then
+            if x == 0 then
+            _G.SettingsTable.messageerror = game.CoreGui.RobloxPromptGui.promptOverlay.ErrorPrompt:WaitForChild('MessageArea'):WaitForChild('ErrorFrame'):WaitForChild('ErrorMessage').Text
+            SaveSettings()
+            end
+            if x == 0 then
+            local queue_on_teleport = queue_on_teleport or syn and syn.queue_on_teleport [[loadstring(game:HttpGet('https://raw.githubusercontent.com/948265/ax/main/dcwh.lua'))()]]
+            end
+            x = x + 1
             if #game.Players:GetPlayers() <= 1 then
                 game.Players.LocalPlayer:Kick("\nRejoining...")
                 wait()
