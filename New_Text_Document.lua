@@ -1014,7 +1014,7 @@ if _G.SettingsTable.mode == "Story Mode" then
     if a1 == false then
         autojoinstart = "Part1Start"
         autojoinmode = "Part1Level"
-        autojoinpath = game:GetService("Workspace").Queue.Story.part1
+        autojoinpath = game:GetService("Workspace").Queue.Story.Part1
     end
 end
 
