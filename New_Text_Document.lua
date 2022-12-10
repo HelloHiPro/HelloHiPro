@@ -171,7 +171,8 @@ _G.SettingsTable = {
     forcetpdcid = false,
     forcetpdc = false,
     forcetpw2 = false,
-    messageerror = ""
+    messageerror = "",
+    tctoggle = false
 }
 
 function LoadSettings()
@@ -1026,6 +1027,12 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 0)
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 1)
         wait(1)
+        pcall(function()
+            if _G.SettingsTable.tctoggle and game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification:WaitForChild('NotificationTemplate').Label.Text == 'Your inventory is full' then
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 0)
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
+            end
+        end)
         coroutine.resume(coroutine.create(function()
         repeat wait()
         Event:FireServer(autojoinmode, autojoinmap, false)
@@ -1425,6 +1432,13 @@ LobbyTab:AddToggle({
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Joinables.Farm, 0)
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Joinables.Farm, 1)
                 checkorbfarm = true
+                wait(1)
+                pcall(function()
+                    if _G.SettingsTable.tctoggle and game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification:WaitForChild('NotificationTemplate').Label.Text == 'Your inventory is full' then
+                       firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 0)
+                       firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
+                    end
+                end)
             end
             if checkorbfarm then
                 repeat wait() until game:GetService("Workspace").Queue.Joinables.Farm.SurfaceGui.TextLabel.Text:sub(22) == '1' or _G.SettingsTable.autojoin == false or checkorbfarm == false
@@ -1445,6 +1459,13 @@ LobbyTab:AddToggle({
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Farm.Collisions.Part9, 0)
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Farm.Collisions.Part9, 1)
                 checkorbfarm = true
+                wait(1)
+                pcall(function()
+                    if _G.SettingsTable.tctoggle and game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification:WaitForChild('NotificationTemplate').Label.Text == 'Your inventory is full' then
+                       firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 0)
+                       firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
+                    end
+                end)
             end
             if checkorbfarm then
                 repeat wait() until game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text:sub(22) == '1' or _G.SettingsTable.autojoin == false or checkorbfarm == false
@@ -1465,6 +1486,16 @@ LobbyTab:AddToggle({
         autojoin()
 	end
 })
+
+LobbyTab:AddToggle({
+	Name = "Join time chamber if inv is full",
+	Default = _G.SettingsTable.tctoggle,
+	Callback = function(Value)
+	    _G.SettingsTable.tctoggle = Value
+	    SaveSettings()
+	end
+})
+
 LobbyTab:AddToggle({
 	Name = "Leave orb farm if someone joins",
 	Default = _G.SettingsTable.leavevalue,
