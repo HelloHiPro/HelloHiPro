@@ -1445,6 +1445,7 @@ LobbyTab:AddToggle({
                 wait(1)
                 pcall(function()
                     if _G.SettingsTable.tctoggle and game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification.NotificationTemplate.Label.Text == 'Your inventory is full' then
+                        pcall(function()
                         dothethingy = http_request or request or HttpPost or syn.request
                         dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
                         ["embeds"] = {{["title"] = "**Full Inv**",
@@ -1453,6 +1454,7 @@ LobbyTab:AddToggle({
                         ["color"] = tonumber(0x7269da)}}}), 
                         Method = "POST", Headers = {
                         ["content-type"] = "application/json"}})
+                        end)
                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 0)
                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
                     end
@@ -1480,6 +1482,7 @@ LobbyTab:AddToggle({
                 wait(1)
                 pcall(function()
                     if _G.SettingsTable.tctoggle and game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification.NotificationTemplate.Label.Text == 'Your inventory is full' then
+                        pcall(function()
                         dothethingy = http_request or request or HttpPost or syn.request
                         dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
                         ["embeds"] = {{["title"] = "**Full Inv**",
@@ -1488,6 +1491,7 @@ LobbyTab:AddToggle({
                         ["color"] = tonumber(0x7269da)}}}), 
                         Method = "POST", Headers = {
                         ["content-type"] = "application/json"}})
+                        end)
                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 0)
                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
                     end
