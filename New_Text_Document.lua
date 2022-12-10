@@ -1028,7 +1028,7 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 1)
         wait(1)
         pcall(function()
-            if _G.SettingsTable.tctoggle and game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification:WaitForChild('NotificationTemplate').Label.Text == 'Your inventory is full' then
+            if _G.SettingsTable.tctoggle and game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification.NotificationTemplate.Label.Text == 'Your inventory is full' then
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 0)
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
             end
@@ -1434,7 +1434,7 @@ LobbyTab:AddToggle({
                 checkorbfarm = true
                 wait(1)
                 pcall(function()
-                    if _G.SettingsTable.tctoggle and game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification:WaitForChild('NotificationTemplate').Label.Text == 'Your inventory is full' then
+                    if _G.SettingsTable.tctoggle and game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification.NotificationTemplate.Label.Text == 'Your inventory is full' then
                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 0)
                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
                     end
@@ -1461,7 +1461,7 @@ LobbyTab:AddToggle({
                 checkorbfarm = true
                 wait(1)
                 pcall(function()
-                    if _G.SettingsTable.tctoggle and game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification:WaitForChild('NotificationTemplate').Label.Text == 'Your inventory is full' then
+                    if _G.SettingsTable.tctoggle and game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification.NotificationTemplate.Label.Text == 'Your inventory is full' then
                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 0)
                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
                     end
