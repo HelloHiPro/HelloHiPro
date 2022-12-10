@@ -1021,14 +1021,38 @@ end
 
 pcall(function()
 if _G.SettingsTable.mode ~= 'Orb Farm' then
+local maxinv = false
 local Event = game:GetService("ReplicatedStorage").Remotes.Input
 while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
     if autojoinpath.SurfaceGui.Frame.TextLabel.Text == "Empty" then
+        local x = 0
+        repeat wait()
+        if maxinv == false then
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 0)
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 1)
+        end
         wait(1)
         pcall(function()
-            if _G.SettingsTable.tctoggle and game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification.NotificationTemplate.Label.Text == 'Your inventory is full' then
+        if game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification.NotificationTemplate.Label.Text == 'Your inventory is full' then
+            maxinv = true
+        end
+        end)
+        if _G.SettingsTable.tctoggle == false and maxinv then
+            pcall(function()
+            dothethingy = http_request or request or HttpPost or syn.request
+                dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
+                ["embeds"] = {{["title"] = "**Full Inv**",
+                ["description"] = "",
+                ["type"] = "rich",
+                ["color"] = tonumber(0x7269da)}}}), 
+                Method = "POST", Headers = {
+                ["content-type"] = "application/json"}})
+            end)
+            break
+        end
+        pcall(function()
+            if _G.SettingsTable.tctoggle and maxinv then
+                if x == 0 then
                 pcall(function()
                 dothethingy = http_request or request or HttpPost or syn.request
                 dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
@@ -1039,10 +1063,14 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
                 Method = "POST", Headers = {
                 ["content-type"] = "application/json"}})
                 end)
+                end
+                x = x + 1
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 0)
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
             end
         end)
+        until autojoinpath.SurfaceGui.Frame.TextLabel.Text ~= "Empty" or _G.SettingsTable.autojoin == false
+        if maxinv == false then
         coroutine.resume(coroutine.create(function()
         repeat wait()
         Event:FireServer(autojoinmode, autojoinmap, false)
@@ -1056,6 +1084,7 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
         repeat wait(1) x = x + 1 until x == 60 or _G.SettingsTable.autojoin == false
         if _G.SettingsTable.autojoin then
         game:GetService("TeleportService"):Teleport(game.PlaceId, LocalPlayer)
+        end
         end
         end
         wait(1)
@@ -1435,16 +1464,36 @@ LobbyTab:AddToggle({
 	    _G.SettingsTable.autojoin = Value
 	    coroutine.resume(coroutine.create(function()
         if _G.SettingsTable.mode == 'Orb Farm' and Value and game:GetService("ReplicatedStorage").Lobby.Value then
+            local x = 0
+            local maxinv = false
             local a1 = pcall(function()
             repeat wait()
-            if game:GetService("Workspace").Queue.Joinables.Farm.SurfaceGui.TextLabel.Text == 'Empty' or game:GetService("Workspace").Queue.Joinables.Farm.SurfaceGui.TextLabel.Text:find('%d+', 22) == nil then 
+            if maxinv == false and game:GetService("Workspace").Queue.Joinables.Farm.SurfaceGui.TextLabel.Text == 'Empty' or game:GetService("Workspace").Queue.Joinables.Farm.SurfaceGui.TextLabel.Text:find('%d+', 22) == nil then 
                 wait(5)
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Joinables.Farm, 0)
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Joinables.Farm, 1)
                 checkorbfarm = true
                 wait(1)
                 pcall(function()
-                    if _G.SettingsTable.tctoggle and game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification.NotificationTemplate.Label.Text == 'Your inventory is full' then
+                    if game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification.NotificationTemplate.Label.Text == 'Your inventory is full' then
+                        maxinv = true
+                    end
+                end)
+                if _G.SettingsTable.tctoggle == false and maxinv then
+                    pcall(function()
+                        dothethingy = http_request or request or HttpPost or syn.request
+                        dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
+                        ["embeds"] = {{["title"] = "**Full Inv**",
+                        ["description"] = "",
+                        ["type"] = "rich",
+                        ["color"] = tonumber(0x7269da)}}}), 
+                        Method = "POST", Headers = {
+                        ["content-type"] = "application/json"}})
+                    end)
+                end
+                pcall(function()
+                    if _G.SettingsTable.tctoggle and maxinv then
+                        if x == 0 then
                         pcall(function()
                         dothethingy = http_request or request or HttpPost or syn.request
                         dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
@@ -1455,6 +1504,8 @@ LobbyTab:AddToggle({
                         Method = "POST", Headers = {
                         ["content-type"] = "application/json"}})
                         end)
+                        end
+                        x = x + 1
                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 0)
                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
                     end
@@ -1474,14 +1525,32 @@ LobbyTab:AddToggle({
             end)
             if a1 == false then
             repeat wait()
-            if game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text == 'Empty' or game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text:find('%d+', 22) == nil then 
+            if maxinv == false and game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text == 'Empty' or game:GetService("Workspace").Queue.Farm.Collisions.Part9.SurfaceGui.TextLabel.Text:find('%d+', 22) == nil then 
                 wait(5)
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Farm.Collisions.Part9, 0)
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Farm.Collisions.Part9, 1)
                 checkorbfarm = true
                 wait(1)
                 pcall(function()
-                    if _G.SettingsTable.tctoggle and game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification.NotificationTemplate.Label.Text == 'Your inventory is full' then
+                    if game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification.NotificationTemplate.Label.Text == 'Your inventory is full' then
+                        maxinv = true
+                    end
+                end)
+                if _G.SettingsTable.tctoggle == false and maxinv then
+                    pcall(function()
+                        dothethingy = http_request or request or HttpPost or syn.request
+                        dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
+                        ["embeds"] = {{["title"] = "**Full Inv**",
+                        ["description"] = "",
+                        ["type"] = "rich",
+                        ["color"] = tonumber(0x7269da)}}}), 
+                        Method = "POST", Headers = {
+                        ["content-type"] = "application/json"}})
+                    end)
+                end
+                pcall(function()
+                    if _G.SettingsTable.tctoggle and maxinv then
+                        if x == 0 then
                         pcall(function()
                         dothethingy = http_request or request or HttpPost or syn.request
                         dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
@@ -1492,6 +1561,8 @@ LobbyTab:AddToggle({
                         Method = "POST", Headers = {
                         ["content-type"] = "application/json"}})
                         end)
+                        end
+                        x = x + 1
                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 0)
                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
                     end
