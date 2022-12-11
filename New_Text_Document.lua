@@ -1,4 +1,40 @@
 repeat wait() until game:IsLoaded()
+local tcvalue = false
+coroutine.resume(coroutine.create(function()
+    repeat wait()
+    pcall(function()
+    if game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.Frame.CLAIM.Parent.Visible == true then
+    pcall(function()
+    stfile = game:GetService("HttpService"):JSONDecode(readfile("Bobsettings" .. game.Players.LocalPlayer.Name .. ".txt"))
+    end)
+    if stfile.autojoin then
+    tcvalue = true
+    local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+    local Window = OrionLib:MakeWindow({IntroText = "BOB HUB",Name = "Bob Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionStar"})
+    local tcTab = Window:MakeTab({
+        Name = "Time Chamber",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    })
+    tcTab:AddToggle({
+        Name = "Auto Join TC",
+        Default = stfile['autojoin'],
+        Callback = function(Value)
+            if Value then
+                stfile['autojoin'] = true
+            else
+                stfile['autojoin'] = false
+            end
+            json = game:GetService("HttpService"):JSONEncode(stfile)
+            writefile("Bobsettings" .. game.Players.LocalPlayer.Name .. ".txt", json)
+        end    
+    })
+    end
+	end
+    end)
+    wait(1)
+    until tcvalue
+    end))
 --Macro timer
 local timer = 0
 local checkplayback = false
@@ -195,7 +231,6 @@ function SaveSettings()
         writefile(file_settings, json)
     end
 end
-
 --Macro ChildAdded
 
 pcall(function()
@@ -1020,7 +1055,7 @@ if _G.SettingsTable.mode == "Story Mode" then
 end
 
 pcall(function()
-if _G.SettingsTable.mode ~= 'Orb Farm' then
+if _G.SettingsTable.mode ~= 'Orb Farm' and _G.SettingsTable.mode ~= 'Time Chamber' then
 local maxinv = false
 local Event = game:GetService("ReplicatedStorage").Remotes.Input
 while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
@@ -1463,7 +1498,16 @@ LobbyTab:AddToggle({
 	Callback = function(Value)
 	    _G.SettingsTable.autojoin = Value
 	    coroutine.resume(coroutine.create(function()
-        if _G.SettingsTable.mode == 'Orb Farm' and Value and game:GetService("ReplicatedStorage").Lobby.Value then
+            if _G.SettingsTable.mode == 'Time Chamber' and Value and game:GetService("ReplicatedStorage").Lobby.Value then
+                repeat task.wait()
+                    pcall(function()
+                       firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 0)
+                       firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
+                    end)
+                    task.wait(.5)
+                until Value == false
+            end
+            if _G.SettingsTable.mode == 'Orb Farm' and Value and game:GetService("ReplicatedStorage").Lobby.Value then
             local x = 0
             local maxinv = false
             local a1 = pcall(function()
@@ -1616,7 +1660,7 @@ LobbyTab:AddToggle({
 LobbyTab:AddDropdown({
     Name = "Auto Join Mode",
     Default = _G.SettingsTable.mode,
-    Options = {"Story Mode", "Infinite Mode", 'Orb Farm'},
+    Options = {"Story Mode", "Infinite Mode", 'Orb Farm', 'Time Chamber'},
     Callback = function(Value)
         _G.SettingsTable.mode = Value
         SaveSettings()
