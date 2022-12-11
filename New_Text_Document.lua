@@ -2150,7 +2150,7 @@ AbilityTab:AddToggle({
             repeat wait() until #game.Workspace.Enemies:GetChildren() > 0
             local tsvalue = false
             coroutine.resume(coroutine.create(function()
-                local a1 = pcall(function()
+                
                 repeat wait()
 local a1 = pcall(function()
                 if pathnumber[1]:FindFirstChild("Status_Effect_Freeze") then
