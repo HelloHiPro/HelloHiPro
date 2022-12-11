@@ -2152,13 +2152,14 @@ AbilityTab:AddToggle({
             coroutine.resume(coroutine.create(function()
                 local a1 = pcall(function()
                 repeat wait()
-                local test = game:GetService("Workspace").Enemies["Test Dummy"]["Status_Effect_Freeze"]
+local a1 = pcall(function()
+                if pathnumber[1]:FindFirstChild("Status_Effect_Freeze") then
                 tsvalue = false
-                until false
-                end)
-                if a1 == false then
-                    tsvalue = true
-                end
+                else tsvalue = true end
+end)
+                until _G.SettingsTable.autotswave == false
+            
+                
             end))
             repeat
             Event:FireServer('Summon', {
@@ -2177,7 +2178,7 @@ AbilityTab:AddToggle({
             repeat wait() until tsvalue
                 repeat wait()
                 Event:FireServer('UseSpecialMove', autotstable[1])
-                until autotstable[1]:WaitForChild('SpecialMove').Special_Enabled2.Value
+                until tsvalue == false
                 pcall(function()
                     repeat wait()
                         Event:FireServer('Sell', autotstable[1])
