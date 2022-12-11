@@ -2145,7 +2145,7 @@ AbilityTab:AddToggle({
             until _G.SettingsTable.autots == false
             end))
             repeat wait() until #game.Workspace.Enemies:GetChildren() > 0 and tostring(game:GetService("ReplicatedStorage").WaveValue.Value) >= _G.SettingsTable.autotswave or _G.SettingsTable.autots == false
-            wait(2.5)
+            wait(2)
             while _G.SettingsTable.autots do
             repeat wait() until #game.Workspace.Enemies:GetChildren() > 0
             local tsvalue = false
@@ -2160,13 +2160,13 @@ AbilityTab:AddToggle({
                     tsvalue = true
                 end
             end))
-            repeat wait()
+            repeat
             Event:FireServer('Summon', {
                 ["Rotation"] = 0, 
                 ["cframe"] = game.Workspace.SummonBox.CFrame * CFrame.new(math.random(-game.Workspace.SummonBox.Size.X/2, game.Workspace.SummonBox.Size.X/2),math.random(-game.Workspace.SummonBox.Size.Y/2, game.Workspace.SummonBox.Size.Y/2),math.random(-game.Workspace.SummonBox.Size.Z/2, game.Workspace.SummonBox.Size.Z/2)), 
                 ["Unit"] = "Six Eyes Gojo"
             })
-            wait()
+            wait(1)
             until gojoplaced or _G.SettingsTable.autots == false
             gojoplaced = false
             repeat wait()
@@ -2177,7 +2177,7 @@ AbilityTab:AddToggle({
             repeat wait() until tsvalue
                 repeat wait()
                 Event:FireServer('UseSpecialMove', autotstable[1])
-                until autotstable[1].SpecialMove.Special_Enabled2.Value
+                until autotstable[1]:WaitForChild('SpecialMove').Special_Enabled2.Value
                 pcall(function()
                     repeat wait()
                         Event:FireServer('Sell', autotstable[1])
