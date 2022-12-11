@@ -91,6 +91,8 @@ local idvalue = 0
 local FarmLeave = ""
 local FarmLeave2 = ""
 local checkorbfarm = false
+local autotstable = {}
+local gojoplaced = false
 
 --Anti-AFK
 local vu = game:GetService("VirtualUser")
@@ -172,6 +174,15 @@ end
 end))
 end)
 end)
+
+summonpart = Instance.new('Part')
+summonpart.Name = 'SummonBox'
+summonpart.Parent = game.Workspace
+summonpart.Transparency = 1
+summonpart.Size = Vector3.new(15, 0, 15)
+summonpart.CanCollide = false
+summonpart.Anchored = true
+
 -- SaveSettings
 
 _G.SettingsTable = {
@@ -208,7 +219,9 @@ _G.SettingsTable = {
     forcetpdc = false,
     forcetpw2 = false,
     messageerror = "",
-    tctoggle = false
+    tctoggle = false,
+    autotswave = "",
+    autots = false
 }
 
 function LoadSettings()
@@ -260,6 +273,13 @@ id.Parent = child
 id.Name = 'ID'
 id.Value = idvalue
 end
+end
+if _G.SettingsTable.autots then
+    if child.Name == 'Six Eyes Gojo' then
+        table.clear(autotstable)
+        table.insert(autotstable, child)
+        gojoplaced = true
+    end
 end
 end
 end)
@@ -2075,6 +2095,111 @@ UpgradeTab:AddSection({
 })
 
 --AbilityTab
+
+AbilityTab:AddToggle({
+	Name = "Auto TS",
+	Default = _G.SettingsTable.autots,
+	Callback = function(Value)
+        _G.SettingsTable.autots = Value
+        SaveSettings()
+        coroutine.resume(coroutine.create(function()
+        if _G.SettingsTable.autots and _G.SettingsTable.autotswave ~= "" and game:GetService("ReplicatedStorage").Lobby.Value == false then
+            local Event1 = game:GetService("ReplicatedStorage").Remotes.Server
+            local Event = game:GetService("ReplicatedStorage").Remotes.Input
+            local upgrade = "Upgrade"
+            local skill = "UseSpecialMove"
+            local sell = "Sell"
+            local gojo = {}
+            wait()
+            local pathnumber = {}
+            coroutine.resume(coroutine.create(function()
+            repeat wait()
+            for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
+            if #pathnumber ~= 0 then
+            local success = 
+            pcall(function()
+            if v:WaitForChild("PathNumber").Value > pathnumber[1].PathNumber.Value then
+            table.clear(pathnumber)
+            table.insert(pathnumber, v)
+            end
+            end)
+            if success == false then
+            pcall(function()
+            table.clear(pathnumber)
+            table.insert(pathnumber, v)
+            end)
+            end
+            else
+            pcall(function()
+            table.insert(pathnumber, v)
+            end)
+            end
+            end
+            until false
+            end))
+            coroutine.resume(coroutine.create(function()
+            repeat wait()
+            pcall(function()
+            summonpart.CFrame = pathnumber[1].REALPOSITIONPOS.Value
+            end)
+            until _G.SettingsTable.autots == false
+            end))
+            repeat wait() until #game.Workspace.Enemies:GetChildren() > 0 and tostring(game:GetService("ReplicatedStorage").WaveValue.Value) >= _G.SettingsTable.autotswave or _G.SettingsTable.autots == false
+            wait(2.5)
+            while _G.SettingsTable.autots do
+            repeat wait() until #game.Workspace.Enemies:GetChildren() > 0
+            local tsvalue = false
+            coroutine.resume(coroutine.create(function()
+                local a1 = pcall(function()
+                repeat wait()
+                local test = game:GetService("Workspace").Enemies["Test Dummy"]["Status_Effect_Freeze"]
+                tsvalue = false
+                until false
+                end)
+                if a1 == false then
+                    tsvalue = true
+                end
+            end))
+            repeat wait()
+            Event:FireServer('Summon', {
+                ["Rotation"] = 0, 
+                ["cframe"] = game.Workspace.SummonBox.CFrame * CFrame.new(math.random(-game.Workspace.SummonBox.Size.X/2, game.Workspace.SummonBox.Size.X/2),math.random(-game.Workspace.SummonBox.Size.Y/2, game.Workspace.SummonBox.Size.Y/2),math.random(-game.Workspace.SummonBox.Size.Z/2, game.Workspace.SummonBox.Size.Z/2)), 
+                ["Unit"] = "Six Eyes Gojo"
+            })
+            wait()
+            until gojoplaced or _G.SettingsTable.autots == false
+            gojoplaced = false
+            repeat wait()
+                pcall(function()
+                Event1:InvokeServer('Upgrade', autotstable[1])
+                end)
+            until autotstable[1]:WaitForChild('UpgradeTag').Value == autotstable[1].MaxUpgradeTag.Value or _G.SettingsTable.autots == false
+            repeat wait() until tsvalue
+                repeat wait()
+                Event:FireServer('UseSpecialMove', autotstable[1])
+                until autotstable[1].SpecialMove.Special_Enabled2.Value
+                pcall(function()
+                    repeat wait()
+                        Event:FireServer('Sell', autotstable[1])
+                    until autotstable[1].UpgradeTag.Value == -1 or _G.SettingsTable.autots == false
+                end)
+            end
+        end
+    end))
+	end    
+})
+
+AbilityTab:AddTextbox({
+	Name = "Auto TS After Wave",
+	Default = _G.SettingsTable.autotswave,
+	TextDisappear = true,
+	Callback = function(Value)
+	    if Value ~= "" then
+        _G.SettingsTable.autotswave = Value
+	    SaveSettings()
+        end
+	end    
+})
 
 AbilityTab:AddToggle({
 	Name = "Law Ability",
