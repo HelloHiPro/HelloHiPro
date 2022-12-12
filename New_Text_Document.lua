@@ -2127,6 +2127,7 @@ AbilityTab:AddToggle({
             end
             else
             pcall(function()
+            table.clear(pathnumber)
             table.insert(pathnumber, v)
             end)
             end
@@ -2156,7 +2157,7 @@ AbilityTab:AddToggle({
                     until _G.SettingsTable.autots == false
                 end
             end))
-            if _G.SettingsTable.autots then
+            if _G.SettingsTable.autots and #game.Workspace.Enemies:GetChildren() > 0 then
             repeat
             Event:FireServer('Summon', {
                 ["Rotation"] = 0, 
@@ -2165,7 +2166,6 @@ AbilityTab:AddToggle({
             })
             wait(1)
             until gojoplaced or _G.SettingsTable.autots == false
-            end
             gojoplaced = false
             if _G.SettingsTable.autots then
             repeat wait()
@@ -2175,17 +2175,21 @@ AbilityTab:AddToggle({
             until autotstable[1]:WaitForChild('UpgradeTag').Value == autotstable[1].MaxUpgradeTag.Value or _G.SettingsTable.autots == false
             end
             if _G.SettingsTable.autots then
+            pcall(function()
             repeat wait() until tsvalue
                 repeat wait()
                 Event:FireServer('UseSpecialMove', autotstable[1])
-                until tsvalue == false or _G.SettingsTable.autots == false
+                until tsvalue == false or _G.SettingsTable.autots or autotstable[1].SpecialMove.Special_Enabled2.Value
+            end)
             end
+            if autotstable[1].StunBoolean.Value then wait(2) end
             if _G.SettingsTable.autots then
                 pcall(function()
                     repeat wait()
                         Event:FireServer('Sell', autotstable[1])
                     until autotstable[1].UpgradeTag.Value == -1 or _G.SettingsTable.autots == false
                 end)
+            end
             end
             end
         end
