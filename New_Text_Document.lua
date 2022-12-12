@@ -2106,10 +2106,6 @@ AbilityTab:AddToggle({
         if _G.SettingsTable.autots and _G.SettingsTable.autotswave ~= "" and game:GetService("ReplicatedStorage").Lobby.Value == false then
             local Event1 = game:GetService("ReplicatedStorage").Remotes.Server
             local Event = game:GetService("ReplicatedStorage").Remotes.Input
-            local upgrade = "Upgrade"
-            local skill = "UseSpecialMove"
-            local sell = "Sell"
-            local gojo = {}
             wait()
             local pathnumber = {}
             coroutine.resume(coroutine.create(function()
@@ -2135,7 +2131,7 @@ AbilityTab:AddToggle({
             end)
             end
             end
-            until false
+            until _G.SettingsTable.autots == false
             end))
             coroutine.resume(coroutine.create(function()
             repeat wait()
@@ -2150,17 +2146,17 @@ AbilityTab:AddToggle({
             repeat wait() until #game.Workspace.Enemies:GetChildren() > 0
             local tsvalue = false
             coroutine.resume(coroutine.create(function()
-                
-                repeat wait()
-local a1 = pcall(function()
-                if pathnumber[1]:FindFirstChild("Status_Effect_Freeze") then
-                tsvalue = false
-                else tsvalue = true end
-end)
-                until _G.SettingsTable.autots == false
-            
-                
+                if _G.SettingsTable.autots then
+                    repeat wait()
+                        local a1 = pcall(function()
+                            if pathnumber[1]:FindFirstChild("Status_Effect_Freeze") then
+                                tsvalue = false
+                            else tsvalue = true end
+                        end)
+                    until _G.SettingsTable.autots == false
+                end
             end))
+            if _G.SettingsTable.autots then
             repeat
             Event:FireServer('Summon', {
                 ["Rotation"] = 0, 
@@ -2169,21 +2165,28 @@ end)
             })
             wait(1)
             until gojoplaced or _G.SettingsTable.autots == false
+            end
             gojoplaced = false
+            if _G.SettingsTable.autots then
             repeat wait()
                 pcall(function()
                 Event1:InvokeServer('Upgrade', autotstable[1])
                 end)
             until autotstable[1]:WaitForChild('UpgradeTag').Value == autotstable[1].MaxUpgradeTag.Value or _G.SettingsTable.autots == false
+            end
+            if _G.SettingsTable.autots then
             repeat wait() until tsvalue
                 repeat wait()
                 Event:FireServer('UseSpecialMove', autotstable[1])
                 until tsvalue == false or _G.SettingsTable.autots == false
+            end
+            if _G.SettingsTable.autots then
                 pcall(function()
                     repeat wait()
                         Event:FireServer('Sell', autotstable[1])
                     until autotstable[1].UpgradeTag.Value == -1 or _G.SettingsTable.autots == false
                 end)
+            end
             end
         end
     end))
