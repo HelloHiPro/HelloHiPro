@@ -2144,7 +2144,7 @@ AbilityTab:AddToggle({
             end)
             until _G.SettingsTable.autots == false
             end))
-            repeat wait() until #game.Workspace.Enemies:GetChildren() > 0 and tostring(game:GetService("ReplicatedStorage").WaveValue.Value) >= _G.SettingsTable.autotswave
+            repeat wait() until #game.Workspace.Enemies:GetChildren() > 0 and game:GetService("ReplicatedStorage").WaveValue.Value >= tonumber(_G.SettingsTable.autotswave)
             wait(2)
             while _G.SettingsTable.autots do
             repeat wait() until #game.Workspace.Enemies:GetChildren() > 0
