@@ -2144,7 +2144,7 @@ AbilityTab:AddToggle({
             end)
             until _G.SettingsTable.autots == false
             end))
-            repeat wait() until #game.Workspace.Enemies:GetChildren() > 0 and tostring(game:GetService("ReplicatedStorage").WaveValue.Value) >= _G.SettingsTable.autotswave or _G.SettingsTable.autots == false
+            repeat wait() until #game.Workspace.Enemies:GetChildren() > 0 and tostring(game:GetService("ReplicatedStorage").WaveValue.Value) >= _G.SettingsTable.autotswave
             wait(2)
             while _G.SettingsTable.autots do
             repeat wait() until #game.Workspace.Enemies:GetChildren() > 0
@@ -2157,7 +2157,7 @@ local a1 = pcall(function()
                 tsvalue = false
                 else tsvalue = true end
 end)
-                until _G.SettingsTable.autotswave == false
+                until _G.SettingsTable.autots == false
             
                 
             end))
@@ -2178,7 +2178,7 @@ end)
             repeat wait() until tsvalue
                 repeat wait()
                 Event:FireServer('UseSpecialMove', autotstable[1])
-                until tsvalue == false
+                until tsvalue == false or _G.SettingsTable.autots == false
                 pcall(function()
                     repeat wait()
                         Event:FireServer('Sell', autotstable[1])
