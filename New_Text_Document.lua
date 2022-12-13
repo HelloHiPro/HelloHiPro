@@ -1,13 +1,106 @@
 repeat wait() until game:IsLoaded()
+
+-- SaveSettings
+local macrolist = {}
+local x = 0
+_G.SettingsTable = {
+    autoreplay = false,
+    auto2x = false,
+    autoextreme = false,
+    autoplayback = false,
+    selectedmacro = "",
+    autosell = false,
+    autosellwave = 999,
+    autosellspeed = 1,
+    autoupgradewave = 999,
+    autoupgrade = false,
+    autojoin = false,
+    mode = "",
+    storylevel = "",
+    inflevel = "",
+    hidenick = false,
+    shiftlock = false,
+    autobufftoggle = false,
+    automerlintoggle = false,
+    autofv = false,
+    macroname = "",
+    autocooler = false,
+    deletetexture = false,
+    fpscap = 60,
+    setfpscap = false,
+    timer = false,
+    WhURL = "",
+    Webhook = false,
+    leavevalue = false,
+    forcetp = false,
+    forcetpdcid = false,
+    forcetpdc = false,
+    forcetpw2 = false,
+    messageerror = "",
+    tctoggle = false,
+    autotswave = "",
+    autots = false
+}
+
+repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer ~= nil
+local file_settings = "Bobsettings" .. game.Players.LocalPlayer.Name .. ".txt"
+local macrofolder = "macrosprofiles_" .. game.Players.LocalPlayer.Name
+local httpservice = game:GetService("HttpService")
+function LoadSettings()
+    if (readfile and isfile and isfile(file_settings)) then
+        _G.SettingsTable = httpservice:JSONDecode(readfile(file_settings))
+    end
+    if (readfile and isfile and isfolder(macrofolder)) then
+        for i,v in pairs(listfiles(macrofolder .. '/')) do
+            table.insert(macrolist, string.sub(v, v:find('/') + 1))
+        end
+    else
+    makefolder(macrofolder)
+    end
+end
+LoadSettings()
+function SaveSettings()
+    local json
+    if (writefile) then
+        json = httpservice:JSONEncode(_G.SettingsTable)
+        writefile(file_settings, json)
+    end
+end
+--Rejoin if dc
+coroutine.resume(coroutine.create(function()
+game:WaitForChild('CoreGui'):WaitForChild('RobloxPromptGui'):WaitForChild('promptOverlay').DescendantAdded:Connect(function()
+    local GUI = game.CoreGui.RobloxPromptGui.promptOverlay:FindFirstChild("ErrorPrompt")
+    if GUI then
+        if GUI.TitleFrame.ErrorTitle.Text == "Disconnected" then
+            if x == 0 then
+	        x = x + 1
+            repeat wait() until game.CoreGui.RobloxPromptGui.promptOverlay.ErrorPrompt:WaitForChild('MessageArea'):WaitForChild('ErrorFrame'):WaitForChild('ErrorMessage').Text ~= 'Label'
+	    _G.SettingsTable.messageerror = game.CoreGui.RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage.Text
+            SaveSettings()
+            local queue_on_teleport = queue_on_teleport or syn and syn.queue_on_teleport [[loadstring(game:HttpGet('https://raw.githubusercontent.com/948265/ax/main/dcwh.lua'))()]]
+            if #game.Players:GetPlayers() <= 1 then
+                game.Players.LocalPlayer:Kick("\nRejoining...")
+                wait()
+                repeat wait()
+                game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+            	until false
+            else
+            	repeat wait()
+                game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer)
+            	until false
+            end
+	  end
+        end
+    end
+end)
+end))
+--TimeChamber
 local tcvalue = false
 coroutine.resume(coroutine.create(function()
     repeat wait()
     pcall(function()
     if game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.Frame.CLAIM.Parent.Visible == true then
-    pcall(function()
-    stfile = game:GetService("HttpService"):JSONDecode(readfile("Bobsettings" .. game.Players.LocalPlayer.Name .. ".txt"))
-    end)
-    if stfile.autojoin then
+    if _G.SettingsTable.autojoin then
     tcvalue = true
     local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
     local Window = OrionLib:MakeWindow({IntroText = "BOB HUB",Name = "Bob Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionStar"})
@@ -18,15 +111,10 @@ coroutine.resume(coroutine.create(function()
     })
     tcTab:AddToggle({
         Name = "Auto Join TC",
-        Default = stfile['autojoin'],
+        Default = _G.SettingsTable.autojoin,
         Callback = function(Value)
-            if Value then
-                stfile['autojoin'] = true
-            else
-                stfile['autojoin'] = false
-            end
-            json = game:GetService("HttpService"):JSONEncode(stfile)
-            writefile("Bobsettings" .. game.Players.LocalPlayer.Name .. ".txt", json)
+            _G.SettingsTable.autojoin = Value
+            SaveSettings()
         end    
     })
     end
@@ -64,15 +152,11 @@ local upgrade = {}
 local prioritymacro = {}
 local summonmax = {}
 local Summon = {}
-local httpservice = game:GetService("HttpService")
 local Event = game:GetService("ReplicatedStorage").Remotes.Input
 local unit = game.Workspace.Unit
 local macro_file = "macro"
-local macrolist = {}
 local a2 = 0
 local a1 = 0
-local file_settings = "Bobsettings" .. game.Players.LocalPlayer.Name .. ".txt"
-local macrofolder = "macrosprofiles_" .. game.Players.LocalPlayer.Name
 local wave69 = game:GetService("ReplicatedStorage").WaveValue.Value
 local mouse1 = me:GetMouse()
 local checkautosell = false
@@ -183,67 +267,6 @@ summonpart.Size = Vector3.new(15, 0, 15)
 summonpart.CanCollide = false
 summonpart.Anchored = true
 
--- SaveSettings
-
-_G.SettingsTable = {
-    autoreplay = false,
-    auto2x = false,
-    autoextreme = false,
-    autoplayback = false,
-    selectedmacro = "",
-    autosell = false,
-    autosellwave = 999,
-    autosellspeed = 1,
-    autoupgradewave = 999,
-    autoupgrade = false,
-    autojoin = false,
-    mode = "",
-    storylevel = "",
-    inflevel = "",
-    hidenick = false,
-    shiftlock = false,
-    autobufftoggle = false,
-    automerlintoggle = false,
-    autofv = false,
-    macroname = "",
-    autocooler = false,
-    deletetexture = false,
-    fpscap = 60,
-    setfpscap = false,
-    timer = false,
-    WhURL = "",
-    Webhook = false,
-    leavevalue = false,
-    forcetp = false,
-    forcetpdcid = false,
-    forcetpdc = false,
-    forcetpw2 = false,
-    messageerror = "",
-    tctoggle = false,
-    autotswave = "",
-    autots = false
-}
-
-function LoadSettings()
-    if (readfile and isfile and isfile(file_settings)) then
-        _G.SettingsTable = httpservice:JSONDecode(readfile(file_settings))
-    end
-    if (readfile and isfile and isfolder(macrofolder)) then
-        for i,v in pairs(listfiles(macrofolder .. '/')) do
-            table.insert(macrolist, string.sub(v, v:find('/') + 1))
-        end
-    else
-    makefolder(macrofolder)
-    end
-end
-LoadSettings()
-function SaveSettings()
-    local json
-    if (writefile) then
-        json = httpservice:JSONEncode(_G.SettingsTable)
-        writefile(file_settings, json)
-    end
-end
 --Macro ChildAdded
 
 pcall(function()
@@ -1367,48 +1390,8 @@ end
 })
 
 
-
---LobbyTab
 LobbyTab:AddToggle({
-	Name = "Force Lobby TP if dc or kick",
-	Default = _G.SettingsTable.forcetpdc,
-	Callback = function(Value)
-	_G.SettingsTable.forcetpdc = Value
-    SaveSettings()
-	if _G.SettingsTable.forcetpdc then
-	    local x = 0
-game.CoreGui.RobloxPromptGui.promptOverlay.DescendantAdded:Connect(function()
-    local GUI = game.CoreGui.RobloxPromptGui.promptOverlay:FindFirstChild("ErrorPrompt")
-    if GUI then
-        if GUI.TitleFrame.ErrorTitle.Text == "Disconnected" then
-            if x == 0 then
-	    x = x + 1
-            repeat wait() until game.CoreGui.RobloxPromptGui.promptOverlay.ErrorPrompt:WaitForChild('MessageArea'):WaitForChild('ErrorFrame'):WaitForChild('ErrorMessage').Text ~= 'Label'
-	    _G.SettingsTable.messageerror = game.CoreGui.RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage.Text
-            SaveSettings()
-            local queue_on_teleport = queue_on_teleport or syn and syn.queue_on_teleport [[loadstring(game:HttpGet('https://raw.githubusercontent.com/948265/ax/main/dcwh.lua'))()]]
-            x = x + 1
-            if #game.Players:GetPlayers() <= 1 then
-                game.Players.LocalPlayer:Kick("\nRejoining...")
-                wait()
-                repeat wait()
-                game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
-            	until false
-            else
-            	repeat wait()
-                game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer)
-            	until false
-            end
-	  end
-        end
-    end
-end)
-end
-end
-})
-
-LobbyTab:AddToggle({
-	Name = "Auto Force Lobby TP W2",
+	Name = "Auto TP W2",
 	Default = _G.SettingsTable.forcetpw2,
 	Callback = function(Value)
         _G.SettingsTable.forcetpw2 = Value
