@@ -42,7 +42,7 @@ _G.SettingsTable = {
     autots = false
 }
 
-repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer ~= nil
+repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
 local file_settings = "Bobsettings" .. game.Players.LocalPlayer.Name .. ".txt"
 local macrofolder = "macrosprofiles_" .. game.Players.LocalPlayer.Name
 local httpservice = game:GetService("HttpService")
