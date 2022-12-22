@@ -2447,16 +2447,20 @@ SettingsTab:AddToggle({
 	end    
 })
 
+local autoex = 0
+
 SettingsTab:AddToggle({
     Name = "Auto Execute (Click Once)",
     Default = _G.SettingsTable.autoexecute,
     Callback = function(Value)
         _G.SettingsTable.autoexecute = Value
-        if _G.SettingsTable.autoexecute and autoexvalue == 0 then autoexvalue = autoexvalue + 1
+        if _G.SettingsTable.autoexecute and autoex == 0 then autoex = autoex + 1
         local queue_on_teleport = queue_on_teleport or syn and syn.queue_on_teleport [[
-        repeat wait() until game:IsLoaded() wait(5)
+        
+repeat wait until game:IsLoaded()
         loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document.lua'))()]]
-        end
+	end
+	SaveSettings()
     end    
 })
 
