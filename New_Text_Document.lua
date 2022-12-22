@@ -1410,23 +1410,23 @@ LobbyTab:AddToggle({
 })
 
 LobbyTab:AddButton({
-	Name = "Force World 1 TP ",
-	Default = false,
-	Callback = function(Value)
-	    pcall(function()
-        game:GetService("TeleportService"):Teleport(4996049426, LocalPlayer)
+    Name = "Teleport World 1",
+    Default = false,
+    Callback = function(Value)
+        pcall(function()
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World1.World1, 0)
         end)
-	end    
+    end    
 })
 
 LobbyTab:AddButton({
-	Name = "Force World 2 TP ",
-	Default = false,
-	Callback = function(Value)
-	    pcall(function()
-        game:GetService("TeleportService"):Teleport(7785334488, LocalPlayer)
+    Name = "Teleport World 2",
+    Default = false,
+    Callback = function(Value)
+        pcall(function()
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World2.World2, 0)
         end)
-	end    
+    end    
 })
 
 LobbyTab:AddButton({
