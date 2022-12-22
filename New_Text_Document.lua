@@ -1407,31 +1407,31 @@ LobbyTab:AddToggle({
 })
 
 LobbyTab:AddButton({
-	Name = "Force Lobby TP ",
+	Name = "Force World 1 TP ",
 	Default = false,
 	Callback = function(Value)
 	    pcall(function()
-        game:GetService("TeleportService"):Teleport(game.PlaceId, LocalPlayer)
+        game:GetService("TeleportService"):Teleport(4996049426, LocalPlayer)
         end)
 	end    
 })
 
 LobbyTab:AddButton({
-	Name = "Teleport World 1",
+	Name = "Force World 2 TP ",
 	Default = false,
 	Callback = function(Value)
 	    pcall(function()
-        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World1.World1, 0)
+        game:GetService("TeleportService"):Teleport(7785334488, LocalPlayer)
         end)
 	end    
 })
 
 LobbyTab:AddButton({
-	Name = "Teleport World 2",
+	Name = "Force World 3 TP ",
 	Default = false,
 	Callback = function(Value)
-        pcall(function()
-        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World2.World2, 0)
+	    pcall(function()
+        game:GetService("TeleportService"):Teleport(11886211138, LocalPlayer)
         end)
 	end    
 })
