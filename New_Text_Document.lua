@@ -41,7 +41,8 @@ _G.SettingsTable = {
     autotswave = "",
     autots = false,
     clocktime = 1,
-    changeclocktime = false
+    changeclocktime = false, 
+    autoexecute = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -2446,15 +2447,14 @@ SettingsTab:AddToggle({
 	end    
 })
 
-SettingsTab:AddButton({
+SettingsTab:AddToggle({
     Name = "Auto Execute (Click Once)",
-    Default = false,
+    Default = _G.SettingsTable.autoexecute,
     Callback = function(Value)
-        _G.autoexecute = Value
-        if _G.autoexecute and autoexvalue == 0 then autoexvalue = autoexvalue + 1
+        _G.SettingsTable.autoexecute = Value
+        if _G.SettingsTable.autoexecute and autoexvalue == 0 then autoexvalue = autoexvalue + 1
         local queue_on_teleport = queue_on_teleport or syn and syn.queue_on_teleport [[
-        repeat wait() until game:IsLoaded() wait(5) print("ServerHoped or rejoined")
-        loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/autoex.lua'))()
+        repeat wait() until game:IsLoaded() wait(5)
         loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document.lua'))()]]
         end
     end    
