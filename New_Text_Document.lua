@@ -2441,15 +2441,6 @@ SettingsTab:AddToggle({
 })
 
 SettingsTab:AddToggle({
-	Name = "Change Clock Time",
-	Default = _G.SettingsTable.changeclocktime,
-	Callback = function(Value)
-        _G.SettingsTable.changeclocktime = Value
-	SaveSettings()
-	end   
-})
-
-SettingsTab:AddToggle({
     Name = "Auto Execute (Click Once)",
     Default = false,
     Callback = function(Value)
@@ -2461,6 +2452,15 @@ SettingsTab:AddToggle({
         loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document.lua'))()]]
         end
     end    
+})
+
+SettingsTab:AddToggle({
+	Name = "Change Clock Time",
+	Default = _G.SettingsTable.changeclocktime,
+	Callback = function(Value)
+        _G.SettingsTable.changeclocktime = Value
+	SaveSettings()
+	end   
 })
 
 SettingsTab:AddSlider({
