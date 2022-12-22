@@ -1407,7 +1407,7 @@ LobbyTab:AddToggle({
 })
 
 LobbyTab:AddButton({
-	Name = "Force Lobby TP",
+	Name = "Force Lobby TP ",
 	Default = false,
 	Callback = function(Value)
 	    pcall(function()
@@ -1439,7 +1439,7 @@ LobbyTab:AddButton({
 LobbyTab:AddDropdown({
     Name = "Banner",
     Default = "Banner X",
-    Options = {"Banner X", "Banner Y", "Banner Z", "Gold Banner", "Special Banner Gohan", "Special Banner Diavolo"},
+    Options = {"Banner X", "Banner Y", "Banner Z", "Gold Banner", "Special Banner Gohan", "Special Banner Diavolo", "Special Banner Ichigo", "Special Banner Katakuri"},
     Callback = function(Value)
     summonvalue = Value
     end
@@ -1467,6 +1467,12 @@ LobbyTab:AddButton({
 	    if summonvalue == "Special Banner Diavolo" then
 	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 1, "DiavoloBanner")
 	    end
+	    if summonvalue == "Special Banner Ichigo" then
+	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 1, "IchigoEraser")
+	    end
+	    if summonvalue == "Special Banner Katakuri" then
+	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 1, "AndroidKatakuri")
+	    end
 	end    
 })
 
@@ -1491,6 +1497,12 @@ LobbyTab:AddButton({
 	    end
 	    if summonvalue == "Special Banner Diavolo" then
 	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 10, "DiavoloBanner")
+	    end
+	    if summonvalue == "Special Banner Ichigo" then
+	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 10, "IchigoEraser")
+	    end
+	    if summonvalue == "Special Banner Katakuri" then
+	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 10, "AndroidKatakuri")
 	    end
 	end    
 })
