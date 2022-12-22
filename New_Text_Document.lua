@@ -823,7 +823,7 @@ SaveSettings()
 coroutine.resume(coroutine.create(function()
 while _G.SettingsTable.autoreplay do wait(.5)
 pcall(function()
-for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.MissionEndNavigateDialog.TextFrame.Replay.Activated)) do
+for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.HUD.MissionEnd.BG.Actions.Replay.Activated)) do
 v.Function()
 end
 end)
