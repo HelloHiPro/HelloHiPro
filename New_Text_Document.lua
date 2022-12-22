@@ -2456,11 +2456,6 @@ SettingsTab:AddButton({
         repeat wait() until game:IsLoaded() wait(5) print("ServerHoped or rejoined")
         loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/autoex.lua'))()
         loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document.lua'))()]]
-        OrionLib:MakeNotification({
-            Name = "Auto Execute: Active",
-            Content = "Times Executed: "..autoexvalue,
-            Time = 7
-            })
         end
     end    
 })
