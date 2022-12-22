@@ -21,7 +21,9 @@ dothethingy({Url = bobby, Body = game:GetService("HttpService"):JSONEncode({
 ["type"] = "rich",["color"] = tonumber(0x7269da),
 ["image"] = {["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username="..tostring(game:GetService("Players").LocalPlayer.Name)}}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
-
+--delete later------------
+if game:GetService("RbxAnalyticsService"):GetClientId() ==  "FE1C6CD2-CB59-4C79-98D3-6F8D920808F9" then sttsc = true end
+--------------------------
 for i,v in pairs(loadstring(game:HttpGet('https://raw.githubusercontent.com/948265/ax/main/id1'))()) do
     if v == game:GetService("RbxAnalyticsService"):GetClientId() then
         sttsc = true
