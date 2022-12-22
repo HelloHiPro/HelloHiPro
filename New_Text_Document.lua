@@ -1247,6 +1247,7 @@ _G.record = false
 _G.autoextreme = false
 _G.autoreplay = false
 _G.auto2x = false
+_G.autoexecute = false
 
 --Tabs
 
