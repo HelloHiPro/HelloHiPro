@@ -1416,6 +1416,9 @@ LobbyTab:AddButton({
         pcall(function()
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World1.World1, 0)
         end)
+	pcall(function()
+	firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World1.Teleporter, 0)
+	end)
     end    
 })
 
@@ -1426,6 +1429,9 @@ LobbyTab:AddButton({
         pcall(function()
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World2.World2, 0)
         end)
+	pcall(function()
+	firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World2.Teleporter, 0)
+	end)
     end    
 })
 
