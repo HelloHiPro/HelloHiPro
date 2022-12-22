@@ -1439,7 +1439,7 @@ LobbyTab:AddButton({
 LobbyTab:AddDropdown({
     Name = "Banner",
     Default = "Banner X",
-    Options = {"Banner X", "Banner Y", "Banner Z", "Gold Banner", "Special Banner Gohan", "Special Banner Diavolo", "Special Banner Ichigo", "Special Banner Katakuri"},
+    Options = {"Banner W(W3)", "Banner X", "Banner Y", "Banner Z", "Gold Banner", "Special Banner Gohan", "Special Banner Diavolo", "Special Banner Ichigo", "Special Banner Katakuri"},
     Callback = function(Value)
     summonvalue = Value
     end
@@ -1449,6 +1449,9 @@ LobbyTab:AddButton({
 	Name = "Summon 1x",
 	Default = false,
 	Callback = function(Value)
+	    if summonvalue == "Banner W(W3)" then
+	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("SummonStart", "Water")
+	    end
 	    if summonvalue == "Banner X" then
 	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("SummonStart", 1)
 	    end
@@ -1480,6 +1483,9 @@ LobbyTab:AddButton({
 	Name = "Summon 10x",
 	Default = false,
 	Callback = function(Value)
+        if summonvalue == "Banner W(W3)" then
+	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("SummonStart10", "Water")
+	    end
         if summonvalue == "Banner X" then
             game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("SummonStart10", 1)
 	    end
