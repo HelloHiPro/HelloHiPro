@@ -2400,7 +2400,7 @@ SettingsTab:AddToggle({
         if _G.SettingsTable.autoexecute and autoex == 0 then autoex = autoex + 1
         local queue_on_teleport = queue_on_teleport or syn and syn.queue_on_teleport [[
         
-repeat wait until game:IsLoaded()
+repeat wait() until game:IsLoaded()
         loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document.lua'))()]]
 	end
 	SaveSettings()
