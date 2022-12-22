@@ -2390,6 +2390,23 @@ SettingsTab:AddButton({
 	end    
 })
 
+local autoex = 0
+
+SettingsTab:AddToggle({
+    Name = "Auto Execute (Click Once)",
+    Default = _G.SettingsTable.autoexecute,
+    Callback = function(Value)
+        _G.SettingsTable.autoexecute = Value
+        if _G.SettingsTable.autoexecute and autoex == 0 then autoex = autoex + 1
+        local queue_on_teleport = queue_on_teleport or syn and syn.queue_on_teleport [[
+        
+repeat wait until game:IsLoaded()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document.lua'))()]]
+	end
+	SaveSettings()
+    end    
+})
+
 SettingsTab:AddToggle({
 	Name = "Player Speed",
 	Default = false,
@@ -2445,23 +2462,6 @@ SettingsTab:AddToggle({
             game:GetService('Players').LocalPlayer.DevEnableMouseLock = false
         end
 	end    
-})
-
-local autoex = 0
-
-SettingsTab:AddToggle({
-    Name = "Auto Execute (Click Once)",
-    Default = _G.SettingsTable.autoexecute,
-    Callback = function(Value)
-        _G.SettingsTable.autoexecute = Value
-        if _G.SettingsTable.autoexecute and autoex == 0 then autoex = autoex + 1
-        local queue_on_teleport = queue_on_teleport or syn and syn.queue_on_teleport [[
-        
-repeat wait until game:IsLoaded()
-        loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document.lua'))()]]
-	end
-	SaveSettings()
-    end    
 })
 
 SettingsTab:AddToggle({
