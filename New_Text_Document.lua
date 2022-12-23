@@ -42,7 +42,8 @@ _G.SettingsTable = {
     autots = false,
     clocktime = 1,
     changeclocktime = false, 
-    autoexecute = false
+    autoexecute = false, 
+    deleteenemy = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -971,7 +972,7 @@ end
 end
 
 workspace.Enemies.ChildAdded:Connect(function(child)
-if _G.deleteenemy then
+if _G.SettingsTable.deleteenemy then
 child:WaitForChild("Left Leg"):Destroy()
 child:WaitForChild("Right Leg"):Destroy()
 child:WaitForChild("Left Arm"):Destroy()
@@ -2562,9 +2563,10 @@ end
 
 SettingsTab:AddToggle({
 	Name = "Delete Enemy (FPS)",
-	Default = false,
+	Default = _G.SettingsTable.deleteenemy,
 	Callback = function(Value)
-        _G.deleteenemy = Value
+        _G.SettingsTable.deleteenemy = Value
+        SaveSettings()
 	end    
 })
 
