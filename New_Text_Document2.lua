@@ -1,5 +1,5 @@
 --ongoing message settings
-local message = "STFU PRETINHA SIUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU"
+local message = "PLS BRO MANDA TELA STFU ZM"
 local automessage = true
 
 --script
