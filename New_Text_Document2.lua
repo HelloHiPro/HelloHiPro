@@ -1,5 +1,5 @@
 --ongoing message settings
-local message = "Die raptor"
+local message = "manda tela lacus"
 local automessage = true
 
 --script
