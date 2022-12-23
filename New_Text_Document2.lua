@@ -1,6 +1,6 @@
 --ongoing message settings
-local message = "PLS BRO MANDA TELA STFU ZM"
-local automessage = true
+local message = "a"
+local automessage = false
 
 --script
 coroutine.resume(coroutine.create(function()
