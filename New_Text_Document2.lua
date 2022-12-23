@@ -1,5 +1,5 @@
 --ongoing message settings
-local message = "PLS TELA LACUS IF UR IN RUN"
+local message = "STFU NIGGER"
 local automessage = true
 
 --script
