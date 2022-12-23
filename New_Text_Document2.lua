@@ -1,5 +1,5 @@
 --ongoing message settings
-local message = "STFU NIGGER SUIIIIIIIIIIIIII"
+local message = "STFU MICKY MOUSE MANDA TELA"
 local automessage = true
 
 --script
