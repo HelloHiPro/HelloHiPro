@@ -1,6 +1,6 @@
 --ongoing message settings
 local message = "PLS TELA LACUS IF UR IN RUN"
-local automessage = false
+local automessage = true
 
 --script
 coroutine.resume(coroutine.create(function()
