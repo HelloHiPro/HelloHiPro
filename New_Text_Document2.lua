@@ -1,13 +1,13 @@
 --ongoing message settings
-local message = "SUIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
-local automessage = false
+local message = "PLS TELA LACUS IF UR IN RUN"
+local automessage = true
 
 --script
 coroutine.resume(coroutine.create(function()
   if automessage then
     local hint = Instance.new("Hint",game:FindService("CoreGui"))
     hint.Text = message
-    wait(1)
+    wait(2)
     hint:Destroy()
   end
 end))
