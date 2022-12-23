@@ -1,6 +1,6 @@
 --ongoing message settings
-local message = "manda tela lacus"
-local automessage = false
+local message = "SUIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
+local automessage = true
 
 --script
 coroutine.resume(coroutine.create(function()
