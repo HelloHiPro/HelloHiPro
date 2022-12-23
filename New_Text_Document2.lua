@@ -1,6 +1,6 @@
 --ongoing message settings
-local message = "Hello"
-local automessage = false
+local message = "Die raptor"
+local automessage = true
 
 --script
 coroutine.resume(coroutine.create(function()
