@@ -1,5 +1,5 @@
 --ongoing message settings
-local message = "MANDA TELA PLSSSSSSSS"
+local message = "STFU NIGGER"
 local automessage = true
 
 --script
