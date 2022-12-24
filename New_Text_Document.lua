@@ -842,7 +842,7 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
     },
     ["footer"] = {
         ["text"] = os.date,
-        ["icon_url"] = "https://i.imgur.com/fKL31aD.jpg"
+        ["icon_url"] = ""
       }},
 ["type"] = "rich",["color"] = tonumber(0x7269da)}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
