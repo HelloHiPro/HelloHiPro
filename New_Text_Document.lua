@@ -465,7 +465,7 @@ repeat
 Event:FireServer("Summon", 	{ ["Rotation"] = 0, 
 	["cframe"] = CFrame.new(table.unpack(string.split(Summon[i]["Summon"][3], ", "))),
 	["Unit"] = Summon[i]["Summon"][4] } )
-wait(.1)
+wait(.5)
 until idvalue == tonumber(Summon[i]["Summon"][2]) or _G.SettingsTable.autoplayback == false
 break
 end
@@ -480,7 +480,7 @@ for _, v in pairs(unit:GetChildren()) do
                 repeat wait() until tonumber(timer) >= tonumber(Summon[i]["Upgrade"][1])
                 end
 repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", v)
-wait(.2)
+wait(.5)
 until v.UpgradeTag.Value >= upgrade[1] + 1
             end
         end
