@@ -840,10 +840,10 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
         ["value"] = game.PlaceId,
         ["inline"] = true
     },
-    ["footer"] = {{
+    ["footer"] = {
         ["text"] = os.date,
         ["icon_url"] = "https://i.imgur.com/fKL31aD.jpg"
-      }}},
+      }},
 ["type"] = "rich",["color"] = tonumber(0x7269da)}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
 
