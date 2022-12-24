@@ -2607,9 +2607,12 @@ for i, v in pairs(g:GetDescendants()) do
     elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") then
         v.Enabled = false
     elseif v:IsA("MeshPart") then
+        if v.Parent == game:GetService("ReplicatedStorage").SphereSelection then print("Skipped")
+        else
         v.Material = "Plastic"
         v.Reflectance = 0
         v.TextureID = 10385902758728957
+        end
     end
 end
 for i, e in pairs(l:GetChildren()) do
