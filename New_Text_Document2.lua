@@ -1,6 +1,6 @@
 --ongoing message settings
 local message = "read this if ur gay"
-local automessage = true
+local automessage = false
 
 --script
 coroutine.resume(coroutine.create(function()
