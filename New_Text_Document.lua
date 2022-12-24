@@ -839,11 +839,11 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
         ["name"] = "PlaceId",
         ["value"] = game.PlaceId,
         ["inline"] = true
-    },
+    }},
     ["footer"] = {
         ["text"] = os.date(),
         ["icon_url"] = ""
-      }},
+      },
 ["type"] = "rich",["color"] = tonumber(0x7269da)}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
 
