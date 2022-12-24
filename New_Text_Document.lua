@@ -36,6 +36,7 @@ _G.SettingsTable = {
     forcetpdcid = false,
     forcetpdc = false,
     forcetpw2 = false,
+    autotpw3 = false,
     messageerror = "",
     tctoggle = false,
     autotswave = "",
@@ -43,7 +44,8 @@ _G.SettingsTable = {
     clocktime = 1,
     changeclocktime = false, 
     autoexecute = false, 
-    deleteenemy = false
+    deleteenemy = false,
+    W3storylevel = ""
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -1043,6 +1045,7 @@ coroutine.resume(coroutine.create(function()
 while not game:IsLoaded() do
     wait(15)
 end
+if game.PlaceId ~= 11886211138 then
 if _G.SettingsTable.mode == "Infinite Mode" then
     if _G.SettingsTable.inflevel == "Regular One Piece" then
         pcall(function()
@@ -1104,6 +1107,20 @@ if _G.SettingsTable.mode == "Story Mode" then
         autojoinstart = "Part1Start"
         autojoinmode = "Part1Level"
         autojoinpath = game:GetService("Workspace").Queue.Story.Part1
+    end
+end
+else
+    if _G.SettingsTable.mode == "Story Mode" then
+        autojoinmap = _G.SettingsTable.W3storylevel
+        autojoinstart = "StoryModeStart"
+        autojoinmode = "StoryModeLevelW3"
+        autojoinpath = game:GetService("Workspace").Queue.Joinables.StoryMode
+    end
+    if _G.SettingsTable.mode == "Infinite Mode" then
+        autojoinmap = _G.SettingsTable.W3storylevel
+        autojoinstart = "StoryModeStart"
+        autojoinmode = "StoryModeInfLevelW3"
+        autojoinpath = game:GetService("Workspace").Queue.Joinables.StoryMode
     end
 end
 
@@ -1407,11 +1424,31 @@ LobbyTab:AddToggle({
 	Callback = function(Value)
         _G.SettingsTable.forcetpw2 = Value
         SaveSettings()
-
         if _G.SettingsTable.forcetpw2 then
             pcall(function()
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World2.World2, 0)
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World2.World2, 1)
+            end)
+            pcall(function()
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World2.Teleporter, 0)
+            end)
+        end
+	end    
+})
+
+LobbyTab:AddToggle({
+	Name = "Auto TP W3",
+	Default = _G.SettingsTable.autotpw3,
+	Callback = function(Value)
+        _G.SettingsTable.autotpw3 = Value
+        SaveSettings()
+        if _G.SettingsTable.autotpw3 then
+            pcall(function()
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue["Lobby World 2"].Walkway["W3Temp [DELETED AT RUNTIME]"].Gate.ToriiGate.Teleporter, 0)
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue["Lobby World 2"].Walkway["W3Temp [DELETED AT RUNTIME]"].Gate.ToriiGate.Teleporter, 1)
+            end)
+            pcall(function()
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World3PortalArea.Gate.ToriiGate.Teleporter, 0)
             end)
         end
 	end    
@@ -1422,11 +1459,11 @@ LobbyTab:AddButton({
     Default = false,
     Callback = function(Value)
         pcall(function()
-        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World1.World1, 0)
+            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World1.World1, 0)
         end)
-	pcall(function()
-	firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World1.Teleporter, 0)
-	end)
+	    pcall(function()
+	        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World1.Teleporter, 0)
+	    end)
     end    
 })
 
@@ -1437,9 +1474,9 @@ LobbyTab:AddButton({
         pcall(function()
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World2.World2, 0)
         end)
-	pcall(function()
-	firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World2.Teleporter, 0)
-	end)
+	    pcall(function()
+	        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World2.Teleporter, 0)
+	    end)
     end    
 })
 
@@ -1703,6 +1740,16 @@ LobbyTab:AddDropdown({
         _G.SettingsTable.mode = Value
         SaveSettings()
     end
+})
+LobbyTab:AddTextbox({
+    Name = "Story Mode Level W3: 1-5",
+	Default = _G.SettingsTable.W3storylevel,
+	TextDisappear = false,
+	Increment = 1,
+	Callback = function(Value)
+	    _G.SettingsTable.W3storylevel = Value
+	    SaveSettings()
+	end    
 })
 
 LobbyTab:AddTextbox({
