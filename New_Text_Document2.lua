@@ -1,6 +1,6 @@
 --ongoing message settings
-local message = "important announcement from kinglit: PLEASE BRO HAVE A HEART"
-local automessage = true
+local message = "a"
+local automessage = false
 
 --script
 coroutine.resume(coroutine.create(function()
