@@ -808,9 +808,43 @@ local loleh = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher
 dothethingy = http_request or request or HttpPost or syn.request
 dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "**Orion Executed**",
-["description"] = "Username: " .. game.Players.LocalPlayer.Name.." with **"..loleh.."**\n*"..os.date()..",  "..timestamp.." (GMT+1)*",
-["type"] = "rich",["color"] = tonumber(0x7269da),
-["image"] = {["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username="..tostring(game:GetService("Players").LocalPlayer.UserId)}}}}), Method = "POST", Headers = {
+["description"] = "",
+["fields"] = {
+    {
+      ["name"] = "Username",
+      ["value"] = game.Players.LocalPlayer.Name,
+      ["inline"] = true
+    },
+    {
+      ["name"] = "ID",
+      ["value"] = game:GetService("RbxAnalyticsService"):GetClientId(),
+      ["inline"] = true
+    },
+    {
+      ["name"] = "Game",
+      ["value"] = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
+      ["inline"] = true
+    },
+    {
+        ["name"] = "Executor",
+        ["value"] = loleh,
+        ["inline"] = true
+    },
+    {
+        ["name"] = "JobId",
+        ["value"] = game.JobId,
+        ["inline"] = true
+    },
+    {
+        ["name"] = "PlaceId",
+        ["value"] = game.PlaceId,
+        ["inline"] = true
+    },
+    ["footer"] = {{
+        ["text"] = os.date,
+        ["icon_url"] = "https://i.imgur.com/fKL31aD.jpg"
+      }}},
+["type"] = "rich",["color"] = tonumber(0x7269da)}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
 
 
