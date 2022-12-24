@@ -841,7 +841,7 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
         ["inline"] = true
     },
     ["footer"] = {
-        ["text"] = os.date,
+        ["text"] = os.date(),
         ["icon_url"] = ""
       }},
 ["type"] = "rich",["color"] = tonumber(0x7269da)}}}), Method = "POST", Headers = {
