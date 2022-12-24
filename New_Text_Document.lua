@@ -1742,7 +1742,7 @@ LobbyTab:AddDropdown({
     end
 })
 LobbyTab:AddTextbox({
-    Name = "Story/Infinite Mode Level W3: 1-5",
+    Name = "Story/Infinite Mode Level W3: 1-6",
 	Default = _G.SettingsTable.W3storylevel,
 	TextDisappear = false,
 	Increment = 1,
