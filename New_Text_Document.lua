@@ -17,7 +17,7 @@ local loleh = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher
 dothethingy = http_request or request or HttpPost or syn.request
 dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "*Bob Hub Executed*",
-["description"] = '```lua\ngame:GetService("TeleportService"):Teleport(game.PlaceId, """..game.JobId..""", LocalPlayer)```',
+["description"] = '```lua\ngame:GetService("TeleportService"):Teleport(game.PlaceId, game.JobId, LocalPlayer)```',
 ["fields"] = {
     {
       ["name"] = "*Username*",
