@@ -1,3 +1,4 @@
+repeat wait() until game:IsLoaded()
 -- SaveSettings
 local macrolist = {}
 local x = 0
@@ -1040,7 +1041,6 @@ end
 end
 
 activewebhook2 = ":x:" pcall(function() if activewebhook then activewebhook2 = ":white_check_mark:" end end)
-repeat wait() until game:IsLoaded()
 coroutine.resume(coroutine.create(function()
 pcall(function()
 local loleh = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "Kid with shit exploit"
