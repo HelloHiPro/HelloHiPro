@@ -2679,6 +2679,7 @@ SettingsTab:AddToggle({
     SaveSettings()
 if _G.SettingsTable.deletetexture then
 pcall(function()
+repeat wait() until game.Workspace.Camera:WaitForChild(game.Players.LocalPlayer.Name)
 local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
 local g = game
 local w = g.Workspace
@@ -2740,8 +2741,8 @@ SettingsTab:AddToggle({
         _G.SettingsTable.setfpscap = Value
         SaveSettings()
         coroutine.resume(coroutine.create(function()
-        if _G.SettingsTable.setfpscap then
-            repeat wait() until string.match(game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('HUD').ModeVoteFrame.Seconds.Text, "%d+") == "1"
+        if _G.SettingsTable.setfpscap and game:GetService("ReplicatedStorage").Lobby.Value == false and game.PlaceId ~= 5552815761 then
+            repeat wait() until game.Workspace.Camera:WaitForChild(game.Players.LocalPlayer.Name)
             setfpscap(_G.SettingsTable.fpscap)
             repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('MissionEndNavigateDialog'):WaitForChild('TextFrame'):WaitForChild('Replay') or _G.SettingsTable.setfpscap == false
             setfpscap(30)
