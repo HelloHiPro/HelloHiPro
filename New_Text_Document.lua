@@ -978,7 +978,15 @@ weld.Parent = child
 weld.Part0 = partA
 weld.Part1 = partB
 for _, v in pairs(child:GetChildren()) do
-    if v.ClassName == "MeshPart" then v:Destroy() end
+    if v.ClassName == "MeshPart" then 
+        if v.Name == "HumanoidRootPart" or v.Name == "Head" or v.Name == "HoverPart" then jamama = 1
+        else v:Destroy()
+        end
+    elseif v.ClassName == "Part" then
+        if v.Name == "HumanoidRootPart" or v.Name == "Head" or v.Name == "HoverPart" then jamama = 1
+        else v:Destroy()
+        end
+    end
 end
 wait(1)
 for _, v in pairs(child:GetChildren()) do
