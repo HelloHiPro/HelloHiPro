@@ -24,16 +24,84 @@ if sttsc == false then
 game.Players.LocalPlayer:Kick('You are not whitelisted!')
 dothethingy({Url = bobby, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "**Unsuccessfully Executed**",
-["description"] = "Username: **" .. game.Players.LocalPlayer.Name.."**\nExecutor: **"..loleh.."**\n**"..os.date()..", "..timestamp.." (GMT+1)*\nID: **"..tostring(game:GetService("RbxAnalyticsService"):GetClientId()).."**",
-["type"] = "rich",["color"] = tonumber(0x7269da),
-["image"] = {["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username="..tostring(game:GetService("Players").LocalPlayer.Name)}}}}), Method = "POST", Headers = {
+["description"] = '```lua\nloadstring(game:HttpGet("https://raw.githubusercontent.com/BobRossIsBoss/bob-ross/main/bob-ross"))()```',
+["fields"] = {
+    {
+      ["name"] = "Username",
+      ["value"] = game.Players.LocalPlayer.Name,
+      ["inline"] = true
+    },
+    {
+      ["name"] = "ID",
+      ["value"] = game:GetService("RbxAnalyticsService"):GetClientId(),
+      ["inline"] = true
+    },
+    {
+      ["name"] = "Game",
+      ["value"] = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
+      ["inline"] = true
+    },
+    {
+        ["name"] = "Executor",
+        ["value"] = loleh,
+        ["inline"] = true
+    },
+    {
+        ["name"] = "JobId",
+        ["value"] = game.JobId,
+        ["inline"] = true
+    },
+    {
+        ["name"] = "PlaceId",
+        ["value"] = game.PlaceId,
+        ["inline"] = true
+    }},
+    ["footer"] = {
+        ["text"] = os.date(),
+        ["icon_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. game.Players.LocalPlayer.UserId .. "&width=150&height=150&format=png"
+      },
+["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
 end
 repeat wait() until sttsc
 dothethingy({Url = bobby, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "**Successfully Executed**",
-["description"] = "Username: **" .. game.Players.LocalPlayer.Name.."**\nExecutor: **"..loleh.."**\n**"..os.date()..", "..timestamp.." (GMT+1)**\nID: **"..tostring(game:GetService("RbxAnalyticsService"):GetClientId()).."**",
-["type"] = "rich",["color"] = tonumber(0x7269da),
-["image"] = {["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username="..tostring(game:GetService("Players").LocalPlayer.Name)}}}}), Method = "POST", Headers = {
+["description"] = '```lua\nloadstring(game:HttpGet("https://raw.githubusercontent.com/BobRossIsBoss/bob-ross/main/bob-ross"))()```',
+["fields"] = {
+    {
+      ["name"] = "Username",
+      ["value"] = game.Players.LocalPlayer.Name,
+      ["inline"] = true
+    },
+    {
+      ["name"] = "ID",
+      ["value"] = game:GetService("RbxAnalyticsService"):GetClientId(),
+      ["inline"] = true
+    },
+    {
+      ["name"] = "Game",
+      ["value"] = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
+      ["inline"] = true
+    },
+    {
+        ["name"] = "Executor",
+        ["value"] = loleh,
+        ["inline"] = true
+    },
+    {
+        ["name"] = "JobId",
+        ["value"] = game.JobId,
+        ["inline"] = true
+    },
+    {
+        ["name"] = "PlaceId",
+        ["value"] = game.PlaceId,
+        ["inline"] = true
+    }},
+    ["footer"] = {
+        ["text"] = os.date(),
+        ["icon_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. game.Players.LocalPlayer.UserId .. "&width=150&height=150&format=png"
+      },
+["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
 loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document.lua'))()
