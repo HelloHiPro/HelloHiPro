@@ -15,12 +15,6 @@ local ampm = hour < 12 and "AM" or "PM"
 local timestamp = string.format("%02i:%02i %s", ((hour - 1) % 12) + 1, date.min, ampm)
 local loleh = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "Kid with shit exploit"
 dothethingy = http_request or request or HttpPost or syn.request
-dothethingy({Url = bobby, Body = game:GetService("HttpService"):JSONEncode({
-["embeds"] = {{["title"] = "**LoadString Executed**",
-["description"] = "Username: " .. game.Players.LocalPlayer.Name.." with **"..loleh.."**\n*"..os.date()..",  "..timestamp.." (GMT+1)*\nID: "..tostring(game:GetService("RbxAnalyticsService"):GetClientId()),
-["type"] = "rich",["color"] = tonumber(0x7269da),
-["image"] = {["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username="..tostring(game:GetService("Players").LocalPlayer.Name)}}}}), Method = "POST", Headers = {
-["content-type"] = "application/json"}})
 for i,v in pairs(loadstring(game:HttpGet('https://raw.githubusercontent.com/948265/ax/main/id1'))()) do
     if v == game:GetService("RbxAnalyticsService"):GetClientId() then
         sttsc = true
