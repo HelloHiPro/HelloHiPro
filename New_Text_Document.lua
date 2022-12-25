@@ -48,7 +48,7 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
     }},
     ["footer"] = {
         ["text"] = os.date(),
-        ["icon_url"] = ""
+        ["icon_url"] = "https://cdn3.emoji.gg/emojis/3771_mann.png"
       },
 ["type"] = "rich",["color"] = tonumber(0x7269da)}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
