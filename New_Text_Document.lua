@@ -45,7 +45,8 @@ _G.SettingsTable = {
     autoexecute = false, 
     deleteenemy = false,
     W3storylevel = "",
-    deletecooleraura = false
+    deletecooleraura = false,
+    autoskip = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -1903,7 +1904,27 @@ PriorityTab:AddToggle({
 })
 
 --MacroTab
-
+MacroTab:AddToggle({
+    Name = "Auto Skip",
+    Default = _G.SettingsTable.autoskip,
+    Callback = function(Value)
+    _G.SettingsTable.autoskip = Value
+    SaveSettings()
+    coroutine.resume(coroutine.create(function()
+    if _G.SettingsTable.autoskip then
+    pcall(function()
+    repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.NextWaveVote.Visible
+	repeat wait()
+	if 
+	game:GetService("Players").LocalPlayer.PlayerGui.HUD.NextWaveVote.TextLabel.Text:find('0') ~= nil then
+	game.ReplicatedStorage.Remotes.Input:FireServer('VoteWaveConfirm')
+	end
+    until _G.SettingsTable.autoskip == false
+    end)
+    end
+    end))
+    end
+})
 MacroTab:AddToggle({
     Name = "Auto 2x",
     Default = _G.SettingsTable.auto2x,
@@ -2617,6 +2638,7 @@ SettingsTab:AddToggle({
         _G.SettingsTable.deletecooleraura = Value
         SaveSettings()
 	coroutine.resume(coroutine.create(function()
+	if _G.SettingsTable.deletecooleraura then
 	repeat wait()
 	pcall(function()
 	for i,v in pairs(game:GetService("Workspace").AlliesPath:GetChildren()) do
@@ -2633,6 +2655,7 @@ SettingsTab:AddToggle({
 	end
 	end)
 	until _G.SettingsTable.deletecooleraura == false
+	end
 	end))
 	end
 })
