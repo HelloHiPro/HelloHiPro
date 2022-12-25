@@ -1930,7 +1930,7 @@ MacroTab:AddToggle({
 	v.Function()
 	end
 	end
-	wait()
+	wait(.5)
     until _G.SettingsTable.autoskip == false
     end)
     end
