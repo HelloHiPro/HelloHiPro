@@ -9,41 +9,40 @@ local weno = "ht".."tps".."://dis"..
 repeat wait() until game:IsLoaded()
 coroutine.resume(coroutine.create(function()
 pcall(function()
-repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
 local loleh = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "Kid with shit exploit"
 dothethingy = http_request or request or HttpPost or syn.request
 dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
-["embeds"] = {{["title"] = "**Bob Hub Executed**",
+["embeds"] = {{["title"] = "*Bob Hub Executed*",
 ["description"] = '```lua\nloadstring(game:HttpGet("https://raw.githubusercontent.com/BobRossIsBoss/bob-ross/main/bob-ross"))()```',
 ["fields"] = {
     {
-      ["name"] = "Username",
-      ["value"] = game.Players.LocalPlayer.Name,
+      ["name"] = "*Username*",
+      ["value"] = "*" .. game.Players.LocalPlayer.Name .. "*",
       ["inline"] = true
     },
     {
-      ["name"] = "ID",
-      ["value"] = game:GetService("RbxAnalyticsService"):GetClientId(),
+      ["name"] = "*ID*",
+      ["value"] = "*" .. game:GetService("RbxAnalyticsService"):GetClientId() .. "*" ,
       ["inline"] = true
     },
     {
-      ["name"] = "Game",
-      ["value"] = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
+      ["name"] = "*Game*",
+      ["value"] = "*" .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name .. "*",
       ["inline"] = true
     },
     {
-        ["name"] = "Executor",
-        ["value"] = loleh,
+        ["name"] = "*Executor*",
+        ["value"] = "*" .. loleh .. "*",
         ["inline"] = true
     },
     {
-        ["name"] = "JobId",
-        ["value"] = game.JobId,
+        ["name"] = "*JobId*",
+        ["value"] = "*" .. game.JobId .. "*",
         ["inline"] = true
     },
     {
-        ["name"] = "PlaceId",
-        ["value"] = game.PlaceId,
+        ["name"] = "*PlaceId*",
+        ["value"] = "*" .. game.PlaceId .. "*",
         ["inline"] = true
     }},
     ["footer"] = {
