@@ -2679,6 +2679,7 @@ SettingsTab:AddToggle({
     SaveSettings()
 if _G.SettingsTable.deletetexture then
 pcall(function()
+coroutine.resume(coroutine.create(function()
 repeat wait() until game.Workspace.Camera:WaitForChild(game.Players.LocalPlayer.Name)
 local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
 local g = game
@@ -2720,6 +2721,7 @@ for i, e in pairs(l:GetChildren()) do
         e.Enabled = false
     end
 end
+end))
 end)
 end
 end    
