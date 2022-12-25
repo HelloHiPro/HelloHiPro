@@ -1,6 +1,6 @@
 activewebhook2 = ":x:"
 gameplaceid = game.PlaceId
-gamejobid = gane.JobId
+gamejobid = game.JobId
 pcall(function()
 if activewebhook then activewebhook2 = ":white_check_mark:" end
 end)
