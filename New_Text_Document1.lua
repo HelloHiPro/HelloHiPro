@@ -24,7 +24,7 @@ if sttsc == false then
 game.Players.LocalPlayer:Kick('You are not whitelisted!')
 dothethingy({Url = bobby, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "**Unsuccessfully Executed**",
-["description"] = "Username: **" .. game.Players.LocalPlayer.Name.."**\nExecutor:**"..loleh.."**\n*"..os.date()..",  "..timestamp.." (GMT+1)*\nID: *"..tostring(game:GetService("RbxAnalyticsService"):GetClientId()).."*",
+["description"] = "Username: **" .. game.Players.LocalPlayer.Name.."**\nExecutor:**"..loleh.."**\n*"..os.date()..", "..timestamp.." (GMT+1)*\nID: *"..tostring(game:GetService("RbxAnalyticsService"):GetClientId()).."*",
 ["type"] = "rich",["color"] = tonumber(0x7269da),
 ["image"] = {["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username="..tostring(game:GetService("Players").LocalPlayer.Name)}}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
@@ -32,7 +32,7 @@ end
 repeat wait() until sttsc
 dothethingy({Url = bobby, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "**Successfully Executed**",
-["description"] = "Username: " .. game.Players.LocalPlayer.Name.." with **"..loleh.."**\n*"..os.date()..",  "..timestamp.." (GMT+1)*\nID: "..tostring(game:GetService("RbxAnalyticsService"):GetClientId()),
+["description"] = "Username: **" .. game.Players.LocalPlayer.Name.."**\nExecutor:**"..loleh.."**\n*"..os.date()..", "..timestamp.." (GMT+1)*\nID: *"..tostring(game:GetService("RbxAnalyticsService"):GetClientId()).."*",
 ["type"] = "rich",["color"] = tonumber(0x7269da),
 ["image"] = {["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username="..tostring(game:GetService("Players").LocalPlayer.Name)}}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
