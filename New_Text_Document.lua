@@ -46,7 +46,8 @@ _G.SettingsTable = {
     deleteenemy = false,
     W3storylevel = "",
     deletecooleraura = false,
-    autoskip = false
+    autoskip = false,
+    autonext = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -1936,6 +1937,26 @@ MacroTab:AddToggle({
     end))
     end
 })
+MacroTab:AddToggle({
+    Name = "Auto Next",
+    Default = _G.SettingsTable.autonext,
+    Callback = function(Value)
+    _G.SettingsTable.autonext = Value
+    SaveSettings()
+	if _G.SettingsTable.autonext then
+	coroutine.resume(coroutine.create(function()
+	while _G.SettingsTable.autonext do wait(.5)
+	pcall(function()
+	for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.HUD.MissionEnd.BG.Actions.Next.Activated)) do
+	v.Function()
+	end
+	end)
+	end
+	end))
+	end
+    end
+})
+
 MacroTab:AddToggle({
     Name = "Auto 2x",
     Default = _G.SettingsTable.auto2x,
