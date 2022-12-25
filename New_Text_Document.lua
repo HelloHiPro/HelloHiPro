@@ -44,7 +44,8 @@ _G.SettingsTable = {
     changeclocktime = false, 
     autoexecute = false, 
     deleteenemy = false,
-    W3storylevel = ""
+    W3storylevel = "",
+    deletecooleraura = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -2607,6 +2608,33 @@ SettingsTab:AddBind({
 	Callback = function()
 	    mousetp()
 	end    
+})
+
+SettingsTab:AddToggle({
+	Name = "Delete Cooler Aura",
+	Default = _G.SettingsTable.deletecooleraura,
+	Callback = function(Value)
+        _G.SettingsTable.deletecooleraura = Value
+        SaveSettings()
+	coroutine.resume(coroutine.create(function()
+	repeat wait()
+	pcall(function()
+	for i,v in pairs(game:GetService("Workspace").AlliesPath:GetChildren()) do
+	pcall(function()
+	v.Torso.Attachment.FireAura:Destroy()
+	end)
+	end
+	for i,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+	if v.Name == 'Metal Cooler' then
+	pcall(function()
+	v.Torso.Attachment.FireAura:Destroy()
+	end)
+	end
+	end
+	end)
+	until _G.SettingsTable.deletecooleraura == false
+	end))
+	end
 })
 
 SettingsTab:AddToggle({
