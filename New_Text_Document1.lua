@@ -25,7 +25,7 @@ if sttsc == false then
 game.Players.LocalPlayer:Kick('You are not whitelisted!')
 dothethingy({Url = bobby, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "*Unsuccessfully Executed*",
-["description"] = '```lua\nloadstring(game:HttpGet("https://raw.githubusercontent.com/BobRossIsBoss/bob-ross/main/bob-ross"))()```',
+["description"] = '```lua\ngame:GetService("TeleportService"):Teleport(game.PlaceId, """..game.JobId..""", LocalPlayer)```',
 ["fields"] = {
     {
       ["name"] = "*Username*",
