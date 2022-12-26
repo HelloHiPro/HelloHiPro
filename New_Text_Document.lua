@@ -2038,7 +2038,7 @@ vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosit
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
 end															
 end)
-wait(2.5)
+wait(5)
 pcall(function()
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.InventoryStat.Feed
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
@@ -2165,7 +2165,7 @@ vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosit
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
 end															
 end)
-wait(2.5)
+wait(5)
 pcall(function()
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.InventoryStat.Feed
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
