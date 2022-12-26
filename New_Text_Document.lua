@@ -632,13 +632,10 @@ workspace.Unit.ChildAdded:Connect(function(child)
         if child.Name == 'Six Eyes Gojo' and game.Players.LocalPlayer.Money.Value > 28000 then
             child:WaitForChild("UpgradeTag")
             repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", child)
+            pcall(function() game:GetService("Workspace").Camera.SphereSelection.Part.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text, 0.1, game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text) game:GetService("Workspace").Camera.SphereSelection.Union.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text) end)
             wait()
             until child.UpgradeTag.Value == child.MaxUpgradeTag.Value
-        game:GetService("Players").LocalPlayer.PlayerGui.HUD.Upgrade.SpecialButton.Visible = true
-	pcall(function()
-	    game:GetService("Workspace").Camera.SphereSelection.Part.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text, 0.1, game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text)
-            game:GetService("Workspace").Camera.SphereSelection.Union.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text)
-	end)
+            game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.Visible = true
 	end
     end
 end)
@@ -650,7 +647,7 @@ workspace.Unit.ChildAdded:Connect(function(child)
             repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", child)
             wait(.01)
             until child.UpgradeTag.Value == 6
-        game:GetService("Players").LocalPlayer.PlayerGui.HUD.Upgrade.SpecialButton.Visible = true
+        game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.Visible = true
         end
     end
 end)
