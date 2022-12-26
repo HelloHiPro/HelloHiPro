@@ -47,7 +47,13 @@ _G.SettingsTable = {
     W3storylevel = "",
     deletecooleraura = false,
     autoskip = false,
-    autonext = false
+    autonext = false,
+    feed = false,
+    unittosearch = "",
+    unittofeed = "",
+    feedunitsearch = "",
+    feedunitkeyword = "",
+    feedwhenmaxinv = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -191,6 +197,7 @@ local FarmLeave2 = ""
 local checkorbfarm = false
 local autotstable = {}
 local gojoplaced = false
+local feedwhenmaxinvbool = false
 
 --Anti-AFK
 local vu = game:GetService("VirtualUser")
@@ -1194,19 +1201,33 @@ local Event = game:GetService("ReplicatedStorage").Remotes.Input
 while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
     if autojoinpath.SurfaceGui.Frame.TextLabel.Text == "Empty" then
         local x = 0
-        repeat wait()
-        if maxinv == false then
+	local tp = false
+	coroutine.resume(coroutine.create(function()
+	repeat wait()
+        if maxinv == false or _G.SettingsTable.feedwhenmaxinv then
+	repeat wait() until autojoinpath.SurfaceGui.Frame.TextLabel.Text == "Empty"
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 0)
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 1)
-        end
-        wait(1)
-        pcall(function()
-        if game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification.NotificationTemplate.Label.Text == 'Your inventory is full' then
+	task.wait(1)
+	local a1 = pcall(function()
+	if game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification.NotificationTemplate.Label.Text == 'Your inventory is full' then
             maxinv = true
+            feedwhenmaxinvbool = true
         end
-        end)
+	end)																
+	if a1 == false then maxinv = false feedwhenmaxinvbool = false end
+	tp = true
+	wait()														
+	tp = false
+	if _G.SettingsTable.feedwhenmaxinv then wait(30) end
+        end
+	until maxinv and _G.SettingsTable.feedwhenmaxinv == false or autojoinpath.SurfaceGui.Frame.TextLabel.Text ~= "Empty" or _G.SettingsTable.autojoin == false
+	end))
+        repeat wait()
+        repeat wait() until tp
         if _G.SettingsTable.tctoggle == false and maxinv then
             pcall(function()
+	    if x == 0 then
             dothethingy = http_request or request or HttpPost or syn.request
                 dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
                 ["embeds"] = {{["title"] = "**Full Inv**",
@@ -1215,8 +1236,12 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
                 ["color"] = tonumber(0x7269da)}}}), 
                 Method = "POST", Headers = {
                 ["content-type"] = "application/json"}})
-            end)
+	    end
+	    end)
+	    x  = x + 1
+	    if _G.SettingsTable.feedwhenmaxinv == false then
             break
+	    end
         end
         pcall(function()
             if _G.SettingsTable.tctoggle and maxinv then
@@ -1237,8 +1262,8 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
                 firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
             end
         end)
-        until autojoinpath.SurfaceGui.Frame.TextLabel.Text ~= "Empty" or _G.SettingsTable.autojoin == false
-        if maxinv == false then
+        until autojoinpath.SurfaceGui.Frame.TextLabel.Text ~= "Empty" or _G.SettingsTable.autojoin == false or maxinv == false
+        if maxinv == false or _G.SettingsTable.feedwhenmaxinv then
         coroutine.resume(coroutine.create(function()
         repeat wait()
         Event:FireServer(autojoinmode, autojoinmap, false)
@@ -1377,6 +1402,12 @@ local MobCounterTab = Window:MakeTab({
 
 local MacroTab = Window:MakeTab({
 	Name = "Macro",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local AutoFeedTab = Window:MakeTab({
+	Name = "Auto Feed",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
@@ -1911,6 +1942,304 @@ PriorityTab:AddToggle({
     Callback = function(Value)
     _G.unit6 = Value
     end
+})
+
+--AutoFeedTab
+AutoFeedTab:AddToggle({
+    Name = "Auto Feed When Full Inv",
+    Default = _G.SettingsTable.feedwhenmaxinv,
+    Callback = function(Value)
+_G.SettingsTable.feedwhenmaxinv = Value
+SaveSettings()
+if _G.SettingsTable.feedwhenmaxinv and game.ReplicatedStorage.Lobby.Value == true then
+if feedwhenmaxinvbool then
+pcall(function()
+coroutine.resume(coroutine.create(function()
+repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.LeftButton.InventoryButton.Visible
+task.wait(5)
+local vim = game:GetService'VirtualInputManager'
+local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.SearchBarBG
+local search = false
+pcall(function()
+for i,v in pairs(game:GetService('CoreGui').Orion:GetChildren()) do
+v.Visible = false
+end
+game:GetService("Players").LocalPlayer.PlayerGui.Chat.Enabled = false
+local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.LeftButton.InventoryButton
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end)
+wait(.5)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+wait(.5)
+game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Search.Text = _G.SettingsTable.unittosearch
+wait(.5)
+pcall(function()
+local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.MaxUnitBG
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end
+end)
+wait(.5)
+for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Inventory:GetChildren()) do
+if v.Name == _G.SettingsTable.unittofeed then
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
+vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,true,v.View.TextButton,1)
+vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,false,v.View.TextButton,1)
+end
+break
+end
+end
+wait(.5)
+pcall(function()
+local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.InventoryStat.Feed
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end
+end)									
+coroutine.resume(coroutine.create(function()
+repeat wait(.5)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+wait(.5)
+game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Search.Text = _G.SettingsTable.feedunitsearch
+wait(.5)
+pcall(function()
+local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.MaxUnitBG
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then		
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end																
+end)
+search = false
+wait(5)
+pcall(function()
+search = true
+local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.InventoryStat.FeedDialog.ConfirmButton
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then															
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end															
+end)
+wait(.5)
+pcall(function()
+local x = game:GetService("Players").LocalPlayer.PlayerGui.Notification.Message.Message.Confirm
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then															
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end															
+end)
+wait(.5)
+pcall(function()
+local x = game:GetService("Players").LocalPlayer.PlayerGui.Notification.Message.Message.Confirm
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then															
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end															
+end)
+wait(2.5)
+pcall(function()
+local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.InventoryStat.Feed
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end
+end)
+wait(1)
+until _G.SettingsTable.feedwhenmaxinv == false or game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible == false
+end))
+repeat wait(1)
+for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Inventory:GetChildren()) do
+pcall(function()
+if v.Trash.Visible == false and v.Name:find(_G.SettingsTable.feedunitkeyword) ~= nil and search == false then
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then														
+vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,true,v.View.TextButton,1)
+vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,false,v.View.TextButton,1)
+end
+wait(.1)
+end
+end)
+end
+until _G.SettingsTable.feedwhenmaxinv == false or game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible == false
+for i,v in pairs(game:GetService('CoreGui').Orion:GetChildren()) do
+v.Visible = true
+end
+game:GetService("Players").LocalPlayer.PlayerGui.Chat.Enabled = true
+end))
+end)
+end
+end
+end
+})
+
+AutoFeedTab:AddToggle({
+    Name = "Auto Feed",
+    Default = _G.SettingsTable.feed,
+    Callback = function(Value)
+_G.SettingsTable.feed = Value
+SaveSettings()
+if _G.SettingsTable.feed and game.ReplicatedStorage.Lobby.Value == true then
+pcall(function()
+coroutine.resume(coroutine.create(function()
+repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.LeftButton.InventoryButton.Visible
+task.wait(5)
+local vim = game:GetService'VirtualInputManager'
+local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.SearchBarBG
+local search = false
+pcall(function()
+for i,v in pairs(game:GetService('CoreGui').Orion:GetChildren()) do
+v.Visible = false
+end
+game:GetService("Players").LocalPlayer.PlayerGui.Chat.Enabled = false
+local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.LeftButton.InventoryButton
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end)
+wait(.5)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+wait(.5)
+game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Search.Text = _G.SettingsTable.unittosearch
+wait(.5)
+pcall(function()
+local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.MaxUnitBG
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end
+end)
+wait(.5)
+for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Inventory:GetChildren()) do
+if v.Name == _G.SettingsTable.unittofeed then
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
+vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,true,v.View.TextButton,1)
+vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,false,v.View.TextButton,1)
+end
+break
+end
+end
+wait(.5)
+pcall(function()
+local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.InventoryStat.Feed
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end
+end)									
+coroutine.resume(coroutine.create(function()
+repeat wait(.5)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+wait(.5)
+game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Search.Text = _G.SettingsTable.feedunitsearch
+wait(.5)
+pcall(function()
+local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.MaxUnitBG
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then		
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end																
+end)
+search = false
+wait(5)
+pcall(function()
+search = true
+local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.InventoryStat.FeedDialog.ConfirmButton
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then															
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end															
+end)
+wait(.5)
+pcall(function()
+local x = game:GetService("Players").LocalPlayer.PlayerGui.Notification.Message.Message.Confirm
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then															
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end															
+end)
+wait(.5)
+pcall(function()
+local x = game:GetService("Players").LocalPlayer.PlayerGui.Notification.Message.Message.Confirm
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then															
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end															
+end)
+wait(2.5)
+pcall(function()
+local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.InventoryStat.Feed
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+end
+end)
+wait(1)
+until _G.SettingsTable.feed == false or game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible == false
+end))
+repeat wait(1)
+for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Inventory:GetChildren()) do
+pcall(function()
+if v.Trash.Visible == false and v.Name:find(_G.SettingsTable.feedunitkeyword) ~= nil and search == false then
+if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then														
+vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,true,v.View.TextButton,1)
+vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,false,v.View.TextButton,1)
+end
+wait(.1)
+end
+end)
+end
+until _G.SettingsTable.feed == false or game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible == false
+for i,v in pairs(game:GetService('CoreGui').Orion:GetChildren()) do
+v.Visible = true
+end
+game:GetService("Players").LocalPlayer.PlayerGui.Chat.Enabled = true
+end))
+end)
+end
+end
+})
+
+AutoFeedTab:AddTextbox({
+	Name = "Search Unit to Lvl up(In Game Name)",
+	Default = tostring(_G.SettingsTable.unittosearch),
+	TextDisappear = false,
+	Increment = 1,
+	Callback = function(Value)
+	    _G.SettingsTable.unittosearch = Value
+	    SaveSettings()
+	end    
+})
+
+AutoFeedTab:AddTextbox({
+	Name = "Unit to Lvl Up(Dex Name)",
+	Default = tostring(_G.SettingsTable.unittofeed),
+	TextDisappear = false,
+	Increment = 1,
+	Callback = function(Value)
+	    _G.SettingsTable.unittofeed = Value
+	    SaveSettings()
+	end    
+})
+			
+AutoFeedTab:AddTextbox({
+	Name = "Search Feed Unit Key Word(In Game Name)",
+	Default = tostring(_G.SettingsTable.feedunitsearch),
+	TextDisappear = false,
+	Increment = 1,
+	Callback = function(Value)
+	    _G.SettingsTable.feedunitsearch = Value
+	    SaveSettings()
+	end    
+})
+AutoFeedTab:AddTextbox({
+	Name = "Feed Unit Key Word(Dex Name)",
+	Default = tostring(_G.SettingsTable.feedunitkeyword),
+	TextDisappear = false,
+	Increment = 1,
+	Callback = function(Value)
+	    _G.SettingsTable.feedunitkeyword = Value
+	    SaveSettings()
+	end    
 })
 
 --MacroTab
