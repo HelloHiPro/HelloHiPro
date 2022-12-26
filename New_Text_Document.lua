@@ -632,10 +632,14 @@ workspace.Unit.ChildAdded:Connect(function(child)
         if child.Name == 'Six Eyes Gojo' and game.Players.LocalPlayer.Money.Value > 28000 then
             child:WaitForChild("UpgradeTag")
             repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", child)
-            wait(.01)
+            wait()
             until child.UpgradeTag.Value == child.MaxUpgradeTag.Value
         game:GetService("Players").LocalPlayer.PlayerGui.HUD.Upgrade.SpecialButton.Visible = true
-        end
+	pcall(function()
+	    game:GetService("Workspace").Camera.SphereSelection.Part.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text, 0.1, game:GetService("Players").HydroMatter5555.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text)
+            game:GetService("Workspace").Camera.SphereSelection.Union.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").HydroMatter5555.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").HydroMatter5555.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text)
+	end)
+	end
     end
 end)
 
