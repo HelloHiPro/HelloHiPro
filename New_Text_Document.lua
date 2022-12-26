@@ -636,8 +636,8 @@ workspace.Unit.ChildAdded:Connect(function(child)
             until child.UpgradeTag.Value == child.MaxUpgradeTag.Value
         game:GetService("Players").LocalPlayer.PlayerGui.HUD.Upgrade.SpecialButton.Visible = true
 	pcall(function()
-	    game:GetService("Workspace").Camera.SphereSelection.Part.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text, 0.1, game:GetService("Players").HydroMatter5555.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text)
-            game:GetService("Workspace").Camera.SphereSelection.Union.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").HydroMatter5555.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").HydroMatter5555.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text)
+	    game:GetService("Workspace").Camera.SphereSelection.Part.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text, 0.1, game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text)
+            game:GetService("Workspace").Camera.SphereSelection.Union.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text)
 	end)
 	end
     end
