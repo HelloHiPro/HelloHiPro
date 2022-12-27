@@ -1958,7 +1958,7 @@ repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.LeftBut
 task.wait(5)
 local vim = game:GetService'VirtualInputManager'
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.SearchBarBG
-local search = false
+local search = true
 pcall(function()
 for i,v in pairs(game:GetService('CoreGui').Orion:GetChildren()) do
 v.Visible = false
@@ -2011,6 +2011,7 @@ vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosit
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
 end																
 end)
+wait(1)
 search = false
 wait(6)
 pcall(function()
@@ -2048,12 +2049,12 @@ end)
 wait(1.5)
 until _G.SettingsTable.feedwhenmaxinv == false or game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible == false
 end))
-repeat wait(1)
+repeat wait(1.5)
 for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Inventory:GetChildren()) do
 pcall(function()
 if v.Trash.Visible == false and v.Name:find(_G.SettingsTable.feedunitkeyword) ~= nil and search == false then
-wait(.15)															
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
+wait(.15)
 vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,true,v.View.TextButton,1)
 vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,false,v.View.TextButton,1)
 end
@@ -2085,7 +2086,7 @@ repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.LeftBut
 task.wait(5)
 local vim = game:GetService'VirtualInputManager'
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.SearchBarBG
-local search = false
+local search = true
 pcall(function()
 for i,v in pairs(game:GetService('CoreGui').Orion:GetChildren()) do
 v.Visible = false
@@ -2138,6 +2139,7 @@ vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosit
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
 end																
 end)
+wait(1)
 search = false
 wait(6)
 pcall(function()
