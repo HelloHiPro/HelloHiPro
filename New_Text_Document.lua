@@ -1990,7 +1990,7 @@ end
 break
 end
 end
-wait(1)
+wait(.1)
 pcall(function()
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.InventoryStat.Feed
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
@@ -2117,7 +2117,7 @@ end
 break
 end
 end
-wait(1)
+wait(.1)
 pcall(function()
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.InventoryStat.Feed
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
