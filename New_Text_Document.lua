@@ -2049,12 +2049,12 @@ end)
 wait(1.5)
 until _G.SettingsTable.feedwhenmaxinv == false or game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible == false
 end))
-repeat wait(1.5)
+repeat wait(.1)
 for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Inventory:GetChildren()) do
 pcall(function()
 if v.Trash.Visible == false and v.Name:find(_G.SettingsTable.feedunitkeyword) ~= nil and search == false then
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
-wait(.15)
+wait(.1)
 vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,true,v.View.TextButton,1)
 vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,false,v.View.TextButton,1)
 end
@@ -2177,12 +2177,12 @@ end)
 wait(1.5)
 until _G.SettingsTable.feed == false or game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible == false
 end))
-repeat wait(1.5)
+repeat wait(.1)
 for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Inventory:GetChildren()) do
 pcall(function()
 if v.Trash.Visible == false and v.Name:find(_G.SettingsTable.feedunitkeyword) ~= nil and search == false then
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
-wait(.15)
+wait(.1)
 vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,true,v.View.TextButton,1)
 vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,false,v.View.TextButton,1)
 end
