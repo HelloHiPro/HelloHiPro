@@ -2184,7 +2184,7 @@ if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
 vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,true,v.View.TextButton,1)
 vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,false,v.View.TextButton,1)
 end
-wait(1)
+wait(.1)
 end
 end)
 end
