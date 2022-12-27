@@ -2149,7 +2149,7 @@ vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosit
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
 end															
 end)
-wait(.5)
+wait(1)
 pcall(function()
 local x = game:GetService("Players").LocalPlayer.PlayerGui.Notification.Message.Message.Confirm
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then															
