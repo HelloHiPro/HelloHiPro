@@ -2382,7 +2382,7 @@ MacroTab:AddToggle({
 })
 
 MacroTab:AddSection({
-	Name = "  Playback starts when there is 1 second(s) left in the ext/normal"
+	Name = "  Playback starts after vote mode frame"
 })
 
 MacroTab:AddToggle({
