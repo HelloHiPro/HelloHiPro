@@ -1258,8 +1258,7 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
                 end)
                 end
                 x = x + 1
-                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 0)
-                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
+                game:GetService("TeleportService"):Teleport(5552815761, LocalPlayer)
             end
         end)
         until autojoinpath.SurfaceGui.Frame.TextLabel.Text ~= "Empty" or _G.SettingsTable.autojoin == false or maxinv == false
@@ -1667,11 +1666,10 @@ LobbyTab:AddToggle({
 	Callback = function(Value)
 	    _G.SettingsTable.autojoin = Value
 	    coroutine.resume(coroutine.create(function()
-            if _G.SettingsTable.mode == 'Time Chamber' and Value and game:GetService("ReplicatedStorage").Lobby.Value then
+            if _G.SettingsTable.mode == 'Time Chamber' and Value and game.PlaceId ~= 5552815761 then
                 repeat task.wait()
                     pcall(function()
-                       firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 0)
-                       firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.Interactions.Elevator, 1)
+                       game:GetService("TeleportService"):Teleport(5552815761, LocalPlayer)
                     end)
                     task.wait(.5)
                 until Value == false
