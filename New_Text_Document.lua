@@ -1,4 +1,13 @@
 repeat wait() until game:IsLoaded()
+
+--Anti-AFK
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+
 -- SaveSettings
 local macrolist = {}
 local x = 0
@@ -115,34 +124,34 @@ game:WaitForChild('CoreGui'):WaitForChild('RobloxPromptGui'):WaitForChild('promp
 end)
 end))
 --TimeChamber
-local tcvalue = false
-coroutine.resume(coroutine.create(function()
-    repeat wait()
     pcall(function()
-    if game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.Frame.CLAIM.Parent.Visible == true then
-    if _G.SettingsTable.autojoin then
-    tcvalue = true
+    if game.PlaceId == 5552815761 then
     local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/948265/ax/main/lib')))()
     local Window = OrionLib:MakeWindow({IntroText = "BOB HUB",Name = "Bob Hub"})
-    local tcTab = Window:MakeTab({
-        Name = "Time Chamber",
+    local LobbyTab = Window:MakeTab({
+        Name = "Lobby",
         Icon = "rbxassetid://4483345998",
         PremiumOnly = false
     })
-    tcTab:AddToggle({
-        Name = "Auto Join TC",
+    LobbyTab:AddToggle({
+        Name = "Auto Join",
         Default = _G.SettingsTable.autojoin,
         Callback = function(Value)
             _G.SettingsTable.autojoin = Value
             SaveSettings()
         end    
     })
+    LobbyTab:AddDropdown({
+        Name = "Auto Join Mode",
+        Default = _G.SettingsTable.mode,
+        Options = {"Story Mode", "Infinite Mode", 'Orb Farm', 'Time Chamber'},
+        Callback = function(Value)
+            _G.SettingsTable.mode = Value
+            SaveSettings()
+        end
+    })
     end
-	end
     end)
-    wait(1)
-    until tcvalue
-    end))
 --Macro timer
 local timer = 0
 local checkplayback = false
@@ -198,14 +207,6 @@ local checkorbfarm = false
 local autotstable = {}
 local gojoplaced = false
 local feedwhenmaxinvbool = false
-
---Anti-AFK
-local vu = game:GetService("VirtualUser")
-game:GetService("Players").LocalPlayer.Idled:connect(function()
-   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-   wait(1)
-   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-end)
 
 --Orion Stuff
 
