@@ -122,8 +122,8 @@ coroutine.resume(coroutine.create(function()
     if game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.Frame.CLAIM.Parent.Visible == true then
     if _G.SettingsTable.autojoin then
     tcvalue = true
-    local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-    local Window = OrionLib:MakeWindow({IntroText = "BOB HUB",Name = "Bob Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionStar"})
+    local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/948265/ax/main/lib')))()
+    local Window = OrionLib:MakeWindow({IntroText = "BOB HUB",Name = "Bob Hub"})
     local tcTab = Window:MakeTab({
         Name = "Time Chamber",
         Icon = "rbxassetid://4483345998",
@@ -209,8 +209,8 @@ end)
 
 --Orion Stuff
 
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({IntroText = "BOB HUB",Name = "Bob Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionStar"})
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/948265/ax/main/lib')))()
+local Window = OrionLib:MakeWindow({IntroText = "BOB HUB",Name = "Bob Hub"})
 
 -- autofv
 if game:GetService("ReplicatedStorage").Lobby.Value == false then
