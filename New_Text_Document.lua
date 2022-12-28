@@ -2891,6 +2891,9 @@ SettingsTab:AddToggle({
         local queue_on_teleport = queue_on_teleport or syn and syn.queue_on_teleport [[
         loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document1.lua'))()]]
 	end
+	pcall(function()
+	    queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document1.lua'))()")
+	end)
 	SaveSettings()
     end    
 })
