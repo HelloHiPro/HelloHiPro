@@ -1592,6 +1592,26 @@ LobbyTab:AddButton({
 })
 
 LobbyTab:AddButton({
+	Name = "Force World 1 TP ",
+	Default = false,
+	Callback = function(Value)
+	    pcall(function()
+        game:GetService("TeleportService"):Teleport(4996049426, LocalPlayer)
+        end)
+	end    
+})
+
+LobbyTab:AddButton({
+	Name = "Force World 2 TP ",
+	Default = false,
+	Callback = function(Value)
+	    pcall(function()
+        game:GetService("TeleportService"):Teleport(7785334488, LocalPlayer)
+        end)
+	end    
+})
+
+LobbyTab:AddButton({
 	Name = "Force World 3 TP ",
 	Default = false,
 	Callback = function(Value)
