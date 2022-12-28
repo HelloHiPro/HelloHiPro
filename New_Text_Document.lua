@@ -155,7 +155,7 @@ end))
             SaveSettings()
         end
     })
-x = 0
+local x = 0
 SettingsTab:AddToggle({
     Name = "Auto Execute",
     Default = _G.SettingsTable.autoexecute,
