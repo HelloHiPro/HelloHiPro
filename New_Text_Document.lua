@@ -2888,7 +2888,8 @@ SettingsTab:AddToggle({
     Callback = function(Value)
         _G.SettingsTable.autoexecute = Value
         if _G.SettingsTable.autoexecute and autoex == 0 then autoex = autoex + 1
-        local queue_on_teleport = queue_on_teleport or syn and syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document1.lua'))()")
+        local queue_on_teleport = syn and syn.queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document1.lua'))()")
+	queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document1.lua'))()")
 	end
 	SaveSettings()
     end    
