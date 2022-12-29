@@ -2292,11 +2292,13 @@ MacroTab:AddToggle({
     pcall(function()
     repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.NextWaveVote.Visible
     repeat wait()
-	if 
-	game:GetService("Players").LocalPlayer.PlayerGui.HUD.NextWaveVote.TextLabel.Text:find('0') ~= nil then
-	for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.HUD.NextWaveVote.YesButton.MouseButton1Click)) do
-	v.Function()
-	end
+	if game:GetService("Players").LocalPlayer.PlayerGui.HUD.NextWaveVote.Visible then
+	pcall(function()
+	local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.NextWaveVote.YesButton
+	local vim = game:GetService'VirtualInputManager'
+	vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
+	vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
+	end)
 	end
 	wait(.5)
     until _G.SettingsTable.autoskip == false
