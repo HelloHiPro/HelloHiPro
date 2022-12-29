@@ -327,6 +327,11 @@ id.Parent = child
 	child:WaitForChild("PriorityAttack").Value
 }})
 end
+child.SpecialMove["Special_Enabled2"].Changed:Connect(function(change)
+if change == true then
+table.insert(Summon, {["UseSpecialMove"] = { timer, tostring(idvalue)}})
+end
+end)
 if _G.SettingsTable.autoplayback then
 if child:WaitForChild('Owner').Value == me then
 idvalue = idvalue + 1
@@ -468,6 +473,21 @@ for _, v in pairs(unit:GetChildren()) do
         until v.SoldBoolean.Value
     end)
                 end
+        end
+    end)
+end
+end
+if Summon[i]["UseSpecialMove"] then
+repeat wait() until tonumber(timer) >= tonumber(Summon[i]["UseSpecialMove"][1])
+for _, v in pairs(unit:GetChildren()) do
+    pcall(function()
+    if v:WaitForChild('Owner').Value == game.Players.LocalPlayer then
+            if v.ID.Value == tonumber(Summon[i]["UseSpecialMove"][2]) then
+repeat 
+game:GetService("ReplicatedStorage").Remotes.Input:FireServer("UseSpecialMove", v)
+wait(.1)
+until v.SpecialMove["Special_Enabled2"].Value
+            end
         end
     end)
 end
