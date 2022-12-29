@@ -327,11 +327,13 @@ id.Parent = child
 	child:WaitForChild("PriorityAttack").Value
 }})
 end
+if _G.record then
 child.SpecialMove["Special_Enabled2"].Changed:Connect(function(change)
 if change == true then
 table.insert(Summon, {["UseSpecialMove"] = { timer, tostring(idvalue)}})
 end
 end)
+end
 if _G.SettingsTable.autoplayback then
 if child:WaitForChild('Owner').Value == me then
 idvalue = idvalue + 1
