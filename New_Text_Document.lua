@@ -327,7 +327,7 @@ id.Parent = child
 	child:WaitForChild("PriorityAttack").Value
 }})
 end
-if _G.record then
+if _G.record and child.Name ~= 'Erwin' and child.Name ~= 'Brook6' and child.Name ~= 'Metal Cooler' and child.Name ~= 'Merlin'  then
 child.SpecialMove["Special_Enabled2"].Changed:Connect(function(change)
 if change == true then
 table.insert(Summon, {["UseSpecialMove"] = { timer, tostring(idvalue)}})
