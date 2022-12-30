@@ -62,7 +62,8 @@ _G.SettingsTable = {
     unittofeed = "",
     feedunitsearch = "",
     feedunitkeyword = "",
-    feedwhenmaxinv = false
+    feedwhenmaxinv = false,
+    autotpw1 = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -1550,6 +1551,22 @@ end
 end    
 })
 
+LobbyTab:AddToggle({
+	Name = "Auto TP W1",
+	Default = _G.SettingsTable.autotpw1,
+	Callback = function(Value)
+        _G.SettingsTable.autotpw1 = Value
+        SaveSettings()
+        if _G.SettingsTable.autotpw1 then
+            pcall(function()
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World1.World1, 0)
+       	    end)
+	    pcall(function()
+	        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, game:GetService("Workspace").Queue.World1.Teleporter, 0)
+	    end)
+        end
+	end    
+})
 
 LobbyTab:AddToggle({
 	Name = "Auto TP W2",
