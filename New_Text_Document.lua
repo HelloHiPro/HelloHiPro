@@ -330,7 +330,7 @@ id.Parent = child
 }})
 end
 if _G.record and child.Name ~= 'Erwin' and child.Name ~= 'Brook6' and child.Name ~= 'Metal Cooler' and child.Name ~= 'Merlin' and child.Name ~= 'Six Eyes Gojo' then
-child.SpecialMove["Special_Enabled2"].Changed:Connect(function(change)
+child:WaitForChild('SpecialMove')["Special_Enabled2"].Changed:Connect(function(change)
 if change == true then
 table.insert(Summon, {["UseSpecialMove"] = { timer, tostring(idvalue)}})
 end
