@@ -63,7 +63,8 @@ _G.SettingsTable = {
     feedunitsearch = "",
     feedunitkeyword = "",
     feedwhenmaxinv = false,
-    autotpw1 = false
+    autotpw1 = false,
+    Render = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -3168,6 +3169,21 @@ SettingsTab:AddToggle({
 	Callback = function(Value)
         _G.SettingsTable.deleteenemy = Value
         SaveSettings()
+	end    
+})
+
+SettingsTab:AddToggle({
+	Name = "Disable Rendering",
+	Default = _G.SettingsTable.Render,
+	Callback = function(Value)
+	_G.SettingsTable.Render = Value
+	SaveSettings()
+	if _G.SettingsTable.Render == false then
+        game:GetService("RunService"):Set3dRenderingEnabled(true)
+	end
+	if _G.SettingsTable.Render == true then
+	game:GetService("RunService"):Set3dRenderingEnabled(false)
+	end
 	end    
 })
 
