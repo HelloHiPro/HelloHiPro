@@ -3172,42 +3172,6 @@ SettingsTab:AddToggle({
         SaveSettings()
 	end    
 })
-local x = 0
-SettingsTab:AddToggle({
-	Name = "Set Fps Cap and Rendering False when window off",
-	Default = _G.SettingsTable.setfpscap,
-	Callback = function(Value)
-        _G.SettingsTable.setfpscap = Value
-        SaveSettings()
-	coroutine.resume(coroutine.create(function()
-	if _G.SettingsTable.setfpscap and x == 0 then x = x + 1
-        local UserInputService = game:GetService("UserInputService")
-	local RunService = game:GetService("RunService")
-	local WindowFocusReleasedFunction = function()
-    	RunService:Set3dRenderingEnabled(false)
-    	setfpscap(_G.SettingsTable.fpscap)
-    	return
-	end
-	local WindowFocusedFunction = function()
-    	RunService:Set3dRenderingEnabled(true)
-    	setfpscap(60)
-    	return
-	end
-	local Initialize = function()
-    	UserInputService.WindowFocusReleased:Connect(WindowFocusReleasedFunction)
-    	UserInputService.WindowFocused:Connect(WindowFocusedFunction)
-    	return
-	end
-        if _G.SettingsTable.setfpscap and game:GetService("ReplicatedStorage").Lobby.Value == false and game.PlaceId ~= 5552815761 then
-            repeat wait() until game.Workspace.Camera:WaitForChild(game.Players.LocalPlayer.Name)
-            Initialize()
-            repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('MissionEndNavigateDialog'):WaitForChild('TextFrame'):WaitForChild('Replay') or _G.SettingsTable.setfpscap == false
-            setfpscap(60)
-        end
-        end
-        end))
-	end
-})
 
 AbilityTab:AddButton({
 	Name = "Set fps cap and render off when window released",
@@ -3232,6 +3196,38 @@ AbilityTab:AddButton({
 end
 Initialize()
 	end    
+})
+
+SettingsTab:AddToggle({
+	Name = "Disable Rendering",
+	Default = _G.SettingsTable.Render,
+	Callback = function(Value)
+	_G.SettingsTable.Render = Value
+	SaveSettings()
+	if _G.SettingsTable.Render == false then
+        game:GetService("RunService"):Set3dRenderingEnabled(true)
+	end
+	if _G.SettingsTable.Render == true then
+	game:GetService("RunService"):Set3dRenderingEnabled(false)
+	end
+	end    
+})
+
+SettingsTab:AddToggle({
+	Name = "Set Fps Cap",
+	Default = _G.SettingsTable.setfpscap,
+	Callback = function(Value)
+        _G.SettingsTable.setfpscap = Value
+        SaveSettings()
+	coroutine.resume(coroutine.create(function()
+        if _G.SettingsTable.setfpscap and game:GetService("ReplicatedStorage").Lobby.Value == false and game.PlaceId ~= 5552815761 then
+            repeat wait() until game.Workspace.Camera:WaitForChild(game.Players.LocalPlayer.Name)
+            setfpscap(_G.SettingsTable.fpscap)
+            repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('MissionEndNavigateDialog'):WaitForChild('TextFrame'):WaitForChild('Replay') or _G.SettingsTable.setfpscap == false
+            setfpscap(30)
+        end
+        end))
+	end
 })
 
 SettingsTab:AddSlider({
