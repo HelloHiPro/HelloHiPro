@@ -2029,9 +2029,9 @@ AutoFeedTab:AddToggle({
 _G.SettingsTable.feedwhenmaxinv = Value
 SaveSettings()
 if _G.SettingsTable.feedwhenmaxinv and game.ReplicatedStorage.Lobby.Value == true then
-if feedwhenmaxinvbool then
 pcall(function()
 coroutine.resume(coroutine.create(function()
+repeat wait() until feedwhenmaxinvbool
 repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.LeftButton.InventoryButton.Visible
 task.wait(5)
 local vim = game:GetService'VirtualInputManager'
@@ -2146,7 +2146,6 @@ end
 game:GetService("Players").LocalPlayer.PlayerGui.Chat.Enabled = true
 end))
 end)
-end
 end
 end
 })
