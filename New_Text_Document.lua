@@ -2401,7 +2401,7 @@ _G.SettingsTable.forcetp = Value
 SaveSettings()
 if _G.SettingsTable.forcetp then
 coroutine.resume(coroutine.create(function()
-game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MissionEndNavigateDialog"):WaitForChild("TextFrame"):WaitForChild("Replay")
+repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.MissionEnd.Visible
 local x = 0
 repeat x = x + 1 wait(1) until x == 60 or _G.SettingsTable.forcetp == false
 if _G.SettingsTable.forcetp then
