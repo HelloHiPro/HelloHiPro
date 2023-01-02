@@ -64,7 +64,8 @@ _G.SettingsTable = {
     feedunitkeyword = "",
     feedwhenmaxinv = false,
     autotpw1 = false,
-    Render = false
+    Render = false,
+    evolveexp = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -2321,6 +2322,31 @@ AutoFeedTab:AddTextbox({
 })
 
 --MacroTab
+
+MacroTab:AddToggle({
+    Name = "Auto Evolve EXP",
+    Default = _G.SettingsTable.evolveexp,
+    Callback = function(Value)
+    _G.SettingsTable.evolveexp = Value
+    SaveSettings()
+    if _G.SettingsTable.evolveexp then
+    local v1695 = require(game:GetService("Players").LocalPlayer.Backpack.Framework.InventoryCardOptimizer);
+    for v1696, v1697 in pairs(v1695.GetTagged("EvolveReadyEXP I")) do
+        game.ReplicatedStorage.Remotes.Input:FireServer("UpgradeUnit", v1697.Name, v1697.ID);
+        task.wait(0.5);
+    end;
+    for v1698, v1699 in pairs(v1695.GetTagged("EvolveReadyEXP II")) do
+        game.ReplicatedStorage.Remotes.Input:FireServer("UpgradeUnit", v1699.Name, v1699.ID);
+        task.wait(0.5);
+    end;
+    for v1700, v1701 in pairs(v1695.GetTagged("EvolveReadyEXP III")) do
+        game.ReplicatedStorage.Remotes.Input:FireServer("UpgradeUnit", v1701.Name, v1701.ID);
+        task.wait(0.5);
+    end;
+    end
+    end
+})
+
 MacroTab:AddToggle({
     Name = "Auto Skip",
     Default = _G.SettingsTable.autoskip,
