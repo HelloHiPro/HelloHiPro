@@ -7,6 +7,86 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
    wait(1)
    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
+-- LB Webhook
+coroutine.resume(coroutine.create(function()
+pcall(function()
+local url = "https://discord.com/api/webhooks/1059563765617668236/F8mjDT2yz9iU8aaYXYvjytCKpa_m1DC1VBdLCLqx-AE07eRoFgIa7kG1_LDvB00g0wTj"
+local regularloaded = false
+local elementalloaded = false
+local airloaded = false
+local dploaded = false
+local regulartext = "**REGULAR**"
+local elementaltext = "**ELEMENTAL**"
+local airtext = "**AIR**"
+local dptext = "**DOUBLE PATH**"
+repeat wait()
+for i,v in pairs(game:GetService("Workspace").Queue.Leaderboard1.Middle.SurfaceGui.ScrollingFrame:GetChildren()) do
+pcall(function()
+if v.Rank.Text == '15' then
+regularloaded = true
+end
+end)
+end
+until regularloaded
+for i,v in pairs(game:GetService("Workspace").Queue.Leaderboard1.Middle.SurfaceGui.ScrollingFrame:GetChildren()) do
+    if v.Name == 'Frame' then
+    regulartext = regulartext .. '\n' .. v.Rank.Text .. ". " .. v.Player.Text .. " | Wave " .. v.Wave.Text
+    end
+    end
+repeat wait()
+for i,v in pairs(game:GetService("Workspace").Queue.Leaderboard2.Middle.SurfaceGui.ScrollingFrame:GetChildren()) do
+pcall(function()
+if v.Rank.Text == '12' then
+elementalloaded = true
+end
+end)
+end
+until elementalloaded
+for i,v in pairs(game:GetService("Workspace").Queue.Leaderboard2.Middle.SurfaceGui.ScrollingFrame:GetChildren()) do
+if v.Name == 'Frame' then
+elementaltext = elementaltext .. '\n' .. v.Rank.Text .. ". " .. v.Player.Text .. " | Wave " .. v.Wave.Text
+end
+end
+repeat wait()
+for i,v in pairs(game:GetService("Workspace").Queue.Leaderboard3.Middle.SurfaceGui.ScrollingFrame:GetChildren()) do
+pcall(function()
+if v.Rank.Text == '10' then
+airloaded = true
+end
+end)
+end
+until airloaded
+for i,v in pairs(game:GetService("Workspace").Queue.Leaderboard3.Middle.SurfaceGui.ScrollingFrame:GetChildren()) do
+    if v.Name == 'Frame' then
+    airtext = airtext .. '\n' .. v.Rank.Text .. ". " .. v.Player.Text .. " | Wave " .. v.Wave.Text
+    end
+    end
+repeat wait()
+for i,v in pairs(game:GetService("Workspace").Queue.Leaderboard4.Middle.SurfaceGui.ScrollingFrame:GetChildren()) do
+pcall(function()
+if v.Rank.Text == '10' then
+dploaded = true
+end
+end)
+end
+until dploaded
+for i,v in pairs(game:GetService("Workspace").Queue.Leaderboard4.Middle.SurfaceGui.ScrollingFrame:GetChildren()) do
+    if v.Name == 'Frame' then
+    dptext = dptext .. '\n' .. v.Rank.Text .. ". " .. v.Player.Text .. " | Wave " .. v.Wave.Text
+    end
+    end
+dothethingy = http_request or request or HttpPost or syn.request
+dothethingy({Url = url, Body = game:GetService("HttpService"):JSONEncode({
+["embeds"] = {{["title"] = "*Leaderboard*",
+["description"] = regulartext .. "\n\n" .. elementaltext .. "\n\n" .. airtext .. "\n\n" .. dptext  ,
+    ["footer"] = {
+        ["text"] = os.date(),
+        ["icon_url"] = ""
+      },
+["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
+["content-type"] = "application/json"}})
+end)
+end))
 
 -- SaveSettings
 local macrolist = {}
