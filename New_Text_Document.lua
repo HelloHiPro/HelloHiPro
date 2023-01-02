@@ -10,7 +10,6 @@ end)
 -- LB Webhook
 coroutine.resume(coroutine.create(function()
 pcall(function()
-local url = "https://discord.com/api/webhooks/1059563765617668236/F8mjDT2yz9iU8aaYXYvjytCKpa_m1DC1VBdLCLqx-AE07eRoFgIa7kG1_LDvB00g0wTj"
 local regularloaded = false
 local elementalloaded = false
 local airloaded = false
