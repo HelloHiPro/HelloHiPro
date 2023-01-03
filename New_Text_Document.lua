@@ -1359,7 +1359,7 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
 	local tp = false
 	coroutine.resume(coroutine.create(function()
 	repeat wait()
-        if maxinv == false or _G.SettingsTable.feedwhenmaxinv then
+        if maxinv == false or _G.SettingsTable.feedwhenmaxinv or _G.SettingsTable.evolveexp then
 	repeat wait() until autojoinpath.SurfaceGui.Frame.TextLabel.Text == "Empty"
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 0)
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 1)
@@ -1374,9 +1374,9 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
 	tp = true
 	wait()														
 	tp = false
-	if _G.SettingsTable.feedwhenmaxinv then wait(30) end
+	if _G.SettingsTable.feedwhenmaxinv or _G.SettingsTable.evolveexp then wait(30) end
         end
-	until maxinv and _G.SettingsTable.feedwhenmaxinv == false or autojoinpath.SurfaceGui.Frame.TextLabel.Text ~= "Empty" or _G.SettingsTable.autojoin == false
+	until maxinv and _G.SettingsTable.feedwhenmaxinv == false or _G.SettingsTable.evolveexp == false or autojoinpath.SurfaceGui.Frame.TextLabel.Text ~= "Empty" or _G.SettingsTable.autojoin == false
 	end))
         repeat wait()
         repeat wait() until tp
@@ -1394,7 +1394,7 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
 	    end
 	    end)
 	    x  = x + 1
-	    if _G.SettingsTable.feedwhenmaxinv == false then
+	    if _G.SettingsTable.feedwhenmaxinv == false or _G.SettingsTable.evolveexp == false then
             break
 	    end
         end
@@ -2442,6 +2442,9 @@ MacroTab:AddToggle({
     _G.SettingsTable.evolveexp = Value
     SaveSettings()
     if _G.SettingsTable.evolveexp then
+    coroutine.resume(coroutine.create(function()
+    task.wait(10)
+    pcall(function()
     local v1695 = require(game:GetService("Players").LocalPlayer.Backpack.Framework.InventoryCardOptimizer);
     for v1696, v1697 in pairs(v1695.GetTagged("EvolveReadyEXP I")) do
         game.ReplicatedStorage.Remotes.Input:FireServer("UpgradeUnit", v1697.Name, v1697.ID);
@@ -2455,6 +2458,8 @@ MacroTab:AddToggle({
         game.ReplicatedStorage.Remotes.Input:FireServer("UpgradeUnit", v1701.Name, v1701.ID);
         task.wait(0.5);
     end;
+    end)
+    end))
     end
     end
 })
