@@ -818,7 +818,7 @@ function mobnotifacation()
     while _G.mobnotifacation do
         OrionLib:MakeNotification({
             Name = "Mob Counter",
-            Content = #game.Workspace.Enemies:GetChildren().."/250",
+            Content = #game.Workspace.Enemies:GetChildren()..'/'..tostring(require(game.ReplicatedStorage.HealthUpdate).MaxCantSkip()),
             Time = mobslider1
         })
         wait(mobslider)
@@ -829,7 +829,7 @@ function click69()
     if click69 then
         OrionLib:MakeNotification({
         Name = "Mob Counter",
-        Content = #game.Workspace.Enemies:GetChildren().."/250",
+        Content = #game.Workspace.Enemies:GetChildren().."/"..tostring(require(game.ReplicatedStorage.HealthUpdate).MaxCantSkip()),
         Time = mobslider1
         })
     end
