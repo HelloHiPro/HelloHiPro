@@ -11,6 +11,7 @@ end)
 coroutine.resume(coroutine.create(function()
 pcall(function()
 local url = "h" .. "tt" .. "ps:/" .. "/disc" .. "ord." .. "com/a" .. "pi/" .. "we" .. "bh" .. "oo" .. "k" .. "s/104" .. "324" .. "0334680" .. "93243" .. "2/otkWouE" .. "IbsZvOSX" .. "ZEqIkQe3" .. "gZLQaS" .. "82Z3z5j" .. "or9t1dA8u" .. "nEqnJOp56" .. "grEvDrk" .. "uR7REDU"
+local urllvl = "ht".."tp".."s://".."disco".."rd.com".."/api/w".."ebhook".."s/10".."5988".."382528".."034001".."8/Hlhp".."yWU_C".."e561Ic".."LZqi1".."l_".."3jyqAJ".."Kem3".."EVGA1b".."Lu-a9vU".."8x-wif".."WvCYb".."oNk".."BnAT".."cyH".."cU"
 local regularloaded = false
 local elementalloaded = false
 local airloaded = false
@@ -79,6 +80,37 @@ dothethingy = http_request or request or HttpPost or syn.request
 dothethingy({Url = url, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "*Leaderboard*",
 ["description"] = regulartext .. "\n\n" .. elementaltext .. "\n\n" .. airtext .. "\n\n" .. dptext  ,
+    ["footer"] = {
+        ["text"] = os.date(),
+        ["icon_url"] = ""
+      },
+["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
+["content-type"] = "application/json"}})
+
+local levelloaded = false
+local leveltext = ""
+repeat wait()
+for i,v in pairs(game:GetService("Workspace").Queue.LevelLeaderboard.Middle.SurfaceGui.ScrollingFrame:GetChildren()) do
+pcall(function()
+if v.Rank.Text == '20' then
+levelloaded = true
+end
+end)
+end
+until levelloaded
+for i,v in pairs(game:GetService("Workspace").Queue.LevelLeaderboard.Middle.SurfaceGui.ScrollingFrame:GetChildren()) do
+    if v.Name == 'Frame' then
+    if v.Rank.Text == '1' then
+    leveltext = leveltext .. v.Rank.Text .. ". " .. v.Player.Text .. " | Level " .. v.Level.Text
+    else
+    leveltext = leveltext .. '\n' .. v.Rank.Text .. ". " .. v.Player.Text .. " | Level " .. v.Level.Text
+    end
+    end
+end
+dothethingy = http_request or request or HttpPost or syn.request
+dothethingy({Url = urllvl, Body = game:GetService("HttpService"):JSONEncode({
+["embeds"] = {{["title"] = "*Level Leaderboard*",
+["description"] = leveltext,
     ["footer"] = {
         ["text"] = os.date(),
         ["icon_url"] = ""
