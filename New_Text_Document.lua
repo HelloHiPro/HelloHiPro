@@ -1348,76 +1348,49 @@ else
         autojoinpath = game:GetService("Workspace").Queue.Joinables.StoryMode
     end
 end
-
+if _G.SettingsTable.tctoggle == false and require(game:GetService("Players").LocalPlayer.Backpack.Framework.InventoryCardOptimizer).OverMaxUnits() then
+	pcall(function()
+	dothethingy = http_request or request or HttpPost or syn.request
+		dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
+		["embeds"] = {{["title"] = "**Full Inv**",
+		["description"] = "",
+		["type"] = "rich",
+		["color"] = tonumber(0x7269da)}}}), 
+		Method = "POST", Headers = {
+		["content-type"] = "application/json"}})
+end)
+end
+pcall(function()
+	if _G.SettingsTable.tctoggle and require(game:GetService("Players").LocalPlayer.Backpack.Framework.InventoryCardOptimizer).OverMaxUnits() then
+		pcall(function()
+		dothethingy = http_request or request or HttpPost or syn.request
+		dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
+		["embeds"] = {{["title"] = "**Full Inv**",
+		["description"] = "**Joining tc...**",
+		["type"] = "rich",
+		["color"] = tonumber(0x7269da)}}}), 
+		Method = "POST", Headers = {
+		["content-type"] = "application/json"}})
+		end)
+		coroutine.resume(coroutine.create(function()
+        repeat wait() 
+		game:GetService("TeleportService"):Teleport(5552815761, LocalPlayer)
+		until _G.SettingsTable.tctoggle == false
+	end))
+	end
+end)
 pcall(function()
 if _G.SettingsTable.mode ~= 'Orb Farm' and _G.SettingsTable.mode ~= 'Time Chamber' then
 local maxinv = false
 local Event = game:GetService("ReplicatedStorage").Remotes.Input
 while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
-    if autojoinpath.SurfaceGui.Frame.TextLabel.Text == "Empty" then
-        local x = 0
-	local tp = false
-	coroutine.resume(coroutine.create(function()
+    if autojoinpath.SurfaceGui.Frame.TextLabel.Text == "Empty" and require(game:GetService("Players").LocalPlayer.Backpack.Framework.InventoryCardOptimizer).OverMaxUnits() == false then
 	repeat wait()
-        if maxinv == false or _G.SettingsTable.feedwhenmaxinv or _G.SettingsTable.evolveexp then
-	repeat wait() until autojoinpath.SurfaceGui.Frame.TextLabel.Text == "Empty"
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 0)
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 1)
-	task.wait(1)
-	local a1 = pcall(function()
-	if game:GetService("Players").LocalPlayer.PlayerGui.Notification.Notification.NotificationTemplate.Label.Text == 'Your inventory is full' then
-            maxinv = true
-            feedwhenmaxinvbool = true
-        end
-	end)																
-	if a1 == false then maxinv = false feedwhenmaxinvbool = false end
-	tp = true
-	wait()														
-	tp = false
-	if _G.SettingsTable.feedwhenmaxinv or _G.SettingsTable.evolveexp then wait(30) end
-        end
-	until maxinv and _G.SettingsTable.feedwhenmaxinv == false or _G.SettingsTable.evolveexp == false or autojoinpath.SurfaceGui.Frame.TextLabel.Text ~= "Empty" or _G.SettingsTable.autojoin == false
-	end))
-        repeat wait()
-        repeat wait() until tp
-        if _G.SettingsTable.tctoggle == false and maxinv then
-            pcall(function()
-	    if x == 0 then
-            dothethingy = http_request or request or HttpPost or syn.request
-                dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
-                ["embeds"] = {{["title"] = "**Full Inv**",
-                ["description"] = "",
-                ["type"] = "rich",
-                ["color"] = tonumber(0x7269da)}}}), 
-                Method = "POST", Headers = {
-                ["content-type"] = "application/json"}})
-	    end
-	    end)
-	    x  = x + 1
-	    if _G.SettingsTable.feedwhenmaxinv == false or _G.SettingsTable.evolveexp == false then
-            break
-	    end
-        end
-        pcall(function()
-            if _G.SettingsTable.tctoggle and maxinv then
-                if x == 0 then
-                pcall(function()
-                dothethingy = http_request or request or HttpPost or syn.request
-                dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
-                ["embeds"] = {{["title"] = "**Full Inv**",
-                ["description"] = "**Joining tc...**",
-                ["type"] = "rich",
-                ["color"] = tonumber(0x7269da)}}}), 
-                Method = "POST", Headers = {
-                ["content-type"] = "application/json"}})
-                end)
-                end
-                x = x + 1
-                game:GetService("TeleportService"):Teleport(5552815761, LocalPlayer)
-            end
-        end)
-        until autojoinpath.SurfaceGui.Frame.TextLabel.Text ~= "Empty" or _G.SettingsTable.autojoin == false or maxinv == false
-        if maxinv == false or _G.SettingsTable.feedwhenmaxinv then
+	task.wait(1)																														
+	until autojoinpath.SurfaceGui.Frame.TextLabel.Text ~= "Empty" or _G.SettingsTable.autojoin == false
+        if require(game:GetService("Players").LocalPlayer.Backpack.Framework.InventoryCardOptimizer).OverMaxUnits() == false then
         coroutine.resume(coroutine.create(function()
         repeat wait()
         Event:FireServer(autojoinmode, autojoinmap, false)
