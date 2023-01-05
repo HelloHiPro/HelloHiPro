@@ -1347,8 +1347,8 @@ else
         autojoinpath = game:GetService("Workspace").Queue.Joinables.StoryMode
     end
 end
+pcall(function()
 if _G.SettingsTable.tctoggle == false and require(game:GetService("Players").LocalPlayer.Backpack.Framework.InventoryCardOptimizer).OverMaxUnits() then
-	pcall(function()
 	dothethingy = http_request or request or HttpPost or syn.request
 		dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
 		["embeds"] = {{["title"] = "**Full Inv**",
@@ -1357,8 +1357,8 @@ if _G.SettingsTable.tctoggle == false and require(game:GetService("Players").Loc
 		["color"] = tonumber(0x7269da)}}}), 
 		Method = "POST", Headers = {
 		["content-type"] = "application/json"}})
-end)
 end
+end)
 pcall(function()
 	if _G.SettingsTable.tctoggle and require(game:GetService("Players").LocalPlayer.Backpack.Framework.InventoryCardOptimizer).OverMaxUnits() then
 		pcall(function()
@@ -1381,7 +1381,8 @@ end)
 pcall(function()
 if _G.SettingsTable.mode ~= 'Orb Farm' and _G.SettingsTable.mode ~= 'Time Chamber' then
 local Event = game:GetService("ReplicatedStorage").Remotes.Input
-while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
+while game:GetService("ReplicatedStorage").Lobby.Value == true and _G.SettingsTable.autojoin do wait()
+pcall(function()
     if autojoinpath.SurfaceGui.Frame.TextLabel.Text == "Empty" and require(game:GetService("Players").LocalPlayer.Backpack.Framework.InventoryCardOptimizer).OverMaxUnits() == false then
 	repeat wait()
         firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, autojoinpath, 0)
@@ -1405,9 +1406,8 @@ while game:GetService("ReplicatedStorage").Lobby.Value == true do wait()
         end
         end
         end
-        wait(1)
-        break
     end
+end)								
 end
 end
 end)
