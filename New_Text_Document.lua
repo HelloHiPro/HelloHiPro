@@ -1347,6 +1347,7 @@ else
         autojoinpath = game:GetService("Workspace").Queue.Joinables.StoryMode
     end
 end
+task.wait(10)
 pcall(function()
 if _G.SettingsTable.tctoggle == false and require(game:GetService("Players").LocalPlayer.Backpack.Framework.InventoryCardOptimizer).OverMaxUnits() then
 	dothethingy = http_request or request or HttpPost or syn.request
