@@ -21,6 +21,11 @@ for i,v in pairs(loadstring(game:HttpGet('https://raw.githubusercontent.com/9482
         sttsc = true
     end
 end
+--remove later---
+if "A1AE5F69-D0F4-49BD-A8C6-40C07A719EF0" == game:GetService("RbxAnalyticsService"):GetClientId() then
+   sttsc = true
+end
+---------------
 if sttsc == false then
 game.Players.LocalPlayer:Kick('You are not whitelisted!')
 dothethingy({Url = bobby, Body = game:GetService("HttpService"):JSONEncode({
