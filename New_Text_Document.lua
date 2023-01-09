@@ -2040,10 +2040,10 @@ AutoFeedTab:AddToggle({
     Callback = function(Value)
 _G.SettingsTable.feedwhenmaxinv = Value
 SaveSettings()
+coroutine.resume(coroutine.create(function()
 task.wait(10)
 if _G.SettingsTable.feedwhenmaxinv and game.ReplicatedStorage.Lobby.Value == true then
 pcall(function()
-coroutine.resume(coroutine.create(function()
 repeat wait() until require(game:GetService("Players").LocalPlayer.Backpack.Framework.InventoryCardOptimizer).OverMaxUnits()
 repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.LeftButton.InventoryButton.Visible
 task.wait(5)
@@ -2157,9 +2157,9 @@ for i,v in pairs(game:GetService('CoreGui').Orion:GetChildren()) do
 v.Visible = true
 end
 game:GetService("Players").LocalPlayer.PlayerGui.Chat.Enabled = true
-end))
 end)
 end
+end))
 end
 })
 
