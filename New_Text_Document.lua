@@ -2040,12 +2040,13 @@ AutoFeedTab:AddToggle({
     Callback = function(Value)
 _G.SettingsTable.feedwhenmaxinv = Value
 SaveSettings()
+task.wait(10)
 if _G.SettingsTable.feedwhenmaxinv and game.ReplicatedStorage.Lobby.Value == true then
 pcall(function()
 coroutine.resume(coroutine.create(function()
 repeat wait() until require(game:GetService("Players").LocalPlayer.Backpack.Framework.InventoryCardOptimizer).OverMaxUnits()
 repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.LeftButton.InventoryButton.Visible
-task.wait(10)
+task.wait(5)
 local vim = game:GetService'VirtualInputManager'
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.SearchBarBG
 local search = true
