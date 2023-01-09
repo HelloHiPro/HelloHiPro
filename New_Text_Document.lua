@@ -2049,6 +2049,7 @@ repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.LeftBut
 task.wait(5)
 local vim = game:GetService'VirtualInputManager'
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.SearchBarBG
+game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.ZIndex = 10000
 local search = true
 pcall(function()
 for i,v in pairs(game:GetService('CoreGui').Orion:GetChildren()) do
@@ -2176,6 +2177,7 @@ repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.LeftBut
 task.wait(5)
 local vim = game:GetService'VirtualInputManager'
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.SearchBarBG
+game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.ZIndex = 10000
 local search = true
 pcall(function()
 for i,v in pairs(game:GetService('CoreGui').Orion:GetChildren()) do
