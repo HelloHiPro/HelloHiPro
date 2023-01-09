@@ -2045,7 +2045,7 @@ pcall(function()
 coroutine.resume(coroutine.create(function()
 repeat wait() until require(game:GetService("Players").LocalPlayer.Backpack.Framework.InventoryCardOptimizer).OverMaxUnits()
 repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.LeftButton.InventoryButton.Visible
-task.wait(5)
+task.wait(10)
 local vim = game:GetService'VirtualInputManager'
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.SearchBarBG
 local search = true
@@ -2058,11 +2058,11 @@ local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.LeftButton.Invent
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
 end)
-wait(1.5)
+wait(2.5)
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
-wait(1.5)
+wait(2.5)
 game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Search.Text = _G.SettingsTable.unittosearch
-wait(1.5)
+wait(2.5)
 pcall(function()
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.MaxUnitBG
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
@@ -2070,7 +2070,7 @@ vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosit
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
 end
 end)
-wait(1.5)
+wait(2.5)
 for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Inventory:GetChildren()) do
 if v.Name == _G.SettingsTable.unittofeed then
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
@@ -2080,7 +2080,7 @@ end
 break
 end
 end
-wait(1.5)
+wait(2.5)
 pcall(function()
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.InventoryStat.Feed
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
@@ -2089,11 +2089,11 @@ vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosit
 end
 end)									
 coroutine.resume(coroutine.create(function()
-repeat wait(1.5)
+repeat wait(2)
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,true,x,1)
-wait(1.5)
+wait(2)
 game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Search.Text = _G.SettingsTable.feedunitsearch
-wait(1.5)
+wait(2)
 pcall(function()
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.MaxUnitBG
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then		
@@ -2101,9 +2101,9 @@ vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosit
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
 end																
 end)
-wait(1)
+wait(2)
 search = false
-wait(6)
+wait(10)
 pcall(function()
 search = true
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.InventoryStat.FeedDialog.ConfirmButton
@@ -2112,7 +2112,7 @@ vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosit
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
 end															
 end)
-wait(1.5)
+wait(2)
 pcall(function()
 local x = game:GetService("Players").LocalPlayer.PlayerGui.Notification.Message.Message.Confirm
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then															
@@ -2120,7 +2120,7 @@ vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosit
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
 end															
 end)
-wait(1.5)
+wait(2)
 pcall(function()
 local x = game:GetService("Players").LocalPlayer.PlayerGui.Notification.Message.Message.Confirm
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then															
@@ -2128,7 +2128,7 @@ vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosit
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
 end															
 end)
-wait(6)
+wait(10)
 pcall(function()
 local x = game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.InventoryStat.Feed
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
@@ -2136,7 +2136,7 @@ vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosit
 vim:SendMouseButtonEvent(x.AbsolutePosition.X+x.AbsoluteSize.X/2,x.AbsolutePosition.Y+50,0,false,x,1)
 end
 end)
-wait(1.5)
+wait(2)
 until _G.SettingsTable.feedwhenmaxinv == false or game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible == false
 end))
 repeat wait(.1)
@@ -2144,7 +2144,7 @@ for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV
 pcall(function()
 if v.Trash.Visible == false and v.Name:find(_G.SettingsTable.feedunitkeyword) ~= nil and search == false then
 if game:GetService("Players").LocalPlayer.PlayerGui.HUD.InventoryV2.Visible then
-wait(.1)
+wait(.25)
 vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,true,v.View.TextButton,1)
 vim:SendMouseButtonEvent(v.View.TextButton.AbsolutePosition.X+v.View.TextButton.AbsoluteSize.X/2,v.View.TextButton.AbsolutePosition.Y+50,0,false,v.View.TextButton,1)
 end
