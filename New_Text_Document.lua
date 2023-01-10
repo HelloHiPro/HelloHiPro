@@ -1,5 +1,4 @@
 repeat wait() until game:IsLoaded()
-
 --Anti-AFK
 local vu = game:GetService("VirtualUser")
 game:GetService("Players").LocalPlayer.Idled:connect(function()
@@ -20,6 +19,37 @@ local regulartext = "**REGULAR**"
 local elementaltext = "**ELEMENTAL**"
 local airtext = "**AIR**"
 local dptext = "**DOUBLE PATH**"
+local leveltext = ""
+local lvlwh = false
+coroutine.resume(coroutine.create(function()
+u185 = require(game.ReplicatedStorage.Framework.RemoteInput).Connect;
+u186 = "Leaderboard";
+u185(u186, function(...)
+local v1556, v1557, v1558 = ...;
+local v1565, v1566, v1567 = pairs(v1556);
+local v1568, v1569 = v1565(v1566, v1567);
+local l__Queue__66 = workspace:FindFirstChild("Queue");
+        for v1591, v1592 in pairs(v1557) do
+        print(v1592[3]..'. '..game:GetService'Players':GetNameFromUserIdAsync(v1592[1]).." | Level "..v1592[2])
+if v1592[3] == 1 then
+    leveltext  = leveltext..tostring(v1592[3])..'. '..game:GetService'Players':GetNameFromUserIdAsync(v1592[1]).." | Level "..tostring(v1592[2])
+    else
+    leveltext  = leveltext..'\n'..tostring(v1592[3])..'. '..game:GetService'Players':GetNameFromUserIdAsync(v1592[1]).." | Level "..tostring(v1592[2])
+end 
+if v1592[3] == 20 then lvlwh = true end
+end
+end)
+end))
+repeat wait() until lvlwh
+dothethingy = http_request or request or HttpPost or syn.request
+dothethingy({Url = urllvl, Body = game:GetService("HttpService"):JSONEncode({
+["embeds"] = {{["title"] = "*Level Leaderboard*",
+["description"] = leveltext,
+    ["footer"] = {
+        ["text"] = os.date()
+      },
+["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
+["content-type"] = "application/json"}})
 repeat wait()
 for i,v in pairs(game:GetService("Workspace").Queue.Leaderboard1.Middle.SurfaceGui.ScrollingFrame:GetChildren()) do
 pcall(function()
@@ -80,37 +110,6 @@ dothethingy = http_request or request or HttpPost or syn.request
 dothethingy({Url = url, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "*Leaderboard*",
 ["description"] = regulartext .. "\n\n" .. elementaltext .. "\n\n" .. airtext .. "\n\n" .. dptext  ,
-    ["footer"] = {
-        ["text"] = os.date(),
-        ["icon_url"] = ""
-      },
-["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
-["content-type"] = "application/json"}})
-
-local levelloaded = false
-local leveltext = ""
-repeat wait()
-for i,v in pairs(game:GetService("Workspace").Queue.LevelLeaderboard.Middle.SurfaceGui.ScrollingFrame:GetChildren()) do
-pcall(function()
-if v.Rank.Text == '20' then
-levelloaded = true
-end
-end)
-end
-until levelloaded
-for i,v in pairs(game:GetService("Workspace").Queue.LevelLeaderboard.Middle.SurfaceGui.ScrollingFrame:GetChildren()) do
-    if v.Name == 'Frame' then
-    if v.Rank.Text == '1' then
-    leveltext = leveltext .. v.Rank.Text .. ". " .. v.Player.Text .. " | Level " .. v.Level.Text
-    else
-    leveltext = leveltext .. '\n' .. v.Rank.Text .. ". " .. v.Player.Text .. " | Level " .. v.Level.Text
-    end
-    end
-end
-dothethingy = http_request or request or HttpPost or syn.request
-dothethingy({Url = urllvl, Body = game:GetService("HttpService"):JSONEncode({
-["embeds"] = {{["title"] = "*Level Leaderboard*",
-["description"] = leveltext,
     ["footer"] = {
         ["text"] = os.date(),
         ["icon_url"] = ""
