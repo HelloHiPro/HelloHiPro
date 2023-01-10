@@ -111,8 +111,7 @@ dothethingy({Url = url, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "*Leaderboard*",
 ["description"] = regulartext .. "\n\n" .. elementaltext .. "\n\n" .. airtext .. "\n\n" .. dptext  ,
     ["footer"] = {
-        ["text"] = os.date(),
-        ["icon_url"] = ""
+        ["text"] = os.date()
       },
 ["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
