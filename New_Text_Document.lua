@@ -21,6 +21,7 @@ local airtext = "**AIR**"
 local dptext = "**DOUBLE PATH**"
 local leveltext = ""
 local lvlwh = false
+local lvlwhcount = 1
 coroutine.resume(coroutine.create(function()
 u185 = require(game.ReplicatedStorage.Framework.RemoteInput).Connect;
 u186 = "Leaderboard";
@@ -28,12 +29,11 @@ u185(u186, function(...)
 local v1556, v1557, v1558 = ...;
 local v1565, v1566, v1567 = pairs(v1556);
 local v1568, v1569 = v1565(v1566, v1567);
-local x = 1
 local l__Queue__66 = workspace:FindFirstChild("Queue");
         for v1591, v1592 in pairs(v1557) do
         print(v1592[3]..'. '..game:GetService'Players':GetNameFromUserIdAsync(v1592[1]).." | Level "..v1592[2])
-    if v1592[3] == x then
-    x = x + 1										
+    if v1592[3] == lvlwhcount then
+    lvlwhcount = lvlwhcount + 1								
     if v1592[3] == 1 then
     	leveltext  = leveltext..tostring(v1592[3])..'. '..game:GetService'Players':GetNameFromUserIdAsync(v1592[1]).." | Level "..tostring(v1592[2])
     else
