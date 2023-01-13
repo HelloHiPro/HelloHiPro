@@ -180,6 +180,7 @@ _G.SettingsTable = {
     autotpw1 = false,
     Render = false,
     evolveexp = false
+    auto3x = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -773,6 +774,9 @@ function autobrookerwin()
             end
         end      
         repeat y = y + 1
+            if game.ReplicatedStorage.SpeedUP.Value == 3 then 
+                wait(.16) 
+            end 
             if game.ReplicatedStorage.SpeedUP.Value == 2 then 
                 wait(.25) 
             end 
@@ -2422,7 +2426,21 @@ MacroTab:AddToggle({
     auto2x()
     end
 })
-
+MacroTab:AddToggle({
+    Name = "Auto 3x",
+    Default = _G.SettingsTable.auto3x,
+    Callback = function(Value)
+_G.SettingsTable.auto3x = Value
+if _G.SettingsTable.auto3x and game.ReplicatedStorage.Lobby.Value == false then
+coroutine.resume(coroutine.create(function()
+repeat 
+    game:GetService("ReplicatedStorage").Remotes.Input:FireServer("SpeedChange", true)
+    wait(1)
+until game.ReplicatedStorage.SpeedUP.Value == 3 or _G.SettingsTable.auto3x == false
+end))
+end
+end
+})
 MacroTab:AddToggle({
     Name = "Auto Extreme",
     Default = _G.SettingsTable.autoextreme,
