@@ -23,6 +23,7 @@ local leveltext = ""
 local lvlwh = false
 local lvlwhcount = 1
 pcall(function()
+if game:GetService("ReplicatedStorage").DayReset.Value:find('%d') ~= nil then
 dothethingy = http_request or request or HttpPost or syn.request
 dothethingy({Url = url, Body = game:GetService("HttpService"):JSONEncode({
 ["embeds"] = {{["title"] = "Reset: *" .. game:GetService("ReplicatedStorage").DayReset.Value .. "* Days",
@@ -31,6 +32,7 @@ dothethingy({Url = url, Body = game:GetService("HttpService"):JSONEncode({
       },
 ["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
+end
 end)
 coroutine.resume(coroutine.create(function()
 u185 = require(game.ReplicatedStorage.Framework.RemoteInput).Connect;
