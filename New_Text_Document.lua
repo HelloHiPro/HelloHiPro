@@ -775,7 +775,7 @@ function autobrookerwin()
         end      
         repeat y = y + 1
             if game.ReplicatedStorage.SpeedUP.Value == 3 then 
-                wait(.16) 
+                wait(.1) 
             end 
             if game.ReplicatedStorage.SpeedUP.Value == 2 then 
                 wait(.25) 
