@@ -22,6 +22,16 @@ local dptext = "**DOUBLE PATH**"
 local leveltext = ""
 local lvlwh = false
 local lvlwhcount = 1
+pcall(function()
+dothethingy = http_request or request or HttpPost or syn.request
+dothethingy({Url = url, Body = game:GetService("HttpService"):JSONEncode({
+["embeds"] = {{["title"] = "Reset: *" .. game:GetService("ReplicatedStorage").DayReset.Value .. "* Days",
+    ["footer"] = {
+        ["text"] = os.date()
+      },
+["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
+["content-type"] = "application/json"}})
+end)
 coroutine.resume(coroutine.create(function()
 u185 = require(game.ReplicatedStorage.Framework.RemoteInput).Connect;
 u186 = "Leaderboard";
