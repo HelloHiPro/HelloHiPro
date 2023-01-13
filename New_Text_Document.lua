@@ -179,7 +179,7 @@ _G.SettingsTable = {
     feedwhenmaxinv = false,
     autotpw1 = false,
     Render = false,
-    evolveexp = false
+    evolveexp = false,
     auto3x = false
 }
 
