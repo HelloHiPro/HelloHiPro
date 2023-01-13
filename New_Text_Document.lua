@@ -2431,6 +2431,7 @@ MacroTab:AddToggle({
     Default = _G.SettingsTable.auto3x,
     Callback = function(Value)
 _G.SettingsTable.auto3x = Value
+SaveSettings()
 if _G.SettingsTable.auto3x and game.ReplicatedStorage.Lobby.Value == false then
 coroutine.resume(coroutine.create(function()
 repeat 
