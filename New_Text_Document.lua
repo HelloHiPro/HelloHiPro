@@ -26,7 +26,7 @@ pcall(function()
 if game:GetService("ReplicatedStorage").DayReset.Value:find('%d') ~= nil then
 dothethingy = http_request or request or HttpPost or syn.request
 dothethingy({Url = url, Body = game:GetService("HttpService"):JSONEncode({
-["embeds"] = {{["title"] = "Reset: *" .. game:GetService("ReplicatedStorage").DayReset.Value .. "* Days",
+["embeds"] = {{["title"] = "Reset: **" .. game:GetService("ReplicatedStorage").DayReset.Value .. "** Days",
     ["footer"] = {
         ["text"] = os.date()
       },
