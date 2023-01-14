@@ -192,7 +192,8 @@ _G.SettingsTable = {
     autotpw1 = false,
     Render = false,
     evolveexp = false,
-    auto3x = false
+    auto3x = false,
+    deleteterrain = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -3293,6 +3294,33 @@ SettingsTab:AddSlider({
 		_G.SettingsTable.fpscap = Value
 		SaveSettings()
 	end    
+})
+
+SettingsTab:AddToggle({
+	Name = "Delete Terrain",
+	Default = _G.SettingsTable.deleteterrain,
+	Callback = function(Value)
+        _G.SettingsTable.deleteterrain = Value
+        SaveSettings()
+	coroutine.resume(coroutine.create(function()
+        if _G.SettingsTable.deleteterrain and game:GetService("ReplicatedStorage").Lobby.Value == false then
+	pcall(function()
+	local plate = Instance.new("Part")
+	plate.Anchored = true
+	plate.Size = Vector3.new(1000,1,1000)
+	plate.CFrame = CFrame.new(game:GetService("Workspace").TowerHP.Position - Vector3.new(0,3.2,0))
+	game.Workspace["Don't Care"]:Destroy()
+	pcall(function()
+	game.Workspace["Map Borders"]:Destroy()
+	end)
+	pcall(function()
+	game.Workspace["Others"]:Destroy()
+	end)
+	plate.Parent = game.Workspace
+	end)
+        end
+        end))
+	end
 })
 
 OrionLib:Init()
