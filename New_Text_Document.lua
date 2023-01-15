@@ -1538,7 +1538,7 @@ local LobbyTab = Window:MakeTab({
 })
 
 local MobCounterTab = Window:MakeTab({
-	Name = "Mob Count",
+	Name = "Mob Notifier",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
@@ -2914,6 +2914,10 @@ AbilityTab:AddTextbox({
 	end    
 })
 
+AbilityTab:AddSection({
+	Name = ""
+})
+
 AbilityTab:AddToggle({
 	Name = "Law Ability",
 	Default = false,
@@ -2928,6 +2932,19 @@ AbilityTab:AddBind({
 	Hold = false,
 	Callback = function()
 	    lawability()
+	end    
+})
+
+AbilityTab:AddSection({
+	Name = ""
+})
+
+AbilityTab:AddToggle({
+	Name = "Auto Cooler",
+	Default = _G.SettingsTable.autocooler,
+	Callback = function(Value)
+        _G.SettingsTable.autocooler = Value
+        autocooler()
 	end    
 })
 
@@ -2957,15 +2974,6 @@ AbilityTab:AddBind({
 	Hold = false,
 	Callback = function()
 	    yugiability()
-	end    
-})
-
-AbilityTab:AddToggle({
-	Name = "Auto Cooler",
-	Default = _G.SettingsTable.autocooler,
-	Callback = function(Value)
-        _G.SettingsTable.autocooler = Value
-        autocooler()
 	end    
 })
 
