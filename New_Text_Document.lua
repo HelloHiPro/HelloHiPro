@@ -3013,12 +3013,16 @@ AbilityTab:AddBind({
 
 --MobCounterTab
 
+MobCounterTab:AddSection({
+	Name = "  Notifies if unslowed mob, notifacation settings below"
+})
+
 MobCounterTab:AddToggle({
 	Name = "Unslowed Notifier",
 	Default = false,
 	Callback = function(Value)
         _G.unslownotifacation = Value
-        repeat wait(2)
+        repeat wait(mobslider)
         for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
             if v.PathNumber.Value > unslowedpath then 
                 if v.Head:FindFirstChild("EffectBBGUI") then
@@ -3026,14 +3030,14 @@ MobCounterTab:AddToggle({
                         OrionLib:MakeNotification({
                             Name = "Unslowed",
                             Content = "Path: "..unslowedpath1.."+",
-                            Time = 2
+                            Time = mobslider1
                         })
                     end
                 else 
                     OrionLib:MakeNotification({
                         Name = "Unslowed",
                         Content = "Path: "..unslowedpath1.."+",
-                        Time = 2
+                        Time = mobslider1
                     })
                 end
             end
@@ -3053,10 +3057,6 @@ MobCounterTab:AddSlider({
 		unslowedpath = Value*100
 		unslowedpath1 = Value
 	end    
-})
-
-MobCounterTab:AddSection({
-	Name = ""
 })
 
 MobCounterTab:AddSection({
