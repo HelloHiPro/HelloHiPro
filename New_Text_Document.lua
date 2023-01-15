@@ -1543,6 +1543,12 @@ local MobCounterTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
+local AutoFarmTab = Window:MakeTab({
+	Name = "Auto Farm",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
 local MacroTab = Window:MakeTab({
 	Name = "Macro",
 	Icon = "rbxassetid://4483345998",
@@ -2352,9 +2358,9 @@ AutoFeedTab:AddTextbox({
 	end    
 })
 
---MacroTab
+--Auto Farm Tab
 
-MacroTab:AddToggle({
+AutoFarmTab:AddToggle({
     Name = "Auto Evolve EXP",
     Default = _G.SettingsTable.evolveexp,
     Callback = function(Value)
@@ -2383,7 +2389,7 @@ MacroTab:AddToggle({
     end
 })
 
-MacroTab:AddToggle({
+AutoFarmTab:AddToggle({
     Name = "Auto Skip",
     Default = _G.SettingsTable.autoskip,
     Callback = function(Value)
@@ -2409,7 +2415,8 @@ MacroTab:AddToggle({
     end))
     end
 })
-MacroTab:AddToggle({
+
+AutoFarmTab:AddToggle({
     Name = "Auto Next",
     Default = _G.SettingsTable.autonext,
     Callback = function(Value)
@@ -2429,7 +2436,7 @@ MacroTab:AddToggle({
     end
 })
 
-MacroTab:AddToggle({
+AutoFarmTab:AddToggle({
     Name = "Auto 2x",
     Default = _G.SettingsTable.auto2x,
     Callback = function(Value)
@@ -2437,7 +2444,7 @@ MacroTab:AddToggle({
     auto2x()
     end
 })
-MacroTab:AddToggle({
+AutoFarmTab:AddToggle({
     Name = "Auto 3x",
     Default = _G.SettingsTable.auto3x,
     Callback = function(Value)
@@ -2453,7 +2460,8 @@ end))
 end
 end
 })
-MacroTab:AddToggle({
+
+AutoFarmTab:AddToggle({
     Name = "Auto Extreme",
     Default = _G.SettingsTable.autoextreme,
     Callback = function(Value)
@@ -2462,7 +2470,7 @@ MacroTab:AddToggle({
     end
 })
 
-MacroTab:AddToggle({
+AutoFarmTab:AddToggle({
     Name = "Auto Replay",
     Default = _G.SettingsTable.autoreplay,
     Callback = function(Value)
@@ -2470,7 +2478,8 @@ MacroTab:AddToggle({
     autoreplay()
     end
 })
-MacroTab:AddToggle({
+
+AutoFarmTab:AddToggle({
     Name = "Force tp lobby if replay tp fails",
     Default = _G.SettingsTable.forcetp,
     Callback = function(Value)
@@ -2489,7 +2498,7 @@ end
 end
 })
 
-MacroTab:AddToggle({
+AutoFarmTab:AddToggle({
     Name = "Auto Sell",
     Default = _G.SettingsTable.autosell,
     Callback = function(Value)
@@ -2498,7 +2507,7 @@ MacroTab:AddToggle({
     end
 })
 
-MacroTab:AddTextbox({
+AutoFarmTab:AddTextbox({
 	Name = "Auto Sell After Wave",
 	Default = tostring(_G.SettingsTable.autosellwave),
 	TextDisappear = false,
@@ -2509,7 +2518,7 @@ MacroTab:AddTextbox({
 	end    
 })
 
-MacroTab:AddTextbox({
+AutoFarmTab:AddTextbox({
     Name = "Auto Sell Speed",
     Default = _G.SettingsTable.autosellspeed,
     TextDisappear = false,
@@ -2518,6 +2527,8 @@ MacroTab:AddTextbox({
         SaveSettings()
     end
 })
+
+--Macro Tab
 
 MacroTab:AddToggle({
     Name = "Record Macro",
