@@ -811,12 +811,12 @@ workspace.Unit.ChildAdded:Connect(function(child)
     if _G.autogojo then
         if child.Name == 'Six Eyes Gojo' and game.Players.LocalPlayer.Money.Value > 28000 then
             child:WaitForChild("UpgradeTag")
-            repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", child)
-            pcall(function() game:GetService("Workspace").Camera.SphereSelection.Part.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text, 0.1, game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text) game:GetService("Workspace").Camera.SphereSelection.Union.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text) end)
-            wait()
-            until child.UpgradeTag.Value == child.MaxUpgradeTag.Value
+                repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", child)
+                    pcall(function() game:GetService("Workspace").Camera.SphereSelection.Part.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text, 0.1, game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text) game:GetService("Workspace").Camera.SphereSelection.Union.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text) end)
+                    wait()
+                until child.UpgradeTag.Value == child.MaxUpgradeTag.Value or _G.stopgojo
             game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.Visible = true
-	end
+	    end
     end
 end)
 
@@ -939,44 +939,6 @@ function click71()
     end
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 15
     end
-end
-
-function farmupgrade()
-    farmer = 0
-    for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
-        if v.Name == 'Speedwagon' and v.Owner.Value == me then 
-            repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", v) wait(.5) farmer = farmer + 1
-            until farmer == 6 or _G.farmupgrade == false
-        end
-    end
-    wave69 = game:GetService("ReplicatedStorage").WaveValue.Value
-    for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
-        if v.Name == 'Bulma (Super Money Corp)' and v.Owner.Value == me then
-            repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", v) wait(.25)
-            until wave69 ~= game:GetService("ReplicatedStorage").WaveValue.Value or _G.farmupgrade == false
-        end
-    end
-while _G.farmupgrade do
-    task.wait()
-    if wave69 ~= game:GetService("ReplicatedStorage").WaveValue.Value then
-    farmer = 0
-    for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
-        if v.Name == 'Speedwagon' and v.Owner.Value == me then 
-            repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", v) wait(.5) farmer = farmer + 1
-            until farmer == 6 or _G.farmupgrade == false
-        end
-    end
-    wave69 = game:GetService("ReplicatedStorage").WaveValue.Value
-    repeat wait(.1)
-    for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
-        if v.Name == 'Bulma (Super Money Corp)' and v.Owner.Value == me then
-            repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", v) wait(.25)
-            until wave69 ~= game:GetService("ReplicatedStorage").WaveValue.Value or _G.farmupgrade == false
-        end
-    end
-    until wave69 ~= game:GetService("ReplicatedStorage").WaveValue.Value or _G.farmupgrade == false
-    end
-end
 end
 
 function autoextreme()
@@ -2716,6 +2678,17 @@ UpgradeTab:AddToggle({
 	end    
 })
 
+UpgradeTab:AddBind({
+	Name = "Force Stop Gojo",
+	Default = "",
+	Hold = false,
+	Callback = function()
+        _G.stopgojo = true
+        wait(1)
+        _G.stopgojo = false
+	end    
+})
+
 UpgradeTab:AddSection({
 	Name = "  Fully maxes Gojo only when you place him down"
 })
@@ -2730,27 +2703,6 @@ UpgradeTab:AddToggle({
 
 UpgradeTab:AddSection({
 	Name = "  Upgrades Law up to Upgrade 6 only (Not Maxed)"
-})
-
-UpgradeTab:AddToggle({
-	Name = "Farm Upgrade",
-	Default = false,
-	Callback = function(Value)
-        _G.farmupgrade = Value
-        farmupgrade()
-	end    
-})
-
-UpgradeTab:AddSection({
-	Name = "  Automatically upgrades Speedwagon and Bulma"
-})
-
-UpgradeTab:AddSection({
-	Name = "  Place both farms first before starting (Made for inf runs)"
-})
-
-UpgradeTab:AddSection({
-	Name = "  Prioritises Speedwagon over Bulma"
 })
 
 --AbilityTab
