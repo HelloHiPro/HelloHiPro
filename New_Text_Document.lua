@@ -1180,13 +1180,43 @@ function autoupgrade()
                 coroutine.resume(coroutine.create(function()
                 repeat wait() until game:GetService("ReplicatedStorage"):WaitForChild("WaveValue").Value >= tonumber(_G.SettingsTable.autoupgradewave)
                 repeat wait()
-                for _, v in pairs(game.Workspace.Unit:GetChildren()) do
-                pcall(function()
-                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value then
+        for _, v in pairs(game.Workspace.Unit:GetChildren()) do
+            pcall(function()
+                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.One.Unit.Value and _G.unitu1 then
                 wait()
                 game.ReplicatedStorage.Remotes.Server:InvokeServer("Upgrade", v)
                 end
-                end)
+            end)
+            pcall(function()
+                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Two.Unit.Value and _G.unitu2 then
+                wait()
+                game.ReplicatedStorage.Remotes.Server:InvokeServer("Upgrade", v)
+                end
+            end)
+            pcall(function()
+                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Three.Unit.Value and _G.unitu3 then
+                wait()
+                game.ReplicatedStorage.Remotes.Server:InvokeServer("Upgrade", v)
+                end
+            end)
+            pcall(function()
+                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Four.Unit.Value and _G.unitu4 then
+                wait()
+                game.ReplicatedStorage.Remotes.Server:InvokeServer("Upgrade", v)
+                end
+            end)
+            pcall(function()
+                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Five.Unit.Value and _G.unitu5 then
+                wait()
+                game.ReplicatedStorage.Remotes.Server:InvokeServer("Upgrade", v)
+                end
+            end)
+            pcall(function()
+                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Six.Unit.Value and _G.unitu6 then
+                wait()
+                game.ReplicatedStorage.Remotes.Server:InvokeServer("Upgrade", v)
+                end
+            end)
         end
         until false or _G.SettingsTable.autoupgrade == false or checkautosell
         end))
@@ -2668,6 +2698,58 @@ UpgradeTab:AddTextbox({
 	    _G.SettingsTable.autoupgradewave = Value
 	    SaveSettings()
 	end    
+})
+
+UpgradeTab:AddToggle({
+    Name = "Slot 1: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.One.Unit.Value,
+    Default = false,
+    Callback = function(Value)
+    _G.unitu1 = Value
+    end
+})
+
+UpgradeTab:AddToggle({
+    Name = "Slot 2: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Two.Unit.Value,
+    Default = false,
+    Callback = function(Value)
+    _G.unitu2 = Value
+    end
+})
+
+UpgradeTab:AddToggle({
+    Name = "Slot 3: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Three.Unit.Value,
+    Default = false,
+    Callback = function(Value)
+    _G.unitu3 = Value
+    end
+})
+
+UpgradeTab:AddToggle({
+    Name = "Slot 4: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Four.Unit.Value,
+    Default = false,
+    Callback = function(Value)
+    _G.unitu4 = Value
+    end
+})
+
+UpgradeTab:AddToggle({
+    Name = "Slot 5: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Five.Unit.Value,
+    Default = false,
+    Callback = function(Value)
+    _G.unitu5 = Value
+    end
+})
+
+UpgradeTab:AddToggle({
+    Name = "Slot 6: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Six.Unit.Value,
+    Default = false,
+    Callback = function(Value)
+    _G.unitu6 = Value
+    end
+})
+
+UpgradeTab:AddSection({
+	Name = ""
 })
 
 UpgradeTab:AddToggle({
