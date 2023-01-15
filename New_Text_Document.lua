@@ -3438,4 +3438,16 @@ SettingsTab:AddToggle({
 	end
 })
 
+SettingsTab:AddToggle({
+	Name = "Hide Speedup",
+	Default = false,
+	Callback = function(Value)
+        if Value then
+            game:GetService("Players").LocalPlayer.PlayerGui.HUD.FastForward.Visible = false
+        else 
+            game:GetService("Players").HydroMatter5555.PlayerGui.HUD.FastForward.Visible = true
+        end
+	end    
+})
+
 OrionLib:Init()
