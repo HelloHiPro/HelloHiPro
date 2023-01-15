@@ -193,7 +193,13 @@ _G.SettingsTable = {
     Render = false,
     evolveexp = false,
     auto3x = false,
-    deleteterrain = false
+    deleteterrain = false,
+    unitu1 = false,
+    unitu2 = false,
+    unitu3 = false,
+    unitu4 = false,
+    unitu5 = false,
+    unitu6 = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -1182,37 +1188,37 @@ function autoupgrade()
                 repeat wait()
         for _, v in pairs(game.Workspace.Unit:GetChildren()) do
             pcall(function()
-                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.One.Unit.Value and _G.unitu1 then
+                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.One.Unit.Value and _G.SettingsTable.unitu1 then
                 wait()
                 game.ReplicatedStorage.Remotes.Server:InvokeServer("Upgrade", v)
                 end
             end)
             pcall(function()
-                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Two.Unit.Value and _G.unitu2 then
+                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Two.Unit.Value and _G.SettingsTable.unitu2 then
                 wait()
                 game.ReplicatedStorage.Remotes.Server:InvokeServer("Upgrade", v)
                 end
             end)
             pcall(function()
-                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Three.Unit.Value and _G.unitu3 then
+                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Three.Unit.Value and _G.SettingsTable.unitu3 then
                 wait()
                 game.ReplicatedStorage.Remotes.Server:InvokeServer("Upgrade", v)
                 end
             end)
             pcall(function()
-                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Four.Unit.Value and _G.unitu4 then
+                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Four.Unit.Value and _G.SettingsTable.unitu4 then
                 wait()
                 game.ReplicatedStorage.Remotes.Server:InvokeServer("Upgrade", v)
                 end
             end)
             pcall(function()
-                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Five.Unit.Value and _G.unitu5 then
+                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Five.Unit.Value and _G.SettingsTable.unitu5 then
                 wait()
                 game.ReplicatedStorage.Remotes.Server:InvokeServer("Upgrade", v)
                 end
             end)
             pcall(function()
-                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Six.Unit.Value and _G.unitu6 then
+                if v.Owner.Value == game.Players.LocalPlayer and v.UpgradeTag.Value < v.MaxUpgradeTag.Value and v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Six.Unit.Value and _G.SettingsTable.unitu6 then
                 wait()
                 game.ReplicatedStorage.Remotes.Server:InvokeServer("Upgrade", v)
                 end
@@ -2702,49 +2708,55 @@ UpgradeTab:AddTextbox({
 
 UpgradeTab:AddToggle({
     Name = "Slot 1: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.One.Unit.Value,
-    Default = false,
+    Default = _G.SettingsTable.unitu1,
     Callback = function(Value)
-    _G.unitu1 = Value
+    _G.SettingsTable.unitu1 = Value
+    SaveSettings()
     end
 })
 
 UpgradeTab:AddToggle({
     Name = "Slot 2: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Two.Unit.Value,
-    Default = false,
+    Default = _G.SettingsTable.unitu2,
     Callback = function(Value)
-    _G.unitu2 = Value
+    _G.SettingsTable.unitu2 = Value
+    SaveSettings()
     end
 })
 
 UpgradeTab:AddToggle({
     Name = "Slot 3: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Three.Unit.Value,
-    Default = false,
+    Default = _G.SettingsTable.unitu3,
     Callback = function(Value)
-    _G.unitu3 = Value
+    _G.SettingsTable.unitu3 = Value
+    SaveSettings()
     end
 })
 
 UpgradeTab:AddToggle({
     Name = "Slot 4: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Four.Unit.Value,
-    Default = false,
+    Default = _G.SettingsTable.unitu4,
     Callback = function(Value)
-    _G.unitu4 = Value
+    _G.SettingsTable.unitu4 = Value
+    SaveSettings()
     end
 })
 
 UpgradeTab:AddToggle({
     Name = "Slot 5: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Five.Unit.Value,
-    Default = false,
+    Default = _G.SettingsTable.unitu5,
     Callback = function(Value)
-    _G.unitu5 = Value
+    _G.SettingsTable.unitu5 = Value
+    SaveSettings()
     end
 })
 
 UpgradeTab:AddToggle({
     Name = "Slot 6: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Six.Unit.Value,
-    Default = false,
+    Default = _G.SettingsTable.unitu6,
     Callback = function(Value)
-    _G.unitu6 = Value
+    _G.SettingsTable.unitu6 = Value
+    SaveSettings()
     end
 })
 
