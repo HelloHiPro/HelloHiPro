@@ -3013,6 +3013,56 @@ AbilityTab:AddBind({
 
 --MobCounterTab
 
+MobCounterTab:AddToggle({
+	Name = "Unslowed Notifier",
+	Default = false,
+	Callback = function(Value)
+        _G.unslownotifacation = Value
+        repeat wait(2)
+        for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
+            if v.PathNumber.Value > unslowedpath then 
+                if v.Head:FindFirstChild("EffectBBGUI") then
+                    if v.Head.EffectBBGUI.Frame.SlowImage.Visible == false then
+                        OrionLib:MakeNotification({
+                            Name = "Unslowed",
+                            Content = "Path: "..unslowedpath1.."+",
+                            Time = 2
+                        })
+                    end
+                else 
+                    OrionLib:MakeNotification({
+                        Name = "Unslowed",
+                        Content = "Path: "..unslowedpath1.."+",
+                        Time = 2
+                    })
+                end
+            end
+        end
+        until _G.unslownotifacation == false
+	end    
+})
+
+MobCounterTab:AddSlider({
+	Name = "Unslowed Path",
+	Min = 1,
+	Max = 15,
+	Default = 5,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	Callback = function(Value)
+		unslowedpath = Value*100
+		unslowedpath1 = Value
+	end    
+})
+
+MobCounterTab:AddSection({
+	Name = ""
+})
+
+MobCounterTab:AddSection({
+	Name = ""
+})
+
 MobCounterTab:AddButton({
 	Name = "Mob Counter: 1 Time Click",
 	Default = false,
