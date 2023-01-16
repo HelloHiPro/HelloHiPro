@@ -677,6 +677,19 @@ end
 end)
 end
 
+function CreateESPPart(BodyPart,color)
+local ESPPartparent = BodyPart
+local Box = Instance.new("BoxHandleAdornment")
+Box.Size = BodyPart.Size + Vector3.new(0.1, 0.1, 0.1)
+Box.Name = "ESPPart"
+Box.Adornee = ESPPartparent
+Box.Color3 = color
+Box.AlwaysOnTop = true
+Box.ZIndex = 5
+Box.Transparency = 0
+Box.Parent = BodyPart
+end
+
 function automerlin()
     SaveSettings()
     if _G.SettingsTable.automerlintoggle then
@@ -3033,7 +3046,7 @@ AbilityTab:AddBind({
 --MobCounterTab
 
 MobCounterTab:AddSection({
-	Name = "  Notifies if unslowed mob, notifacation settings below"
+	Name = "  Notifies if unslowed mob, no settings"
 })
 
 MobCounterTab:AddToggle({
@@ -3042,24 +3055,37 @@ MobCounterTab:AddToggle({
 	Callback = function(Value)
         _G.unslownotifacation = Value
         pcall(function()
-        repeat wait(mobslider)
+        repeat wait()
         for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
             if v.PathNumber.Value > unslowedpath then 
+            if not v.HumanoidRootPart:FindFirstChild("ESPPart") then
                 if v.Head:FindFirstChild("EffectBBGUI") then
-                    if v.Head.EffectBBGUI.Frame.SlowImage.Visible == false then
+                    if v.Head.EffectBBGUI:WaitForChild("Frame"):WaitForChild("SlowImage").Visible == false then
+                        coroutine.resume(coroutine.create(function()
                         OrionLib:MakeNotification({
                             Name = "Unslowed",
                             Content = "Path: "..unslowedpath1.."+",
-                            Time = mobslider1
+                            Time = 7
                         })
+                        CreateESPPart(v.HumanoidRootPart, Color3.fromRGB(255,0,0)) 
+                        repeat wait() until v.Head.EffectBBGUI.Frame.SlowImage.Visible == true
+                        v.HumanoidRootPart.ESPPart:Destroy()
+                        end))
                     end
                 else 
+                    coroutine.resume(coroutine.create(function()
                     OrionLib:MakeNotification({
                         Name = "Unslowed",
                         Content = "Path: "..unslowedpath1.."+",
-                        Time = mobslider1
+                        Time = 7
                     })
+                    CreateESPPart(v.HumanoidRootPart, Color3.fromRGB(255,0,0)) 
+                    v.Head:WaitForChild("EffectBBGUI"):WaitForChild("Frame"):WaitForChild("SlowImage")
+                    repeat wait() until v.Head.EffectBBGUI.Frame.SlowImage.Visible == true
+                    v.HumanoidRootPart.ESPPart:Destroy()
+                    end))
                 end
+            end
             end
         end
         until _G.unslownotifacation == false
@@ -3118,9 +3144,9 @@ MobCounterTab:AddSlider({
 	Name = "Notifacation Interval (1-30 sec)",
 	Min = 1,
 	Max = 30,
-	Default = 5,
+	Default = 3,
 	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
+	Increment = 5,
 	Callback = function(Value)
 		mobslider = Value
 	end    
