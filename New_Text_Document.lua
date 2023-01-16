@@ -3041,6 +3041,7 @@ MobCounterTab:AddToggle({
 	Default = false,
 	Callback = function(Value)
         _G.unslownotifacation = Value
+        pcall(function()
         repeat wait(mobslider)
         for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
             if v.PathNumber.Value > unslowedpath then 
@@ -3062,6 +3063,7 @@ MobCounterTab:AddToggle({
             end
         end
         until _G.unslownotifacation == false
+        end)
 	end    
 })
 
