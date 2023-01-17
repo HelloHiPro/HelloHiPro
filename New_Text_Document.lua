@@ -3121,7 +3121,7 @@ MobCounterTab:AddSlider({
 	Max = 15,
 	Default = 5,
 	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
+	Increment = 0.1,
 	Callback = function(Value)
 		unslowedpath = Value*100
 		unslowedpath1 = Value
