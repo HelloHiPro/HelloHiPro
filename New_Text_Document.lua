@@ -199,7 +199,8 @@ _G.SettingsTable = {
     unitu3 = false,
     unitu4 = false,
     unitu5 = false,
-    unitu6 = false
+    unitu6 = false,
+    deleteexodia = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -3519,6 +3520,24 @@ SettingsTab:AddToggle({
             game:GetService("Players").LocalPlayer.PlayerGui.HUD.FastForward.Visible = true
         end
 	end
+	end    
+})
+
+SettingsTab:AddToggle({
+	Name = "Delete Exodia Cutscene",
+	Default = _G.SettingsTable.deleteexodia,
+	Callback = function(Value)
+    _G.SettingsTable.deleteexodia = Value
+    SaveSettings()
+        pcall(function()
+            coroutine.resume(coroutine.create(function()
+            game.Workspace.Camera:WaitForChild("Exodia")
+            if _G.SettingsTable.deleteexodia then 
+                game.Workspace.Camera:WaitForChild("Exodia"):Destroy()
+                game.Workspace.CurrentCamera.CameraType = "Custom"
+            end
+            end))
+        end)
 	end    
 })
 
