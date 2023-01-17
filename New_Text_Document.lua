@@ -3056,7 +3056,7 @@ workspace.Enemies.ChildAdded:Connect(function(child)
         child:WaitForChild("Head")
         repeat wait() until child.PathNumber.Value > unslowedpath
         if not child.Head:FindFirstChild("EffectBBGUI") then
-            CreateESPPart(child.HumanoidRootPart, espcolour)
+            CreateESPPart(child.HumanoidRootPart, Color3.fromRGB(255, 0, 0))
             local espframe1 = Instance.new("BillboardGui",child.HumanoidRootPart)
             espframe1.Name = "ElectricPPPGUI"
             espframe1.Size = UDim2.new(5,0, 5,0)
@@ -3065,7 +3065,7 @@ workspace.Enemies.ChildAdded:Connect(function(child)
             espframe.Size = UDim2.new(1,0, 1,0)
             espframe.BackgroundTransparency = 0.80
             espframe.BorderSizePixel = 0
-            espframe.BackgroundColor3 = espcolour1 
+            espframe.BackgroundColor3 = Color3.fromRGB(0, 255, 0) 
             child.Head:WaitForChild("EffectBBGUI"):WaitForChild("Frame"):WaitForChild("SlowImage")
             repeat wait() until child.Head.EffectBBGUI.Frame.SlowImage.Visible == true
             child.HumanoidRootPart.ESPPart:Destroy()
@@ -3096,24 +3096,7 @@ MobCounterTab:AddSlider({
 	Increment = 0.1,
 	Callback = function(Value)
 		unslowedpath = Value*100
-		unslowedpath1 = Value
 	end    
-})
-
-MobCounterTab:AddColorpicker({
-	Name = "Esp Colour",
-	Default = Color3.fromRGB(255, 0, 0),
-	Callback = function(Value)
-		espcolour = Value
-	end	  
-})
-
-MobCounterTab:AddColorpicker({
-	Name = "Esp Frame Colour",
-	Default = Color3.fromRGB(0, 255, 0),
-	Callback = function(Value)
-		espcolour1 = Value
-	end	  
 })
 
 MobCounterTab:AddSection({
