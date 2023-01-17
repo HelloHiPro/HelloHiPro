@@ -3063,6 +3063,7 @@ MobCounterTab:AddToggle({
             if not v.HumanoidRootPart:FindFirstChild("ESPPart") then
                 if v.Head:FindFirstChild("EffectBBGUI") then
                     if v.Head.EffectBBGUI:WaitForChild("Frame"):WaitForChild("SlowImage").Visible == false then
+                        pcall(function()
                         coroutine.resume(coroutine.create(function()
                         OrionLib:MakeNotification({
                             Name = "Unslowed",
@@ -3083,8 +3084,10 @@ MobCounterTab:AddToggle({
                         v.HumanoidRootPart.ESPPart:Destroy()
                         v.HumanoidRootPart.ElectricPPPGUI:Destroy()
                         end))
+                        end)
                     end
-                else 
+                else
+                    pcall(function()
                     coroutine.resume(coroutine.create(function()
                     OrionLib:MakeNotification({
                         Name = "Unslowed",
@@ -3106,6 +3109,7 @@ MobCounterTab:AddToggle({
                     v.HumanoidRootPart.ESPPart:Destroy()
                     v.HumanoidRootPart.ElectricPPPGUI:Destroy()
                     end))
+                    end)
                 end
             end
             end
