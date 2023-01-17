@@ -677,6 +677,7 @@ end
 end)
 end
 
+pcall(function()
 function CreateESPPart(BodyPart,color)
 local ESPPartparent = BodyPart
 local Box = Instance.new("BoxHandleAdornment")
@@ -689,6 +690,7 @@ Box.ZIndex = 5
 Box.Transparency = 0
 Box.Parent = BodyPart
 end
+end) 
 
 function automerlin()
     SaveSettings()
