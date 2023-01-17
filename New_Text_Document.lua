@@ -3048,6 +3048,33 @@ AbilityTab:AddBind({
 
 --MobCounterTab
 
+workspace.Enemies.ChildAdded:Connect(function(child)
+    if _G.unslownotifacation then
+        pcall(function()
+        child:WaitForChild("PathNumber")
+        child:WaitForChild("HumanoidRootPart")
+        child:WaitForChild("Head")
+        repeat wait() until child.PathNumber.Value > unslowedpath
+        if not child.Head:FindFirstChild("EffectBBGUI") then
+            CreateESPPart(child.HumanoidRootPart, espcolour)
+            local espframe1 = Instance.new("BillboardGui",child.HumanoidRootPart)
+            espframe1.Name = "ElectricPPPGUI"
+            espframe1.Size = UDim2.new(5,0, 5,0)
+            espframe1.AlwaysOnTop = true
+            local espframe = Instance.new("Frame",espframe1)
+            espframe.Size = UDim2.new(1,0, 1,0)
+            espframe.BackgroundTransparency = 0.80
+            espframe.BorderSizePixel = 0
+            espframe.BackgroundColor3 = espcolour1 
+            child.Head:WaitForChild("EffectBBGUI"):WaitForChild("Frame"):WaitForChild("SlowImage")
+            repeat wait() until child.Head.EffectBBGUI.Frame.SlowImage.Visible == true
+            child.HumanoidRootPart.ESPPart:Destroy()
+            child.HumanoidRootPart.ElectricPPPGUI:Destroy()
+        end
+        end)
+    end
+end)
+
 MobCounterTab:AddSection({
 	Name = "  Notifies if unslowed mob, no settings"
 })
@@ -3057,66 +3084,6 @@ MobCounterTab:AddToggle({
 	Default = false,
 	Callback = function(Value)
         _G.unslownotifacation = Value
-        pcall(function()
-        repeat wait()
-        for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
-            if v.PathNumber.Value > unslowedpath then 
-            if not v.HumanoidRootPart:FindFirstChild("ESPPart") then
-                if v.Head:FindFirstChild("EffectBBGUI") then
-                    if v.Head.EffectBBGUI:WaitForChild("Frame"):WaitForChild("SlowImage").Visible == false then
-                        pcall(function()
-                        coroutine.resume(coroutine.create(function()
-                        OrionLib:MakeNotification({
-                            Name = "Unslowed",
-                            Content = "Path: "..unslowedpath1.."+",
-                            Time = 7
-                        })
-                        CreateESPPart(v.HumanoidRootPart, espcolour) 
-                        local espframe1 = Instance.new("BillboardGui",v.HumanoidRootPart)
-                        espframe1.Name = "ElectricPPPGUI"
-                        espframe1.Size = UDim2.new(5,0, 5,0)
-                        espframe1.AlwaysOnTop = true
-                        local espframe = Instance.new("Frame",espframe1)
-                        espframe.Size = UDim2.new(1,0, 1,0)
-                        espframe.BackgroundTransparency = 0.80
-                        espframe.BorderSizePixel = 0
-                        espframe.BackgroundColor3 = espcolour1
-                        repeat wait() until v.Head.EffectBBGUI.Frame.SlowImage.Visible == true
-                        v.HumanoidRootPart.ESPPart:Destroy()
-                        v.HumanoidRootPart.ElectricPPPGUI:Destroy()
-                        end))
-                        end)
-                    end
-                else
-                    pcall(function()
-                    coroutine.resume(coroutine.create(function()
-                    OrionLib:MakeNotification({
-                        Name = "Unslowed",
-                        Content = "Path: "..unslowedpath1,
-                        Time = 7
-                    })
-                    CreateESPPart(v.HumanoidRootPart, espcolour)    
-                    local espframe1 = Instance.new("BillboardGui",v.HumanoidRootPart)
-                    espframe1.Name = "ElectricPPPGUI"
-                    espframe1.Size = UDim2.new(5,0, 5,0)
-                    espframe1.AlwaysOnTop = true
-                    local espframe = Instance.new("Frame",espframe1)
-                    espframe.Size = UDim2.new(1,0, 1,0)
-                    espframe.BackgroundTransparency = 0.80
-                    espframe.BorderSizePixel = 0
-                    espframe.BackgroundColor3 = espcolour1
-                    v.Head:WaitForChild("EffectBBGUI"):WaitForChild("Frame"):WaitForChild("SlowImage")
-                    repeat wait() until v.Head.EffectBBGUI.Frame.SlowImage.Visible == true
-                    v.HumanoidRootPart.ESPPart:Destroy()
-                    v.HumanoidRootPart.ElectricPPPGUI:Destroy()
-                    end))
-                    end)
-                end
-            end
-            end
-        end
-        until _G.unslownotifacation == false
-        end)
 	end    
 })
 
