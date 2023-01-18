@@ -831,6 +831,7 @@ end
 
 workspace.Unit.ChildAdded:Connect(function(child)
     if _G.autogojo then
+        _G.stopgojo = false
         if child.Name == 'Six Eyes Gojo' and game.Players.LocalPlayer.Money.Value > 28000 and child:WaitForChild("Owner").Value == me then
             child:WaitForChild("UpgradeTag")
                 repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", child)
@@ -2805,8 +2806,6 @@ UpgradeTab:AddBind({
 	Hold = false,
 	Callback = function()
         _G.stopgojo = true
-        wait(1)
-        _G.stopgojo = false
 	end    
 })
 
