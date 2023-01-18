@@ -831,7 +831,7 @@ end
 
 workspace.Unit.ChildAdded:Connect(function(child)
     if _G.autogojo then
-        if child.Name == 'Six Eyes Gojo' and game.Players.LocalPlayer.Money.Value > 28000 then
+        if child.Name == 'Six Eyes Gojo' and game.Players.LocalPlayer.Money.Value > 28000 and child:WaitForChild("Owner").Value == me then
             child:WaitForChild("UpgradeTag")
                 repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", child)
                     pcall(function() game:GetService("Workspace").Camera.SphereSelection.Part.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text, 0.1, game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text) game:GetService("Workspace").Camera.SphereSelection.Union.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text) end)
@@ -3481,10 +3481,12 @@ SettingsTab:AddToggle({
     SaveSettings()
         pcall(function()
             coroutine.resume(coroutine.create(function()
+            while _G.SettingsTable.deleteexodia do wait()
             game.Workspace.Camera:WaitForChild("Exodia")
             if _G.SettingsTable.deleteexodia then 
                 game.Workspace.Camera:WaitForChild("Exodia"):Destroy()
                 game.Workspace.CurrentCamera.CameraType = "Custom"
+            end
             end
             end))
         end)
