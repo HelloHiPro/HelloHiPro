@@ -3075,12 +3075,37 @@ workspace.Enemies.ChildAdded:Connect(function(child)
     end
 end)
 
+local unslowgojo = {}
+
+workspace.Enemies.ChildAdded:Connect(function(child)
+    if _G.unslowautots then
+        pcall(function()
+
+        child:WaitForChild("PathNumber")
+        child:WaitForChild("Head")
+        repeat wait() until child.PathNumber.Value > unslowedpath
+        if not child.Head:FindFirstChild("EffectBBGUI") then
+            for _,v in pairs(unslowgojo) do
+                print(v)
+                if v.SpecialMove.Special_Enabled2.Value == false then
+                    repeat wait()
+                        remote:FireServer('UseSpecialMove', v)
+                    until v.SpecialMove["Special_Enabled2"].Value == true
+                    break
+                end
+            end
+        end
+
+        end)
+    end
+end)
+
 MobCounterTab:AddSection({
 	Name = "  Notifies if unslowed mob, no settings"
 })
 
 MobCounterTab:AddToggle({
-	Name = "Unslowed Notifier",
+	Name = "Unslowed Esp",
 	Default = false,
 	Callback = function(Value)
         _G.unslownotifacation = Value
@@ -3096,6 +3121,49 @@ MobCounterTab:AddSlider({
 	Increment = 0.1,
 	Callback = function(Value)
 		unslowedpath = Value*100
+	end    
+})
+
+MobCounterTab:AddToggle({
+	Name = "Unslowed Auto TS (Refresh Gojo 6 Table First)",
+	Default = false,
+	Callback = function(Value)
+        _G.unslowautots = Value
+	end    
+})
+
+MobCounterTab:AddButton({
+	Name = "Refresh Gojo 6 Table",
+	Default = false,
+	Callback = function(Value)
+		table.clear(unslowgojo)
+            for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+                if v.Name == 'Six Eyes Gojo' and v.Owner.Value == me and v.UpgradeTag.Value == v.MaxUpgradeTag.Value then
+                    table.insert(unslowgojo, v)
+                end
+            end
+            if #unslowgojo > unslowgojo1 then
+                repeat wait(.1)
+                    table.remove(unslowgojo, #unslowgojo)
+                until #unslowgojo == unslowgojo1
+            end
+            OrionLib:MakeNotification({
+                Name = "Refreshed",
+                Content = "First "..#unslowgojo.." Gojos",
+                Time = 3
+            })
+	end    
+})
+
+MobCounterTab:AddSlider({
+	Name = "Number of gojos at spawn (Needs to be maxed)",
+	Min = 1,
+	Max = 8,
+	Default = 7,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	Callback = function(Value)
+		unslowgojo1 = Value
 	end    
 })
 
