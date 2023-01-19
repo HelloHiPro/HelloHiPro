@@ -3146,6 +3146,24 @@ MobCounterTab:AddButton({
                     table.remove(unslowgojo, #unslowgojo)
                 until #unslowgojo == unslowgojo1
             end
+            for i, v in pairs(game.Workspace.Unit:GetChildren()) do
+                if v.Name == 'Six Eyes Gojo' then
+                    if v.HumanoidRootPart:FindFirstChild("ElectricPPPGUI") then
+                        v.HumanoidRootPart:FindFirstChild("ElectricPPPGUI"):Destroy()
+                    end
+                end
+            end
+            for i, v in pairs(unslowgojo) do
+                local espframe1 = Instance.new("BillboardGui",v.HumanoidRootPart)
+                espframe1.Name = "ElectricPPPGUI"
+                espframe1.Size = UDim2.new(2.4,0, 2.4,0)
+                espframe1.AlwaysOnTop = true
+                local espframe = Instance.new("Frame",espframe1)
+                espframe.Size = UDim2.new(1,0, 1,0)
+                espframe.BackgroundTransparency = 0.5
+                espframe.BorderSizePixel = 0
+                espframe.BackgroundColor3 = Color3.fromRGB( 0, 0, 139) 
+            end
             OrionLib:MakeNotification({
                 Name = "Refreshed",
                 Content = "First "..#unslowgojo.." Gojos",
