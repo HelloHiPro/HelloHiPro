@@ -1015,7 +1015,7 @@ local Event = game:GetService("ReplicatedStorage").Remotes.Input
 
 if game.ReplicatedStorage.Lobby.Value == false then
 coroutine.resume(coroutine.create(function()
-repeat task.wait() until game:GetService("ReplicatedStorage").WaveValue.Value >= 1
+repeat task.wait() until game:GetService("ReplicatedStorage").WaveValue.Value == 1
 repeat 
     Event:FireServer(A_1, A_2)
     wait(.5)
@@ -1155,7 +1155,7 @@ weld.Part0 = partA
 weld.Part1 = partB
 for _, v in pairs(child:GetChildren()) do
     if v.ClassName == "MeshPart" then 
-        if v.Name == "HumanoidRootPart" or v.Name == "Head" or v.Name == "HoverPart" then jamama = 1
+        if v.Name ~= "HumanoidRootPart" or v.Name ~= "Head" or v.Name ~= "HoverPart" then jamama = 1
         else v:Destroy()
         end
     elseif v.ClassName == "Part" then
@@ -1164,9 +1164,16 @@ for _, v in pairs(child:GetChildren()) do
         end
     end
 end
+for _, v in pairs(child.Head:GetChildren()) do
+    pcall(function()
+        v.Transparency = 1
+    end)
+end
 wait(1)
 for _, v in pairs(child:GetChildren()) do
-    if v.ClassName == "Folder" then v:Destroy() end
+    if v.ClassName == "Folder" then 
+        v:Destroy() 
+    end
 end
 end)
 end
@@ -2484,7 +2491,7 @@ _G.SettingsTable.auto3x = Value
 SaveSettings()
 if _G.SettingsTable.auto3x and game.ReplicatedStorage.Lobby.Value == false then
 coroutine.resume(coroutine.create(function()
-repeat task.wait() until game:GetService("ReplicatedStorage").WaveValue.Value >= 1
+repeat task.wait() until game:GetService("ReplicatedStorage").WaveValue.Value == 1
 repeat 
     game:GetService("ReplicatedStorage").Remotes.Input:FireServer("SpeedChange", true)
     wait(.5)
