@@ -1163,6 +1163,8 @@ for _, v in pairs(child:GetChildren()) do
         if v.Name == "HumanoidRootPart" or v.Name == "Head" or v.Name == "HoverPart" then jamama = 1
         else v:Destroy()
         end
+    elseif v.ClassName == "Model" then
+	v:Destroy()
     end
 end
 for _, v in pairs(child.Head:GetChildren()) do
