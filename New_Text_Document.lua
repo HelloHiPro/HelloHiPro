@@ -645,7 +645,7 @@ if Summon[i]["Summon"] then
 if _G.SettingsTable.timer then
 repeat wait() until tonumber(timer) >= tonumber(Summon[i]["Summon"][1])
 end
-repeat
+repeat wait()
 if selling == false then
 Event:FireServer("Summon", 	{ ["Rotation"] = 0, 
 	["cframe"] = CFrame.new(table.unpack(string.split(Summon[i]["Summon"][3], ", "))),
