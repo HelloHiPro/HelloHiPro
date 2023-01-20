@@ -1015,7 +1015,7 @@ local Event = game:GetService("ReplicatedStorage").Remotes.Input
 
 if game.ReplicatedStorage.Lobby.Value == false then
 coroutine.resume(coroutine.create(function()
-repeat task.wait() until game:GetService("ReplicatedStorage").WaveValue.Value == 1
+repeat task.wait() until game:GetService("ReplicatedStorage").WaveValue.Value >= 1
 repeat 
     Event:FireServer(A_1, A_2)
     wait(.5)
@@ -2484,7 +2484,7 @@ _G.SettingsTable.auto3x = Value
 SaveSettings()
 if _G.SettingsTable.auto3x and game.ReplicatedStorage.Lobby.Value == false then
 coroutine.resume(coroutine.create(function()
-repeat task.wait() until game:GetService("ReplicatedStorage").WaveValue.Value == 1
+repeat task.wait() until game:GetService("ReplicatedStorage").WaveValue.Value >= 1
 repeat 
     game:GetService("ReplicatedStorage").Remotes.Input:FireServer("SpeedChange", true)
     wait(.5)
