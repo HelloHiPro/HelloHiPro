@@ -2744,13 +2744,14 @@ UpgradeTab:AddToggle({
         pcall(function()
             while _G.Visrange do
                 game:GetService("Workspace"):WaitForChild("Camera"):WaitForChild("SphereSelection")
-                while game:GetService("Workspace").Camera:FindFirstChild("SphereSelection") and _G.Visrange do wait()
+                while game:GetService("Workspace").Camera:FindFirstChild("SphereSelection") and _G.Visrange do
                     pcall(function()
                         game:GetService("Workspace").Camera.SphereSelection:FindFirstChild("Union").Size = Vector3.new(visrange1, visrange1, visrange1)
                     end)
                     pcall(function()
                         game:GetService("Workspace").Camera.SphereSelection:FindFirstChild("Part").Size = Vector3.new(visrange1, 0.1, visrange1)
                     end)
+		game:GetService('RunService').RenderStepped:Wait()
                 end
             end
         end)
