@@ -200,7 +200,9 @@ _G.SettingsTable = {
     unitu4 = false,
     unitu5 = false,
     unitu6 = false,
-    deleteexodia = false
+    deleteexodia = false,
+    yugiuntil = false,
+    yugicard = ""
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -565,6 +567,7 @@ function playback()
     SaveSettings()
     pcall(function()
     if _G.SettingsTable.autoplayback and _G.record == false then
+    local selling = false
     idvalue = 0
     SaveSettings()
    	macro = httpservice:JSONDecode(readfile(macrofolder .. "/" .. _G.SettingsTable.selectedmacro))
@@ -605,12 +608,14 @@ for _, v in pairs(unit:GetChildren()) do
     pcall(function()
         if v:WaitForChild('Owner').Value == game.Players.LocalPlayer then
                 if v.ID.Value == tonumber(Summon[i]["Sell"][2]) then
+	selling = true
     pcall(function()
         repeat
             game:GetService("ReplicatedStorage").Remotes.Input:FireServer("Sell", v)
             wait()
         until v.SoldBoolean.Value
     end)
+	selling = false
                 end
         end
     end)
@@ -641,10 +646,12 @@ if _G.SettingsTable.timer then
 repeat wait() until tonumber(timer) >= tonumber(Summon[i]["Summon"][1])
 end
 repeat
+if selling == false then
 Event:FireServer("Summon", 	{ ["Rotation"] = 0, 
 	["cframe"] = CFrame.new(table.unpack(string.split(Summon[i]["Summon"][3], ", "))),
 	["Unit"] = Summon[i]["Summon"][4] } )
 wait(.5)
+end
 until idvalue == tonumber(Summon[i]["Summon"][2]) or _G.SettingsTable.autoplayback == false
 break
 end
@@ -658,7 +665,7 @@ for _, v in pairs(unit:GetChildren()) do
                 if _G.SettingsTable.timer then
                 repeat wait() until tonumber(timer) >= tonumber(Summon[i]["Upgrade"][1])
                 end
-repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", v)
+repeat if selling == false then game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", v) end
 wait(.5)
 until v.UpgradeTag.Value >= upgrade[1] + 1
             end
@@ -1305,6 +1312,11 @@ while not game:IsLoaded() do
 end
 if game.PlaceId ~= 11886211138 then
 if _G.SettingsTable.mode == "Infinite Mode" then
+    if _G.SettingsTable.inflevel == "Solo" then
+        pcall(function()
+            autojoinmap = "-1.8"
+        end)
+    end
     if _G.SettingsTable.inflevel == "Regular One Piece" then
         pcall(function()
             autojoinmap = "-1"
@@ -1988,7 +2000,7 @@ LobbyTab:AddTextbox({
 LobbyTab:AddDropdown({
     Name = "Infinite Mode Map",
     Default = _G.SettingsTable.inflevel,
-    Options = {"Regular One Piece", "Regular Food", "Category", "Air", "Double Path", "Training Mode"},
+    Options = {"Solo", "Regular One Piece", "Regular Food", "Category", "Air", "Double Path", "Training Mode"},
     Callback = function(Value)
         _G.SettingsTable.inflevel = Value
         SaveSettings()
@@ -2977,6 +2989,52 @@ AbilityTab:AddToggle({
 AbilityTab:AddSection({
 	Name = ""
 })
+
+AbilityTab:AddToggle({
+	Name = "Auto Yugi Until",
+	Default = _G.SettingsTable.yugiuntil,
+	Callback = function(Value)
+        _G.SettingsTable.yugiuntil = Value
+	SaveSettings()
+	local x = 0
+	coroutine.resume(coroutine.create(function()
+	pcall(function()
+	repeat task.wait() until game:GetService("Workspace").Unit:WaitForChild('YugiMax'):WaitForChild('UpgradeTag').Value == 5
+	task.wait(10)
+	repeat task.wait(.5)
+	pcall(function()
+	game.ReplicatedStorage.Remotes.Input:FireServer('UseSpecialMove', game:GetService("Workspace").Unit.YugiMax)
+	end)
+	if x == 0 then
+        if game:GetService("Workspace").Unit.YugiMax.SpecialMove["Special_Enabled2"].Value then
+	    x = x + 1
+	    wait(5)
+	    if game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card 40/40' then
+		game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+	    end
+	end
+	end
+	until game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card ' .. _G.SettingsTable.yugicard .. '/40' or _G.SettingsTable.yugiuntil == false
+	if game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card ' .. _G.SettingsTable.yugicard .. '/40' and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.HeadExodia.Transparency == 0 then
+	    game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)	
+	end
+        end)
+	end))
+	end    
+})
+AbilityTab:AddSlider({
+	Name = "Card",
+	Min = 1,
+	Max = 39,
+	Default = 3,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	Callback = function(Value)
+	   _G.SettingsTable.yugicard = Value
+	   SaveSettings()
+	end    
+})
+
 
 AbilityTab:AddButton({
 	Name = "Yugi 4 Cards (Auto)",
