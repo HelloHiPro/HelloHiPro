@@ -202,7 +202,9 @@ _G.SettingsTable = {
     unitu6 = false,
     deleteexodia = false,
     yugiuntil = false,
-    yugicard = ""
+    yugicard = "",
+    Visrange = false,
+    visrange1 = 100
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -2736,37 +2738,45 @@ BuffTab:AddToggle({
 
 --UpgradeTab
 
+function Visrange()
+    coroutine.resume(coroutine.create(function()
+    pcall(function()
+        while _G.SettingsTable.Visrange do
+            game:GetService("Workspace"):WaitForChild("Camera"):WaitForChild("SphereSelection")
+            while game:GetService("Workspace").Camera:FindFirstChild("SphereSelection") and _G.SettingsTable.Visrange do 
+                pcall(function()
+                    game:GetService("Workspace").Camera.SphereSelection:FindFirstChild("Union").Size = Vector3.new(_G.SettingsTable.visrange1, _G.SettingsTable.visrange1, _G.SettingsTable.visrange1)
+                end)
+                pcall(function()
+                    game:GetService("Workspace").Camera.SphereSelection:FindFirstChild("Part").Size = Vector3.new(_G.SettingsTable.visrange1, 0.1, _G.SettingsTable.visrange1)
+                end)
+                game:GetService('RunService').RenderStepped:Wait()
+            end
+        end
+    end)
+    end))
+end
+
 UpgradeTab:AddToggle({
 	Name = "Visual Range",
-	Default = _G.Visrange,
+	Default = _G.SettingsTable.Visrange,
 	Callback = function(Value)
-        _G.Visrange = Value
-        pcall(function()
-            while _G.Visrange do
-                game:GetService("Workspace"):WaitForChild("Camera"):WaitForChild("SphereSelection")
-                while game:GetService("Workspace").Camera:FindFirstChild("SphereSelection") and _G.Visrange do
-                    pcall(function()
-                        game:GetService("Workspace").Camera.SphereSelection:FindFirstChild("Union").Size = Vector3.new(visrange1, visrange1, visrange1)
-                    end)
-                    pcall(function()
-                        game:GetService("Workspace").Camera.SphereSelection:FindFirstChild("Part").Size = Vector3.new(visrange1, 0.1, visrange1)
-                    end)
-		game:GetService('RunService').RenderStepped:Wait()
-                end
-            end
-        end)
+        _G.SettingsTable.Visrange = Value
+        Visrange()
+        SaveSettings()
 	end    
 })
 
 UpgradeTab:AddSlider({
 	Name = "Range:",
 	Min = 1,
-	Max = 150,
-	Default = 20,
+	Max = 200,
+	Default = _G.SettingsTable.visrange1,
 	Color = Color3.fromRGB(255,255,255),
 	Increment = 1,
 	Callback = function(Value)
-		visrange1 = Value
+		_G.SettingsTable.visrange1 = Value
+		SaveSettings()
 	end    
 })
 
@@ -3044,10 +3054,8 @@ AbilityTab:AddToggle({
 	local y = 0
 	coroutine.resume(coroutine.create(function()
 	pcall(function()
-	if _G.SettingsTable.yugiuntil then
 	repeat task.wait() until game:GetService("Workspace").Unit:WaitForChild('YugiMax'):WaitForChild('UpgradeTag').Value == 5
 	task.wait(10)
-	if _G.SettingsTable.yugiuntil then
 	repeat task.wait(.5)
 	pcall(function()
 	game.ReplicatedStorage.Remotes.Input:FireServer('UseSpecialMove', game:GetService("Workspace").Unit.YugiMax)
@@ -3095,8 +3103,6 @@ AbilityTab:AddToggle({
         	["color"] = tonumber(0x7269da)}}}), 
         	Method = "POST", Headers = {
         	["content-type"] = "application/json"}})
-	end
-	end
 	end
         end)
 	end))
