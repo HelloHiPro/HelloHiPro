@@ -1141,9 +1141,10 @@ end
 
 workspace.Enemies.ChildAdded:Connect(function(child)
 if _G.SettingsTable.deleteenemy then
-child:WaitForChild("Head")
+pcall(function()
 child:WaitForChild("HumanoidRootPart")
 child:WaitForChild("Torso")
+child:WaitForChild("Head")
 child.Head.Transparency = 1
 child.HumanoidRootPart.Transparency = 0
 local partA = child.HumanoidRootPart
@@ -1167,6 +1168,7 @@ wait(1)
 for _, v in pairs(child:GetChildren()) do
     if v.ClassName == "Folder" then v:Destroy() end
 end
+end)
 end
 end)
 
