@@ -1156,7 +1156,7 @@ weld.Part0 = partA
 weld.Part1 = partB
 for _, v in pairs(child:GetChildren()) do
     if v.ClassName == "MeshPart" then 
-        if v.Name ~= "HumanoidRootPart" or v.Name ~= "Head" or v.Name ~= "HoverPart" then jamama = 1
+        if v.Name == "HumanoidRootPart" or v.Name == "Head" or v.Name == "HoverPart" then jamama = 1
         else v:Destroy()
         end
     elseif v.ClassName == "Part" then
