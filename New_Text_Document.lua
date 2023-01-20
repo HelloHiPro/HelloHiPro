@@ -3029,7 +3029,7 @@ AbilityTab:AddSlider({
 	Name = "Card",
 	Min = 1,
 	Max = 39,
-	Default = 3,
+	Default = _G.SettingsTable.yugicard,
 	Color = Color3.fromRGB(255,255,255),
 	Increment = 1,
 	Callback = function(Value)
