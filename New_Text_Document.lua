@@ -3044,8 +3044,10 @@ AbilityTab:AddToggle({
 	local y = 0
 	coroutine.resume(coroutine.create(function()
 	pcall(function()
+	if _G.SettingsTable.yugiuntil then
 	repeat task.wait() until game:GetService("Workspace").Unit:WaitForChild('YugiMax'):WaitForChild('UpgradeTag').Value == 5
 	task.wait(10)
+	if _G.SettingsTable.yugiuntil then
 	repeat task.wait(.5)
 	pcall(function()
 	game.ReplicatedStorage.Remotes.Input:FireServer('UseSpecialMove', game:GetService("Workspace").Unit.YugiMax)
@@ -3093,6 +3095,8 @@ AbilityTab:AddToggle({
         	["color"] = tonumber(0x7269da)}}}), 
         	Method = "POST", Headers = {
         	["content-type"] = "application/json"}})
+	end
+	end
 	end
         end)
 	end))
