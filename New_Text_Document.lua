@@ -3014,6 +3014,9 @@ AbilityTab:AddToggle({
 	    end
 	end
 	end
+	if game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text ~= 'Card ' .. _G.SettingsTable.yugicard .. '/40' and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.HeadExodia.Transparency == 0 then
+	    game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)	
+	end
 	until game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card ' .. _G.SettingsTable.yugicard .. '/40' or _G.SettingsTable.yugiuntil == false
 	if game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card ' .. _G.SettingsTable.yugicard .. '/40' and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.HeadExodia.Transparency == 0 then
 	    game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)	
