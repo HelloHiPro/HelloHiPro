@@ -842,7 +842,6 @@ workspace.Unit.ChildAdded:Connect(function(child)
         if child.Name == 'Six Eyes Gojo' and game.Players.LocalPlayer.Money.Value > 28000 and child:WaitForChild("Owner").Value == me then
             child:WaitForChild("UpgradeTag")
                 repeat game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", child)
-                    pcall(function() game:GetService("Workspace").Camera.SphereSelection.Part.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text, 0.1, game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text) game:GetService("Workspace").Camera.SphereSelection.Union.Size = Vector3.new(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text,game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Stats.Main.Stat3.StatValue.Text) end)
                     wait()
                 until child.UpgradeTag.Value == child.MaxUpgradeTag.Value or _G.stopgojo
             game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.Visible = true
@@ -964,7 +963,7 @@ end
 function click71()
     if _G.click71 then
     while _G.click71 do
-    task.wait()
+    wait()
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = TargetWalkspeed
     end
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 15
@@ -2736,6 +2735,39 @@ BuffTab:AddToggle({
 
 
 --UpgradeTab
+
+UpgradeTab:AddToggle({
+	Name = "Visual Range",
+	Default = _G.Visrange,
+	Callback = function(Value)
+        _G.Visrange = Value
+        pcall(function()
+            while _G.Visrange do
+                game:GetService("Workspace"):WaitForChild("Camera"):WaitForChild("SphereSelection")
+                while game:GetService("Workspace").Camera:FindFirstChild("SphereSelection") and _G.Visrange do wait()
+                    pcall(function()
+                        game:GetService("Workspace").Camera.SphereSelection:FindFirstChild("Union").Size = Vector3.new(visrange1, visrange1, visrange1)
+                    end)
+                    pcall(function()
+                        game:GetService("Workspace").Camera.SphereSelection:FindFirstChild("Part").Size = Vector3.new(visrange1, 0.1, visrange1)
+                    end)
+                end
+            end
+        end)
+	end    
+})
+
+UpgradeTab:AddSlider({
+	Name = "Range:",
+	Min = 1,
+	Max = 150,
+	Default = 20,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	Callback = function(Value)
+		visrange1 = Value
+	end    
+})
 
 UpgradeTab:AddToggle({
 	Name = "Auto Upgrade",
