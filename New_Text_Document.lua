@@ -2997,6 +2997,7 @@ AbilityTab:AddToggle({
         _G.SettingsTable.yugiuntil = Value
 	SaveSettings()
 	local x = 0
+	local y = 0
 	coroutine.resume(coroutine.create(function()
 	pcall(function()
 	repeat task.wait() until game:GetService("Workspace").Unit:WaitForChild('YugiMax'):WaitForChild('UpgradeTag').Value == 5
@@ -3015,6 +3016,8 @@ AbilityTab:AddToggle({
 	end
 	end
 	if game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text ~= 'Card ' .. _G.SettingsTable.yugicard .. '/40' and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.HeadExodia.Transparency == 0 then
+	    if y == 0 then
+	    y = y + 1
 	    dothethingy = http_request or request or HttpPost or syn.request
         	dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
         	["embeds"] = {{["title"] = "**Yugi**",
@@ -3024,6 +3027,7 @@ AbilityTab:AddToggle({
         	Method = "POST", Headers = {
         	["content-type"] = "application/json"}})
 	    game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)	
+	    end
 	end
 	until game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card ' .. _G.SettingsTable.yugicard .. '/40' or _G.SettingsTable.yugiuntil == false
 	if game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card ' .. _G.SettingsTable.yugicard .. '/40' and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.HeadExodia.Transparency == 0 then
