@@ -3072,7 +3072,6 @@ AbilityTab:AddBind({
 	    yugiability()
 	end    
 })
-local bob = 0
 AbilityTab:AddToggle({
 	Name = "Auto Yugi Until",
 	Default = _G.SettingsTable.yugiuntil,
@@ -3098,7 +3097,7 @@ AbilityTab:AddToggle({
 	if x == 0 then
         if v.SpecialMove["Special_Enabled2"].Value then
 	    x = x + 1
-	    wait(5)
+	    wait(10)
 	    if v:WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card 40/40' then
 		game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
 	    end
