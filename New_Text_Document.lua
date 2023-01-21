@@ -144,9 +144,9 @@ _G.SettingsTable = {
     autoplayback = false,
     selectedmacro = "",
     autosell = false,
-    autosellwave = "",
+    autosellwave = nil,
     autosellspeed = 1,
-    autoupgradewave = "",
+    autoupgradewave = nil,
     autoupgrade = false,
     autojoin = false,
     mode = "",
@@ -202,7 +202,7 @@ _G.SettingsTable = {
     unitu6 = false,
     deleteexodia = false,
     yugiuntil = false,
-    yugicard = "",
+    yugicard = nil,
     Visrange = false,
     visrange1 = 100
 }
@@ -3070,6 +3070,88 @@ AbilityTab:AddBind({
 	Hold = false,
 	Callback = function()
 	    yugiability()
+	end    
+})
+
+AbilityTab:AddToggle({
+	Name = "Auto Yugi Until",
+	Default = _G.SettingsTable.yugiuntil,
+	Callback = function(Value)
+        _G.SettingsTable.yugiuntil = Value
+	SaveSettings()
+	local x = 0
+	local y = 0
+	coroutine.resume(coroutine.create(function()
+	pcall(function()
+	if _G.SettingsTable.yugiuntil then
+	repeat task.wait() until game:GetService("Workspace").Unit:WaitForChild('YugiMax'):WaitForChild('UpgradeTag').Value == 5
+	task.wait(10)
+	if _G.SettingsTable.yugiuntil then
+	repeat task.wait(.5)
+	pcall(function()
+	game.ReplicatedStorage.Remotes.Input:FireServer('UseSpecialMove', game:GetService("Workspace").Unit.YugiMax)
+	end)
+	if x == 0 then
+        if game:GetService("Workspace").Unit.YugiMax.SpecialMove["Special_Enabled2"].Value then
+	    x = x + 1
+	    wait(5)
+	    if game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card 40/40' then
+		game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+	    end
+	end
+	end
+	if game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text ~= 'Card ' .. _G.SettingsTable.yugicard .. '/40' and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.HeadExodia.Transparency == 0 then
+	    if y == 0 then
+	    y = y + 1
+	    dothethingy = http_request or request or HttpPost or syn.request
+        	dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
+        	["embeds"] = {{["title"] = "**Yugi**",
+        	["description"] = "Fail\n" .. game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text,
+        	["type"] = "rich",
+        	["color"] = tonumber(0x7269da)}}}), 
+        	Method = "POST", Headers = {
+        	["content-type"] = "application/json"}})
+	    game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)	
+	    end
+	end
+	until game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card ' .. _G.SettingsTable.yugicard .. '/40' or _G.SettingsTable.yugiuntil == false
+	if game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card ' .. _G.SettingsTable.yugicard .. '/40' and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.HeadExodia.Transparency == 0 then
+	    dothethingy = http_request or request or HttpPost or syn.request
+        	dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
+        	["embeds"] = {{["title"] = "**Yugi**",
+        	["description"] = "Fail\n" .. game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text,
+        	["type"] = "rich",
+        	["color"] = tonumber(0x7269da)}}}), 
+        	Method = "POST", Headers = {
+        	["content-type"] = "application/json"}})
+	    game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)	
+	else
+        dothethingy = http_request or request or HttpPost or syn.request
+        	dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
+        	["embeds"] = {{["title"] = "**Yugi**",
+        	["description"] = "Success\n" .. game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text,
+        	["type"] = "rich",
+        	["color"] = tonumber(0x7269da)}}}), 
+        	Method = "POST", Headers = {
+        	["content-type"] = "application/json"}})
+	end
+	end
+        end
+        end)
+	end))
+	end    
+})
+
+AbilityTab:AddSlider({
+	Name = "Card",
+	Min = 1,
+	Max = 39,
+	Default = tonumber(_G.SettingsTable.yugicard),
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	Callback = function(Value)
+	   _G.SettingsTable.yugicard = Value
+	   SaveSettings()
 	end    
 })
 
