@@ -3233,7 +3233,7 @@ workspace.Enemies.ChildAdded:Connect(function(child)
         child:WaitForChild("PathNumber")
         child:WaitForChild("Head")
         repeat wait() until child.PathNumber.Value > unslowedpath
-        if not child.Head:FindFirstChild("EffectBBGUI") then
+        if not child.Head:FindFirstChild("EffectBBGUI") and child.PathNumber.Value < unslowedpath + 150 then
             for _,v in pairs(unslowgojo) do
                 print(v)
                 if v.SpecialMove.Special_Enabled2.Value == false then
