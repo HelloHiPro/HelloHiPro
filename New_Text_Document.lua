@@ -1519,6 +1519,7 @@ function autocooler()
     if _G.SettingsTable.autocooler then
         SaveSettings()
         coroutine.resume(coroutine.create(function()
+	pcall(function()
         repeat wait()
         for _, v in pairs(unit:GetChildren()) do
             pcall(function()
@@ -1528,6 +1529,7 @@ function autocooler()
             end)
         end
         until _G.SettingsTable.autocooler == false
+	end)
         end))
     end
 end
