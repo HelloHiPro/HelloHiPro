@@ -1,6 +1,6 @@
 --ongoing message settings
-local message = "TS TS TS TS TS TS TS TS"
-local automessage = false
+local message = "PLS TELA PLS ZM RAPTOR LACUS MID AISUXHEIAIIAIAOXI"
+local automessage = true
 
 --script
 coroutine.resume(coroutine.create(function()
