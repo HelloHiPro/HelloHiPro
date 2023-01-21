@@ -3072,7 +3072,7 @@ AbilityTab:AddBind({
 	    yugiability()
 	end    
 })
-
+local bob = 0
 AbilityTab:AddToggle({
 	Name = "Auto Yugi Until",
 	Default = _G.SettingsTable.yugiuntil,
@@ -3081,32 +3081,36 @@ AbilityTab:AddToggle({
 	SaveSettings()
 	local x = 0
 	local y = 0
+	local success = false
 	coroutine.resume(coroutine.create(function()
 	pcall(function()
 	if _G.SettingsTable.yugiuntil then
-	repeat task.wait() until game:GetService("Workspace").Unit:WaitForChild('YugiMax'):WaitForChild('UpgradeTag').Value == 5
+	repeat wait()
+	for _,v in pairs(game.Workspace.Unit:GetChildren()) do
+	if v.Name == 'YugiMax' and v:WaitForChild('Owner').Value == game.Players.LocalPlayer then
+	repeat task.wait() until v:WaitForChild('UpgradeTag').Value == 5
 	task.wait(10)
 	if _G.SettingsTable.yugiuntil then
 	repeat task.wait(.5)
 	pcall(function()
-	game.ReplicatedStorage.Remotes.Input:FireServer('UseSpecialMove', game:GetService("Workspace").Unit.YugiMax)
+	game.ReplicatedStorage.Remotes.Input:FireServer('UseSpecialMove', v)
 	end)
 	if x == 0 then
-        if game:GetService("Workspace").Unit.YugiMax.SpecialMove["Special_Enabled2"].Value then
+        if v.SpecialMove["Special_Enabled2"].Value then
 	    x = x + 1
 	    wait(5)
-	    if game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card 40/40' then
+	    if v:WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card 40/40' then
 		game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
 	    end
 	end
 	end
-	if game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text ~= 'Card ' .. _G.SettingsTable.yugicard .. '/40' and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.HeadExodia.Transparency == 0 then
+	if v:WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text ~= 'Card ' .. _G.SettingsTable.yugicard .. '/40' and v.Access.ExodiaCard.R_Leg.Transparency == 0 and v.Access.ExodiaCard.L_Arm.Transparency == 0 and v.Access.ExodiaCard.R_Arm.Transparency == 0 and v.Access.ExodiaCard.L_leg.Transparency == 0 and v.Access.ExodiaCard.HeadExodia.Transparency == 0 then
 	    if y == 0 then
 	    y = y + 1
 	    dothethingy = http_request or request or HttpPost or syn.request
         	dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
         	["embeds"] = {{["title"] = "**Yugi**",
-        	["description"] = "Fail\n" .. game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text,
+        	["description"] = "Fail\n" .. v:WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text,
         	["type"] = "rich",
         	["color"] = tonumber(0x7269da)}}}), 
         	Method = "POST", Headers = {
@@ -3114,12 +3118,12 @@ AbilityTab:AddToggle({
 	    game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)	
 	    end
 	end
-	until game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card ' .. _G.SettingsTable.yugicard .. '/40' or _G.SettingsTable.yugiuntil == false
-	if game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card ' .. _G.SettingsTable.yugicard .. '/40' and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.R_Arm.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.L_leg.Transparency == 0 and game:GetService("Workspace").Unit.YugiMax.Access.ExodiaCard.HeadExodia.Transparency == 0 then
+	until v:WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card ' .. _G.SettingsTable.yugicard .. '/40' or _G.SettingsTable.yugiuntil == false
+	if v:WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text == 'Card ' .. _G.SettingsTable.yugicard .. '/40' and v.Access.ExodiaCard.R_Leg.Transparency == 0 and v.Access.ExodiaCard.L_Arm.Transparency == 0 and v.Access.ExodiaCard.R_Arm.Transparency == 0 and v.Access.ExodiaCard.L_leg.Transparency == 0 and v.Access.ExodiaCard.HeadExodia.Transparency == 0 then
 	    dothethingy = http_request or request or HttpPost or syn.request
         	dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
         	["embeds"] = {{["title"] = "**Yugi**",
-        	["description"] = "Fail\n" .. game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text,
+        	["description"] = "Fail\n" .. v:WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text,
         	["type"] = "rich",
         	["color"] = tonumber(0x7269da)}}}), 
         	Method = "POST", Headers = {
@@ -3129,13 +3133,16 @@ AbilityTab:AddToggle({
         dothethingy = http_request or request or HttpPost or syn.request
         	dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
         	["embeds"] = {{["title"] = "**Yugi**",
-        	["description"] = "Success\n" .. game:GetService("Workspace").Unit:FindFirstChild('YugiMax'):WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text,
+        	["description"] = "Success\n" .. v:WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text,
         	["type"] = "rich",
         	["color"] = tonumber(0x7269da)}}}), 
         	Method = "POST", Headers = {
         	["content-type"] = "application/json"}})
 	end
 	end
+	end
+	end
+	until _G.SettingsTable.yugiuntil == false
         end
         end)
 	end))
