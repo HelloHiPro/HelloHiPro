@@ -3285,7 +3285,9 @@ MobCounterTab:AddButton({
 	Name = "Refresh Gojo 6 Table",
 	Default = false,
 	Callback = function(Value)
-		table.clear(unslowgojo)
+	pcall(function()
+	coroutine.resume(coroutine.create(function()
+	table.clear(unslowgojo)
             for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
                 if v.Name == 'Six Eyes Gojo' and v.Owner.Value == me and v.UpgradeTag.Value == v.MaxUpgradeTag.Value then
                     table.insert(unslowgojo, v)
@@ -3319,6 +3321,8 @@ MobCounterTab:AddButton({
                 Content = "First "..#unslowgojo.." Gojos",
                 Time = 3
             })
+	end))
+	end)
 	end    
 })
 
