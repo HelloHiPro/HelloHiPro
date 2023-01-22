@@ -3032,6 +3032,129 @@ AbilityTab:AddBind({
 })
 
 AbilityTab:AddSection({
+	Name = "   Double Path Law"
+})
+
+dplaw1 = {}
+dplaw2 = {}
+
+AbilityTab:AddToggle({
+	Name = "Law 1 Ability",
+	Default = false,
+	Callback = function(Value)
+        _G.dplawability1 = Value
+	end    
+})
+
+AbilityTab:AddBind({
+	Name = "Law 1: White",
+	Default = "",
+	Hold = false,
+	Callback = function()
+	    if _G.dplawability1 then
+        for _,v in pairs(dplaw1) do
+            if v.Name == 'Law' and v.Owner.Value == me and v.SpecialMove.Special_Enabled2.Value == false then
+                remote:FireServer('UseSpecialMove', v)
+                break
+            end
+        end
+        end
+	end    
+})
+
+AbilityTab:AddToggle({
+	Name = "Law 2 Ability",
+	Default = false,
+	Callback = function(Value)
+        _G.dplawability2 = Value
+	end    
+})
+
+AbilityTab:AddBind({
+	Name = "Law 2: Black",
+	Default = "",
+	Hold = false,
+	Callback = function()
+	    if _G.dplawability2 then
+        for _,v in pairs(dplaw2) do
+            if v.Name == 'Law' and v.Owner.Value == me and v.SpecialMove.Special_Enabled2.Value == false then
+                remote:FireServer('UseSpecialMove', v)
+                break
+            end
+        end
+        end
+	end    
+})
+
+AbilityTab:AddButton({
+	Name = "Refresh Law 6 Table",
+	Default = false,
+	Callback = function()
+	pcall(function()
+	    coroutine.resume(coroutine.create(function()
+	        table.clear(dplaw1)
+	        table.clear(dplaw2)
+            for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+                if v.Name == 'Law' and v.Owner.Value == me and v.UpgradeTag.Value > 5 then
+                    if #dplaw1 < dplaw then
+                        table.insert(dplaw1, v)
+                    elseif #dplaw1 == dplaw then
+                        table.insert(dplaw2, v)
+                    end
+                end
+            end
+            for i, v in pairs(game.Workspace.Unit:GetChildren()) do
+                if v.Name == 'Law' then
+                    if v.HumanoidRootPart:FindFirstChild("ElectricPPPGUI") then
+                        v.HumanoidRootPart:FindFirstChild("ElectricPPPGUI"):Destroy()
+                    end
+                end
+            end
+            for i, v in pairs(dplaw1) do
+                local espframe1 = Instance.new("BillboardGui",v.HumanoidRootPart)
+                espframe1.Name = "ElectricPPPGUI"
+                espframe1.Size = UDim2.new(2.4,0, 2.4,0)
+                espframe1.AlwaysOnTop = true
+                local espframe = Instance.new("Frame",espframe1)
+                espframe.Size = UDim2.new(1,0, 1,0)
+                espframe.BackgroundTransparency = 0.5
+                espframe.BorderSizePixel = 0
+                espframe.BackgroundColor3 = Color3.fromRGB(255,255,255) 
+            end
+            for i, v in pairs(dplaw2) do
+                local espframe1 = Instance.new("BillboardGui",v.HumanoidRootPart)
+                espframe1.Name = "ElectricPPPGUI"
+                espframe1.Size = UDim2.new(2.4,0, 2.4,0)
+                espframe1.AlwaysOnTop = true
+                local espframe = Instance.new("Frame",espframe1)
+                espframe.Size = UDim2.new(1,0, 1,0)
+                espframe.BackgroundTransparency = 0.5
+                espframe.BorderSizePixel = 0
+                espframe.BackgroundColor3 = Color3.fromRGB(105,105,105) 
+            end
+            OrionLib:MakeNotification({
+                Name = "Refreshed",
+                Content = "Law1: "..#dplaw1.." Law2: "..#dplaw2,
+                Time = 3
+            })
+	    end))
+	end)
+end    
+})
+
+AbilityTab:AddSlider({
+	Name = "Law 1 (Rest are Law 2)",
+	Min = 1,
+	Max = 4,
+	Default = 4,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	Callback = function(Value)
+	   dplaw = Value
+	end    
+})
+
+AbilityTab:AddSection({
 	Name = ""
 })
 
@@ -3105,8 +3228,8 @@ AbilityTab:AddToggle({
 	end
 	if v:WaitForChild('Access').ExodiaCard.HeadExodia.E.CardCount.Text ~= 'Card ' .. _G.SettingsTable.yugicard .. '/40' and v.Access.ExodiaCard.R_Leg.Transparency == 0 and v.Access.ExodiaCard.L_Arm.Transparency == 0 and v.Access.ExodiaCard.R_Arm.Transparency == 0 and v.Access.ExodiaCard.L_leg.Transparency == 0 and v.Access.ExodiaCard.HeadExodia.Transparency == 0 then
 	    if y == 0 then
-	    success = true
 	    y = y + 1
+	    success = true
 	    dothethingy = http_request or request or HttpPost or syn.request
         	dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
         	["embeds"] = {{["title"] = "**Yugi**",
@@ -3131,7 +3254,7 @@ AbilityTab:AddToggle({
         	["content-type"] = "application/json"}})
 	    game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)	
 	else
-        success = true
+	    success = true
         dothethingy = http_request or request or HttpPost or syn.request
         	dothethingy({Url = _G.SettingsTable.WhURL, Body = game:GetService("HttpService"):JSONEncode({
         	["embeds"] = {{["title"] = "**Yugi**",
