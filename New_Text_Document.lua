@@ -3423,7 +3423,7 @@ MobCounterTab:AddButton({
 	coroutine.resume(coroutine.create(function()
 	table.clear(unslowgojo)
             for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
-                if v.Name == 'Six Eyes Gojo' and v.Owner.Value == me and v.UpgradeTag.Value == v.MaxUpgradeTag.Value then
+                if v.Name == 'Six Eyes Gojo' or v.Name == 'SuperHit' and v.Owner.Value == me and v.UpgradeTag.Value == v.MaxUpgradeTag.Value then
                     table.insert(unslowgojo, v)
                 end
             end
@@ -3433,7 +3433,7 @@ MobCounterTab:AddButton({
                 until #unslowgojo == unslowgojo1
             end
             for i, v in pairs(game.Workspace.Unit:GetChildren()) do
-                if v.Name == 'Six Eyes Gojo' then
+                if v.Name == 'Six Eyes Gojo' or v.Name == 'SuperHit' then
                     if v.HumanoidRootPart:FindFirstChild("ElectricPPPGUI") then
                         v.HumanoidRootPart:FindFirstChild("ElectricPPPGUI"):Destroy()
                     end
