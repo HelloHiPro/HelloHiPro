@@ -1575,6 +1575,12 @@ local PriorityTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
+local VisualRangeTab = Window:MakeTab({
+	Name = "Visual Range",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
 local LobbyTab = Window:MakeTab({
 	Name = "Lobby Stuff",
 	Icon = "rbxassetid://4483345998",
@@ -2761,7 +2767,40 @@ function Visrange()
     end))
 end
 
-UpgradeTab:AddToggle({
+dashbeamvalue = {}
+
+VisualRangeTab:AddButton({
+    Name = "Print Cone Angle (Degrees)",
+    Default = false,
+    Callback = function(Value)
+        local printrange = pcall(function()
+        table.clear(dashbeamvalue)
+        for i, v in pairs(game:GetService("Workspace").Camera.SphereSelection:GetChildren()) do
+            if v.Name == "DashBeam" then
+                table.insert(dashbeamvalue, v)
+            end
+        end
+        dashbeamvalue1 = dashbeamvalue[1].Orientation.Y - dashbeamvalue[2].Orientation.Y
+        local str = ""..dashbeamvalue1
+        local numMatch = str:match("%d+");
+        print(numMatch)
+        OrionLib:MakeNotification({
+            Name = "Unit Range",
+            Content = ""..numMatch.." Degrees",
+            Time = 5
+        })
+        end)
+        if printrange == false then
+            OrionLib:MakeNotification({
+            Name = "Error",
+            Content = "Click on the unit",
+            Time = 5
+            })
+        end
+    end    
+})
+
+VisualRangeTab:AddToggle({
 	Name = "Visual Range",
 	Default = _G.SettingsTable.Visrange,
 	Callback = function(Value)
@@ -2771,7 +2810,7 @@ UpgradeTab:AddToggle({
 	end    
 })
 
-UpgradeTab:AddSlider({
+VisualRangeTab:AddSlider({
 	Name = "Range:",
 	Min = 1,
 	Max = 200,
@@ -2781,6 +2820,86 @@ UpgradeTab:AddSlider({
 	Callback = function(Value)
 		_G.SettingsTable.visrange1 = Value
 		SaveSettings()
+	end    
+})
+
+dashbeam = {}
+
+VisualRangeTab:AddToggle({
+	Name = "Visual Cone Angle",
+	Default = false,
+	Callback = function(Value)
+        viscone = Value
+        if viscone then
+            coroutine.resume(coroutine.create(function()
+            while viscone do wait()
+            pcall(function()
+            table.clear(dashbeam)
+            for i, v in pairs(game:GetService("Workspace").Camera.SphereSelection:GetChildren()) do
+                if v.Name == "DashBeam" then
+                    pcall(function()
+                    v.Transparency = .5
+                    v.Size = v.Size + Vector3.new(500,0,0)
+                    end)
+                end
+            end
+            for i, v in pairs(game:GetService("Workspace").Camera.SphereSelection:GetChildren()) do
+                if v.Name == "DashBeam" then
+                    pcall(function()
+                    table.insert(dashbeam, v)
+                    end)
+                end
+            end
+            pcall(function()
+            dashbeam[2].Orientation = dashbeam[1].Orientation + Vector3.new(0,conesize,0)
+            end)
+            end)
+            end
+            end))
+        end
+	end    
+})
+
+VisualRangeTab:AddSlider({
+	Name = "Cone Size (Degrees)",
+	Min = 0,
+	Max = 180,
+	Default = 90,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	Callback = function(Value)
+		conesize = Value
+	end    
+})
+
+VisualRangeTab:AddToggle({
+	Name = "Cone Rotation",
+	Default = false,
+	Callback = function(Value)
+        visconerotate = Value
+        if visconerotate then
+            coroutine.resume(coroutine.create(function()
+            pcall(function()
+            while visconerotate do wait()
+                pcall(function()
+                dashbeam[1].Orientation = Vector3.new(0,conerotation,0)
+                end)
+            end
+            end)
+            end))
+        end
+	end    
+})
+
+VisualRangeTab:AddSlider({
+	Name = "Cone Rotation Angle (Degrees",
+	Min = 1,
+	Max = 360,
+	Default = 360,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	Callback = function(Value)
+		conerotation = Value
 	end    
 })
 
