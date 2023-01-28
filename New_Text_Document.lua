@@ -1626,6 +1626,19 @@ local WhTab = Window:MakeTab({
 
 -- WhTab
 
+bobby = 0
+bobby1 = tick()
+
+local joey = WhTab:AddLabel(bobby)
+
+coroutine.resume(coroutine.create(function()
+    repeat task.wait()
+        bobby = bobby + .1
+        repeat task.wait() until tick() - bobby1 > bobby
+        joey:Set(string.format("%.01f", bobby))
+    until false
+end))
+
 WhTab:AddTextbox({
 	Name = "Webhook URL",
 	Default = _G.SettingsTable.WhURL,
@@ -2798,6 +2811,23 @@ VisualRangeTab:AddButton({
             })
         end
     end    
+})
+
+VisualRangeTab:AddToggle({
+	Name = "Impossible to click off unit",
+	Default = false,
+	Callback = function(Value)
+        noclickoff = Value
+        pcall(function()
+        if noclickoff then 
+            game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.BG.WhiteStroke.Size = UDim2.new(10,0,10,0)
+            game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.BG.WhiteStroke.BackgroundTransparency = 1
+            game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.BG.WhiteStroke.Visible = true
+        elseif noclickoff == false then
+            game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.BG.WhiteStroke.Visible = false
+        end
+        end)
+	end    
 })
 
 VisualRangeTab:AddToggle({
@@ -3986,3 +4016,4 @@ SettingsTab:AddToggle({
 })
 
 OrionLib:Init()
+
