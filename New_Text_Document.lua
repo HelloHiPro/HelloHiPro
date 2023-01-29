@@ -2816,6 +2816,74 @@ BuffTab:AddToggle({
 	end    
 })
 
+BuffTab:AddSection({
+	Name = ""
+})
+
+BuffTab:AddLabel("Can't click off and waits until unit is clicked")
+
+local actoggle = BuffTab:AddToggle({
+	Name = "Autoclick TS Modified",
+	Default = _G.acts,
+	Callback = function(Value)
+        _G.acts = Value
+        if _G.acts then
+            coroutine.resume(coroutine.create(function()
+            for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.MouseButton1Click)) do
+                repeat task.wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Visible and game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Preview.Character:FindFirstChild("Six Eyes Gojo")
+                if _G.acts then
+                    v:Fire()
+                end
+            end
+            while _G.acts do
+            acts = tick()
+            actstime = 0
+            repeat task.wait() actstime = tick() - acts
+            until tonumber(actstime)*1000 > tonumber(actsdelay)
+            for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.MouseButton1Click)) do
+                repeat task.wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Visible and game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Preview.Character:FindFirstChild("Six Eyes Gojo")
+                if _G.acts then
+                    v:Fire()
+                end
+            end
+            end
+            end))
+        end
+	end    
+})
+
+BuffTab:AddBind({
+	Name = "Autoclick TS Toggle",
+	Default = "",
+	Hold = false,
+	Callback = function()
+	    if _G.acts then 
+	        OrionLib:MakeNotification({
+                Name = "Autoclick TS",
+                Content = "Stopped...",
+                Time = 3
+            }) 
+            actoggle:Set(false)
+        else
+            OrionLib:MakeNotification({
+                Name = "Autoclick TS",
+                Content = "Playing...",
+                Time = 3
+            }) 
+            actoggle:Set(true)
+        end
+	end    
+})
+
+BuffTab:AddTextbox({
+	Name = "Autoclick TS Delay (ms)",
+	Default = "",
+	TextDisappear = false,
+	Increment = 1,
+	Callback = function(Value)
+	    actsdelay = Value
+	end    
+})
 
 --UpgradeTab
 
