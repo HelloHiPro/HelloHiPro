@@ -1626,19 +1626,15 @@ local WhTab = Window:MakeTab({
 
 -- WhTab
 
-bobby = 0
 bobby1 = tick()
 
 local joey = WhTab:AddLabel(bobby)
 
 coroutine.resume(coroutine.create(function()
     repeat task.wait()
-        bobby = bobby + .1
-        repeat task.wait() until tick() - bobby1 > bobby
-        joey:Set(string.format("%.01f", bobby))
+        joey:Set(string.format("%.01f", tick() - bobby1))
     until false
 end))
-
 WhTab:AddTextbox({
 	Name = "Webhook URL",
 	Default = _G.SettingsTable.WhURL,
@@ -1721,6 +1717,68 @@ end)
 end))
 end
 end    
+})
+
+WhTab:AddSection({
+	Name = ""
+})
+
+WhTab:AddButton({
+	Name = "TS Timer",
+	Default = false,
+	Callback = function()
+            
+local ScrollSpeed = Instance.new("ScreenGui")
+local Main = Instance.new("TextLabel")
+
+gojotime1 = tick()
+
+--Setup GUI
+ScrollSpeed.Name = "TS Gui"
+ScrollSpeed.Parent = game:GetService("CoreGui")
+Main.Name = "Main"
+Main.Parent = ScrollSpeed
+Main.Active = true
+Main.AnchorPoint = Vector2.new(0.5, 0.5)
+Main.BackgroundColor3 = Color3.new(0.333333, 1, 0.498039)
+Main.BorderSizePixel = 0
+Main.Draggable = true
+Main.Position = UDim2.new(.9, 0, .93, 0)
+Main.Size = UDim2.new(0, 300, 0, 50)
+Main.Font = Enum.Font.SourceSansLight
+Main.Text = 10.1
+Main.TextScaled = true
+Main.TextSize = 14
+Main.TextWrapped = true
+
+game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.MouseButton1Click:Connect(function()
+    if game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Preview.Character:FindFirstChild("Six Eyes Gojo") then
+        gojotime1 = tick()
+    end
+end)
+
+repeat wait()
+    gojotime = string.format("%.01f", tsslider - (tick() - gojotime1))
+    Main.Text = gojotime
+    if tonumber(gojotime) > 0 then
+        Main.BackgroundColor3 = Color3.new(0.333333, 1, 0.498039)
+    elseif tonumber(gojotime) < 0 then
+        Main.BackgroundColor3 = Color3.new(0.76, 0.15, 0.1)
+    end
+until false
+	end    
+})
+
+WhTab:AddSlider({
+	Name = "TS Countdown from:",
+	Min = 10,
+	Max = 11,
+	Default = 10.1,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = .1,
+	Callback = function(Value)
+	   tsslider = Value
+	end    
 })
 
 LobbyTab:AddToggle({
@@ -4016,4 +4074,3 @@ SettingsTab:AddToggle({
 })
 
 OrionLib:Init()
-
