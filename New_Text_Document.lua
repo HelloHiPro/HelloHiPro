@@ -1631,9 +1631,11 @@ bobby1 = tick()
 local joey = WhTab:AddLabel(bobby)
 
 coroutine.resume(coroutine.create(function()
+    pcall(function()
     repeat task.wait()
-        joey:Set(string.format("%.01f", tick() - bobby1))
+        joey:Set("Timer: "..string.format("%.01f", tick() - bobby1))
     until false
+    end)
 end))
 WhTab:AddTextbox({
 	Name = "Webhook URL",
@@ -1717,68 +1719,6 @@ end)
 end))
 end
 end    
-})
-
-WhTab:AddSection({
-	Name = ""
-})
-
-WhTab:AddButton({
-	Name = "TS Timer",
-	Default = false,
-	Callback = function()
-            
-local ScrollSpeed = Instance.new("ScreenGui")
-local Main = Instance.new("TextLabel")
-
-gojotime1 = tick()
-
---Setup GUI
-ScrollSpeed.Name = "TS Gui"
-ScrollSpeed.Parent = game:GetService("CoreGui")
-Main.Name = "Main"
-Main.Parent = ScrollSpeed
-Main.Active = true
-Main.AnchorPoint = Vector2.new(0.5, 0.5)
-Main.BackgroundColor3 = Color3.new(0.333333, 1, 0.498039)
-Main.BorderSizePixel = 0
-Main.Draggable = true
-Main.Position = UDim2.new(.9, 0, .93, 0)
-Main.Size = UDim2.new(0, 300, 0, 50)
-Main.Font = Enum.Font.SourceSansLight
-Main.Text = 10.1
-Main.TextScaled = true
-Main.TextSize = 14
-Main.TextWrapped = true
-
-game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.MouseButton1Click:Connect(function()
-    if game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Preview.Character:FindFirstChild("Six Eyes Gojo") then
-        gojotime1 = tick()
-    end
-end)
-
-repeat wait()
-    gojotime = string.format("%.01f", tsslider - (tick() - gojotime1))
-    Main.Text = gojotime
-    if tonumber(gojotime) > 0 then
-        Main.BackgroundColor3 = Color3.new(0.333333, 1, 0.498039)
-    elseif tonumber(gojotime) < 0 then
-        Main.BackgroundColor3 = Color3.new(0.76, 0.15, 0.1)
-    end
-until false
-	end    
-})
-
-WhTab:AddSlider({
-	Name = "TS Countdown from:",
-	Min = 10,
-	Max = 11,
-	Default = 10.1,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = .1,
-	Callback = function(Value)
-	   tsslider = Value
-	end    
 })
 
 LobbyTab:AddToggle({
@@ -2828,6 +2768,7 @@ local actoggle = BuffTab:AddToggle({
 	Callback = function(Value)
         _G.acts = Value
         if _G.acts then
+                pcall(function()
             coroutine.resume(coroutine.create(function()
             for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.MouseButton1Click)) do
                 repeat task.wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Visible and game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Preview.Character:FindFirstChild("Six Eyes Gojo")
@@ -2839,7 +2780,7 @@ local actoggle = BuffTab:AddToggle({
             acts = tick()
             actstime = 0
             repeat task.wait() actstime = tick() - acts
-            until tonumber(actstime)*1000 > tonumber(actsdelay)
+            until tonumber(actstime) > tonumber(actsdelay)
             for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.MouseButton1Click)) do
                 repeat task.wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Visible and game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Preview.Character:FindFirstChild("Six Eyes Gojo")
                 if _G.acts then
@@ -2848,6 +2789,7 @@ local actoggle = BuffTab:AddToggle({
             end
             end
             end))
+            end)
         end
 	end    
 })
@@ -2881,7 +2823,70 @@ BuffTab:AddTextbox({
 	TextDisappear = false,
 	Increment = 1,
 	Callback = function(Value)
-	    actsdelay = Value
+	    actsdelay = Value/1000
+	end    
+})
+
+BuffTab:AddSection({
+	Name = ""
+})
+
+BuffTab:AddButton({
+	Name = "TS Timer",
+	Default = false,
+	Callback = function()
+                pcall(function()
+local ScrollSpeed = Instance.new("ScreenGui")
+local Main = Instance.new("TextLabel")
+
+gojotime1 = tick()
+
+--Setup GUI
+ScrollSpeed.Name = "TS Gui"
+ScrollSpeed.Parent = game:GetService("CoreGui")
+Main.Name = "Main"
+Main.Parent = ScrollSpeed
+Main.Active = true
+Main.AnchorPoint = Vector2.new(0.5, 0.5)
+Main.BackgroundColor3 = Color3.new(0.333333, 1, 0.498039)
+Main.BorderSizePixel = 0
+Main.Draggable = true
+Main.Position = UDim2.new(.9, 0, .93, 0)
+Main.Size = UDim2.new(0, 300, 0, 50)
+Main.Font = Enum.Font.SourceSansLight
+Main.Text = 10.1
+Main.TextScaled = true
+Main.TextSize = 14
+Main.TextWrapped = true
+
+game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.MouseButton1Click:Connect(function()
+    if game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Preview.Character:FindFirstChild("Six Eyes Gojo") then
+        gojotime1 = tick()
+    end
+end)
+
+repeat wait()
+    gojotime = string.format("%.01f", tsslider - (tick() - gojotime1))
+    Main.Text = gojotime
+    if tonumber(gojotime) > 0 then
+        Main.BackgroundColor3 = Color3.new(0.333333, 1, 0.498039)
+    elseif tonumber(gojotime) < 0 then
+        Main.BackgroundColor3 = Color3.new(0.76, 0.15, 0.1)
+    end
+until false
+end)
+	end    
+})
+
+BuffTab:AddSlider({
+	Name = "TS Countdown from:",
+	Min = 10,
+	Max = 11,
+	Default = 10.1,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = .1,
+	Callback = function(Value)
+	   tsslider = Value
 	end    
 })
 
