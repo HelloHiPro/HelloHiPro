@@ -204,7 +204,9 @@ _G.SettingsTable = {
     yugiuntil = false,
     yugicard = nil,
     Visrange = false,
-    visrange1 = 100
+    visrange1 = 100,
+    autoskipoff = false,
+    autoskipoffwave = 999
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -2588,6 +2590,34 @@ AutoFarmTab:AddTextbox({
         _G.SettingsTable.autosellspeed = Value
         SaveSettings()
     end
+})
+
+AutoFarmTab:AddToggle({
+    Name = "Auto-Skip off",
+    Default = _G.SettingsTable.autoskipoff,
+    Callback = function(Value)
+    _G.SettingsTable.autoskipoff = Value
+    SaveSettings()
+    if _G.SettingsTable.autoskipoff then
+    pcall(function()
+        repeat task.wait() until game:GetService("ReplicatedStorage"):WaitForChild("WaveValue").Value >= tonumber(_G.SettingsTable.autoskipoffwave)
+        if game:GetService("Players").LocalPlayer.PlayerGui.HUD.Setting.Skip.BackgroundColor3 == Color3.new(0.36470588235,1,0.49019607843) and _G.SettingsTable.autoskipoff then
+        game:GetService("ReplicatedStorage").Remotes.Input:FireServer("AutoSkipWaves_CHANGE")
+        end
+    end)
+    end
+    end
+})
+
+AutoFarmTab:AddTextbox({
+	Name = "Auto-Skip off wave",
+	Default = _G.SettingsTable.autoskipoffwave,
+	TextDisappear = false,
+	Increment = 1,
+	Callback = function(Value)
+	    _G.SettingsTable.autoskipoffwave = Value
+	    SaveSettings()
+	end    
 })
 
 --Macro Tab
