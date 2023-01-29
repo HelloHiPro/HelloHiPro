@@ -2599,12 +2599,14 @@ AutoFarmTab:AddToggle({
     _G.SettingsTable.autoskipoff = Value
     SaveSettings()
     if _G.SettingsTable.autoskipoff then
+    coroutine.resume(coroutine.create(function()
     pcall(function()
         repeat task.wait() until game:GetService("ReplicatedStorage"):WaitForChild("WaveValue").Value >= tonumber(_G.SettingsTable.autoskipoffwave)
         if game:GetService("Players").LocalPlayer.PlayerGui.HUD.Setting.Skip.BackgroundColor3 == Color3.new(0.36470588235,1,0.49019607843) and _G.SettingsTable.autoskipoff then
         game:GetService("ReplicatedStorage").Remotes.Input:FireServer("AutoSkipWaves_CHANGE")
         end
     end)
+    end)) 
     end
     end
 })
