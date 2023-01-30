@@ -918,33 +918,11 @@ function yugiability()
     end
 end
 
-function kiraability()
-    if _G.kiraability then
-        for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
-            if v.Name == 'Light Yagami (Darkness)' and v.Owner.Value == me and v.SpecialMove.Special_Enabled2.Value == false then
-                remote:FireServer('UseSpecialMove', v)
-                break
-            end
-        end
-    end
-end
-
 local TIME_ZONE = 1
 local date = os.date("!*t")
 local hour = (date.hour + TIME_ZONE) % 24
 local ampm = hour < 12 and "AM" or "PM"
 local timestamp = string.format("%02i:%02i %s", ((hour - 1) % 12) + 1, date.min, ampm)
-
-function ryukability()
-    if _G.ryukability then
-        for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
-            if v.Name == 'Ryuk' and v.Owner.Value == me and v.SpecialMove.Special_Enabled2.Value == false then
-                remote:FireServer('UseSpecialMove', v)
-                break
-            end
-        end
-    end
-end
 
 function click73()
         OrionLib:MakeNotification({
@@ -3705,40 +3683,146 @@ AbilityTab:AddSection({
 })
 
 AbilityTab:AddToggle({
-	Name = "Light (Kira) Ability",
-	Default = false,
-	Callback = function(Value)
-        _G.kiraability = Value
-	end    
+    Name = "Slot 1: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.One.Unit.Value,
+    Default = _G.unita1,
+    Callback = function(Value)
+    _G.unita1 = Value
+    end
 })
 
 AbilityTab:AddBind({
-	Name = "Light Bind",
+	Name = "Slot 1 Bind",
 	Default = "",
 	Hold = false,
 	Callback = function()
-	    kiraability()
+    if _G.unita1 then
+        for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+            if v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.One.Unit.Value and v.Owner.Value == me and v.SpecialMove.Special_Enabled2.Value == false then
+                remote:FireServer('UseSpecialMove', v)
+                break
+            end
+        end
+    end
 	end    
-})
-
-AbilityTab:AddSection({
-	Name = ""
 })
 
 AbilityTab:AddToggle({
-	Name = "Ryuk Ability",
-	Default = false,
-	Callback = function(Value)
-        _G.ryukability = Value
-	end    
+    Name = "Slot 2: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Two.Unit.Value,
+    Default = _G.unita2,
+    Callback = function(Value)
+    _G.unita2 = Value
+    end
 })
 
 AbilityTab:AddBind({
-	Name = "Ryuk Bind",
+	Name = "Slot 2 Bind",
 	Default = "",
 	Hold = false,
 	Callback = function()
-	    ryukability()
+    if _G.unita2 then
+        for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+            if v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Two.Unit.Value and v.Owner.Value == me and v.SpecialMove.Special_Enabled2.Value == false then
+                remote:FireServer('UseSpecialMove', v)
+                break
+            end
+        end
+    end
+	end    
+})
+
+AbilityTab:AddToggle({
+    Name = "Slot 3: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Three.Unit.Value,
+    Default = _G.unita3,
+    Callback = function(Value)
+    _G.unita3 = Value
+    end
+})
+
+AbilityTab:AddBind({
+	Name = "Slot 3 Bind",
+	Default = "",
+	Hold = false,
+	Callback = function()
+    if _G.unita3 then
+        for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+            if v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Three.Unit.Value and v.Owner.Value == me and v.SpecialMove.Special_Enabled2.Value == false then
+                remote:FireServer('UseSpecialMove', v)
+                break
+            end
+        end
+    end
+	end    
+})
+
+AbilityTab:AddToggle({
+    Name = "Slot 4: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Four.Unit.Value,
+    Default = _G.unita4,
+    Callback = function(Value)
+    _G.unita4 = Value
+    end
+})
+
+AbilityTab:AddBind({
+	Name = "Slot 4 Bind",
+	Default = "",
+	Hold = false,
+	Callback = function()
+    if _G.unita4 then
+        for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+            if v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Four.Unit.Value and v.Owner.Value == me and v.SpecialMove.Special_Enabled2.Value == false then
+                remote:FireServer('UseSpecialMove', v)
+                break
+            end
+        end
+    end
+	end    
+})
+
+AbilityTab:AddToggle({
+    Name = "Slot 5: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Five.Unit.Value,
+    Default = _G.unita5,
+    Callback = function(Value)
+    _G.unita5 = Value
+    end
+})
+
+AbilityTab:AddBind({
+	Name = "Slot 5 Bind",
+	Default = "",
+	Hold = false,
+	Callback = function()
+    if _G.unita5 then
+        for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+            if v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Five.Unit.Value and v.Owner.Value == me and v.SpecialMove.Special_Enabled2.Value == false then
+                remote:FireServer('UseSpecialMove', v)
+                break
+            end
+        end
+    end
+	end    
+})
+
+AbilityTab:AddToggle({
+    Name = "Slot 6: "..game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Six.Unit.Value,
+    Default = _G.unita6,
+    Callback = function(Value)
+    _G.unita6 = Value
+    end
+})
+
+AbilityTab:AddBind({
+	Name = "Slot 6 Bind",
+	Default = "",
+	Hold = false,
+	Callback = function()
+    if _G.unita6 then
+        for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+            if v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Six.Unit.Value and v.Owner.Value == me and v.SpecialMove.Special_Enabled2.Value == false then
+                remote:FireServer('UseSpecialMove', v)
+                break
+            end
+        end
+    end
 	end    
 })
 
