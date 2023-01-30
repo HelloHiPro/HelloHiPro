@@ -206,7 +206,11 @@ _G.SettingsTable = {
     Visrange = false,
     visrange1 = 100,
     autoskipoff = false,
-    autoskipoffwave = 999
+    autoskipoffwave = 1,
+    autoskipon = false,
+    autoskiponwave = 1,
+    autoskipoffwave1 = true,
+    autoskiponwave1 = true
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -2590,16 +2594,21 @@ AutoFarmTab:AddToggle({
     Callback = function(Value)
     _G.SettingsTable.autoskipoff = Value
     SaveSettings()
-    pcall(function() if _G.SettingsTable.autoskipoffwave > -1 then _G.SettingsTable.autoskipoffwave = {} end end)
     autoskipoffwavecurrent = 1
     coroutine.resume(coroutine.create(function()
+    autoskipoffwavetable = "Waves: "
+    for i, v in pairs(_G.SettingsTable.autoskipoffwave) do
+        autoskipoffwavetable = autoskipoffwavetable..v..", "
+    end
+    joey1:Set(autoskipoffwavetable)
+    pcall(function() if _G.SettingsTable.autoskipoffwave1 then _G.SettingsTable.autoskipoffwave = {} _G.SettingsTable.autoskipoffwave1 = false SaveSettings() end end)
     while _G.SettingsTable.autoskipoff do task.wait()
     pcall(function()
         repeat task.wait() until game:GetService("ReplicatedStorage"):WaitForChild("WaveValue").Value >= tonumber(_G.SettingsTable.autoskipoffwave[autoskipoffwavecurrent])
         if game:GetService("Players").LocalPlayer.PlayerGui.HUD.Setting.Skip.BackgroundColor3 == Color3.new(0.36470588235,1,0.49019607843) and _G.SettingsTable.autoskipoff then
         game:GetService("ReplicatedStorage").Remotes.Input:FireServer("AutoSkipWaves_CHANGE")
-        autoskipoffwavecurrent = autoskipoffwavecurrent + 1
         end
+        autoskipoffwavecurrent = autoskipoffwavecurrent + 1
     end)
     end
     end)) 
@@ -2612,6 +2621,8 @@ AutoFarmTab:AddTextbox({
 	TextDisappear = false,
 	Increment = 1,
 	Callback = function(Value)
+        pcall(function() if _G.SettingsTable.autoskipoffwave1 then _G.SettingsTable.autoskipoffwave = {} _G.SettingsTable.autoskipoffwave1 = false SaveSettings() end end)
+	    pcall(function()
         table.insert(_G.SettingsTable.autoskipoffwave, Value)
         table.sort(_G.SettingsTable.autoskipoffwave, function(a,b)
 	        return (tonumber(a) < tonumber(b))
@@ -2622,6 +2633,7 @@ AutoFarmTab:AddTextbox({
             autoskipoffwavetable = autoskipoffwavetable..v..", "
         end
         joey1:Set(autoskipoffwavetable)
+        end)
 	end    
 })
 
@@ -2629,9 +2641,73 @@ AutoFarmTab:AddButton({
     Name = "Refresh Auto-Skip off",
     Default = false,
     Callback = function(Value)
+        pcall(function() if _G.SettingsTable.autoskipoffwave1 then _G.SettingsTable.autoskipoffwave = {} _G.SettingsTable.autoskipoffwave1 = false SaveSettings() end end)
         pcall(function()
             table.clear(_G.SettingsTable.autoskipoffwave)
             joey1:Set("Empty")
+        end)
+    end    
+})
+
+local joey2 = AutoFarmTab:AddLabel("Refresh")
+
+AutoFarmTab:AddToggle({
+    Name = "Auto-Skip on",
+    Default = _G.SettingsTable.autoskipon,
+    Callback = function(Value)
+    _G.SettingsTable.autoskipon = Value
+    SaveSettings()
+    autoskiponwavecurrent = 1
+    coroutine.resume(coroutine.create(function()
+    autoskiponwavetable = "Waves: "
+    for i, v in pairs(_G.SettingsTable.autoskiponwave) do
+        autoskiponwavetable = autoskiponwavetable..v..", "
+    end
+    joey2:Set(autoskiponwavetable)
+    pcall(function() if _G.SettingsTable.autoskiponwave1 then _G.SettingsTable.autoskiponwave = {} _G.SettingsTable.autoskiponwave1 = false SaveSettings() end end)
+    while _G.SettingsTable.autoskipon do task.wait()
+    pcall(function()
+        repeat task.wait() until game:GetService("ReplicatedStorage"):WaitForChild("WaveValue").Value >= tonumber(_G.SettingsTable.autoskiponwave[autoskiponwavecurrent])
+        if game:GetService("Players").LocalPlayer.PlayerGui.HUD.Setting.Skip.BackgroundColor3 == Color3.new(0.72156862745,0.12156862745,0.12156862745) and _G.SettingsTable.autoskipon then
+        game:GetService("ReplicatedStorage").Remotes.Input:FireServer("AutoSkipWaves_CHANGE")
+        end
+        autoskiponwavecurrent = autoskiponwavecurrent + 1
+    end)
+    end
+    end)) 
+    end
+})
+
+AutoFarmTab:AddTextbox({
+	Name = "Auto-Skip on wave",
+	Default = "",
+	TextDisappear = false,
+	Increment = 1,
+	Callback = function(Value)
+        pcall(function() if _G.SettingsTable.autoskiponwave1 then _G.SettingsTable.autoskiponwave = {} _G.SettingsTable.autoskiponwave1 = false SaveSettings() end end)
+	    pcall(function()
+        table.insert(_G.SettingsTable.autoskiponwave, Value)
+        table.sort(_G.SettingsTable.autoskiponwave, function(a,b)
+	        return (tonumber(a) < tonumber(b))
+        end)
+	    SaveSettings()
+        autoskiponwavetable = "Waves: "
+        for i, v in pairs(_G.SettingsTable.autoskiponwave) do
+            autoskiponwavetable = autoskiponwavetable..v..", "
+        end
+        joey2:Set(autoskiponwavetable)
+        end)
+	end    
+})
+
+AutoFarmTab:AddButton({
+    Name = "Refresh Auto-Skip on",
+    Default = false,
+    Callback = function(Value)
+        pcall(function() if _G.SettingsTable.autoskiponwave1 then _G.SettingsTable.autoskiponwave = {} _G.SettingsTable.autoskiponwave1 = false SaveSettings() end end)
+        pcall(function()
+            table.clear(_G.SettingsTable.autoskiponwave)
+            joey2:Set("Empty")
         end)
     end    
 })
