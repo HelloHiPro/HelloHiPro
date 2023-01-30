@@ -2582,15 +2582,7 @@ AutoFarmTab:AddTextbox({
 	end    
 })
 
-AutoFarmTab:AddTextbox({
-    Name = "Auto Sell Speed",
-    Default = _G.SettingsTable.autosellspeed,
-    TextDisappear = false,
-    Callback = function(Value)
-        _G.SettingsTable.autosellspeed = Value
-        SaveSettings()
-    end
-})
+local joey1 = AutoFarmTab:AddLabel("Refresh")
 
 AutoFarmTab:AddToggle({
     Name = "Auto-Skip off",
@@ -2598,28 +2590,50 @@ AutoFarmTab:AddToggle({
     Callback = function(Value)
     _G.SettingsTable.autoskipoff = Value
     SaveSettings()
-    if _G.SettingsTable.autoskipoff then
+    pcall(function() if _G.SettingsTable.autoskipoffwave > -1 then _G.SettingsTable.autoskipoffwave = {} end end)
+    autoskipoffwavecurrent = 1
     coroutine.resume(coroutine.create(function()
+    while _G.SettingsTable.autoskipoff do task.wait()
     pcall(function()
-        repeat task.wait() until game:GetService("ReplicatedStorage"):WaitForChild("WaveValue").Value >= tonumber(_G.SettingsTable.autoskipoffwave)
+        repeat task.wait() until game:GetService("ReplicatedStorage"):WaitForChild("WaveValue").Value >= tonumber(_G.SettingsTable.autoskipoffwave[autoskipoffwavecurrent])
         if game:GetService("Players").LocalPlayer.PlayerGui.HUD.Setting.Skip.BackgroundColor3 == Color3.new(0.36470588235,1,0.49019607843) and _G.SettingsTable.autoskipoff then
         game:GetService("ReplicatedStorage").Remotes.Input:FireServer("AutoSkipWaves_CHANGE")
+        autoskipoffwavecurrent = autoskipoffwavecurrent + 1
         end
     end)
-    end)) 
     end
+    end)) 
     end
 })
 
 AutoFarmTab:AddTextbox({
 	Name = "Auto-Skip off wave",
-	Default = _G.SettingsTable.autoskipoffwave,
+	Default = "",
 	TextDisappear = false,
 	Increment = 1,
 	Callback = function(Value)
-	    _G.SettingsTable.autoskipoffwave = Value
+        table.insert(_G.SettingsTable.autoskipoffwave, Value)
+        table.sort(_G.SettingsTable.autoskipoffwave, function(a,b)
+	        return (tonumber(a) < tonumber(b))
+        end)
 	    SaveSettings()
+        autoskipoffwavetable = "Waves: "
+        for i, v in pairs(_G.SettingsTable.autoskipoffwave) do
+            autoskipoffwavetable = autoskipoffwavetable..v..", "
+        end
+        joey1:Set(autoskipoffwavetable)
 	end    
+})
+
+AutoFarmTab:AddButton({
+    Name = "Refresh Auto-Skip off",
+    Default = false,
+    Callback = function(Value)
+        pcall(function()
+            table.clear(_G.SettingsTable.autoskipoffwave)
+            joey1:Set("Empty")
+        end)
+    end    
 })
 
 --Macro Tab
