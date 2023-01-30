@@ -1643,6 +1643,17 @@ coroutine.resume(coroutine.create(function()
     until false
     end)
 end))
+
+local countmob = MobCounterTab:AddLabel(#game.Workspace.Enemies:GetChildren().."/"..tostring(require(game.ReplicatedStorage.HealthUpdate).MaxCantSkip()))
+
+coroutine.resume(coroutine.create(function()
+    pcall(function()
+    repeat task.wait(1)
+        countmob:Set("Mobs: "..#game.Workspace.Enemies:GetChildren().."/"..tostring(require(game.ReplicatedStorage.HealthUpdate).MaxCantSkip()))
+    until false
+    end)
+end))
+
 WhTab:AddTextbox({
 	Name = "Webhook URL",
 	Default = _G.SettingsTable.WhURL,
