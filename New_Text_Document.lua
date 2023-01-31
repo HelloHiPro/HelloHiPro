@@ -2961,43 +2961,76 @@ BuffTab:AddButton({
 	Default = false,
 	Callback = function()
                 pcall(function()
-local ScrollSpeed = Instance.new("ScreenGui")
-local Main = Instance.new("TextLabel")
+local ScreenGui = Instance.new("ScreenGui")
+local hpcdsystem = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local Frame = Instance.new("Frame")
+local UICorner_2 = Instance.new("UICorner")
+local TextLabel = Instance.new("TextLabel")
 
-gojotime1 = tick()
+--Properties:
+ScreenGui.Name = 'CDGui'
+ScreenGui.Parent = game.CoreGui
 
---Setup GUI
-ScrollSpeed.Name = "TS Gui"
-ScrollSpeed.Parent = game:GetService("CoreGui")
-Main.Name = "Main"
-Main.Parent = ScrollSpeed
-Main.Active = true
-Main.AnchorPoint = Vector2.new(0.5, 0.5)
-Main.BackgroundColor3 = Color3.new(0.333333, 1, 0.498039)
-Main.BorderSizePixel = 0
-Main.Draggable = true
-Main.Position = UDim2.new(.9, 0, .93, 0)
-Main.Size = UDim2.new(0, 300, 0, 50)
-Main.Font = Enum.Font.SourceSansLight
-Main.Text = 10.1
-Main.TextScaled = true
-Main.TextSize = 14
-Main.TextWrapped = true
+hpcdsystem.Name = "hp/cd system"
+hpcdsystem.Parent = ScreenGui
+hpcdsystem.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+hpcdsystem.Position = UDim2.new(0.0101562738, 0, 0.0133582223, 0)
+hpcdsystem.Size = UDim2.new(0.311557651, 0, 0.05, 0)
+hpcdsystem.ZIndex = 0
+hpcdsystem.Draggable = true
+hpcdsystem.Active = true
+hpcdsystem.Selectable = true
+
+UICorner.CornerRadius = UDim.new(0.100000001, 10)
+UICorner.Parent = hpcdsystem
+
+Frame.Parent = hpcdsystem
+Frame.BackgroundColor3 = Color3.fromRGB(38, 255, 0)
+Frame.Size = UDim2.new(1, 0, 1, 0)
+Frame.ZIndex = 0
+
+UICorner_2.CornerRadius = UDim.new(0.100000001, 10)
+UICorner_2.Parent = Frame
+
+TextLabel.Parent = hpcdsystem
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.Position = UDim2.new(0, 0, 0, 0)
+TextLabel.Size = UDim2.new(1, 0, 1, 0)
+TextLabel.Font = Enum.Font.SourceSansBold
+TextLabel.Text = ""
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
+
+
+local guiObject = game.CoreGui.CDGui['hp/cd system'].Frame
+
+guiObject.Changed:connect(function()
+    if guiObject.Size == UDim2.new(0,0,1,0) then
+guiObject:TweenSize(
+    UDim2.new(1, 0, 1, 0),
+    Enum.EasingDirection.Out, 
+    Enum.EasingStyle.Linear, 
+    tsslider,
+    false
+        )
+        end
+end)
 
 game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.MouseButton1Click:Connect(function()
     if game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Preview.Character:FindFirstChild("Six Eyes Gojo") then
-        gojotime1 = tick()
+        guiObject.Size = UDim2.new(0,0,1,0)
     end
 end)
 
-repeat wait()
-    gojotime = string.format("%.01f", tsslider - (tick() - gojotime1))
-    Main.Text = gojotime
-    if tonumber(gojotime) > 0 then
-        Main.BackgroundColor3 = Color3.new(0.333333, 1, 0.498039)
-    elseif tonumber(gojotime) < 0 then
-        Main.BackgroundColor3 = Color3.new(0.76, 0.15, 0.1)
-    end
+gojotime = 0
+
+repeat task.wait()
+    gojotime = string.format("%.02f", tsslider - (guiObject.Size.X.Scale * tsslider))
+    TextLabel.Text = gojotime
 until false
 end)
 	end    
