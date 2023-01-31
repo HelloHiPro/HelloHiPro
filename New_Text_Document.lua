@@ -2726,7 +2726,7 @@ MacroTab:AddToggle({
 })
 
 MacroTab:AddSection({
-	Name = "  Playback starts after vote mode frame"
+	Name = "  Playback with timer starts after vote mode frame"
 })
 
 MacroTab:AddTextbox({
