@@ -2901,12 +2901,9 @@ local actoggle = BuffTab:AddToggle({
                 end
             end
             while _G.acts do
-            acts = tick()
-            actstime = 0
-            repeat task.wait() actstime = tick() - acts
-            until tonumber(actstime) > tonumber(actsdelay)
+            task.wait(actsdelay)
             for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.MouseButton1Click)) do
-                repeat task.wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.Visible and game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Visible and game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Preview.Character:FindFirstChild("Six Eyes Gojo")
+            repeat game:GetService("RunService").RenderStepped:wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.Visible and game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Visible and game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Preview.Character:FindFirstChild("Six Eyes Gojo")
                 if _G.acts then
                     v:Fire()
                 end
@@ -2967,7 +2964,6 @@ local UICorner = Instance.new("UICorner")
 local Frame = Instance.new("Frame")
 local UICorner_2 = Instance.new("UICorner")
 local TextLabel = Instance.new("TextLabel")
-
 --Properties:
 ScreenGui.Name = 'CDGui'
 ScreenGui.Parent = game.CoreGui
@@ -3005,17 +3001,19 @@ TextLabel.TextScaled = true
 TextLabel.TextSize = 14.000
 TextLabel.TextWrapped = true
 
+local Instance = Instance.new('UIStroke', game:GetService("CoreGui").CDGui["hp/cd system"])
+Instance.Thickness = 5
 
 local guiObject = game.CoreGui.CDGui['hp/cd system'].Frame
 
 guiObject.Changed:connect(function()
     if guiObject.Size == UDim2.new(0,0,1,0) then
 guiObject:TweenSize(
-    UDim2.new(1, 0, 1, 0),
-    Enum.EasingDirection.Out, 
-    Enum.EasingStyle.Linear, 
-    tsslider,
-    false
+    UDim2.new(1, 0, 1, 0), -- endSize (required)
+    Enum.EasingDirection.Out, -- easingDirection (default Out)
+    Enum.EasingStyle.Linear, -- easingStyle (default Quad)
+    10.150, -- time (default: 1)
+    false -- should this tween override ones in-progress? (default: false) -- a function to call when the tween completes (default: nil)
         )
         end
 end)
@@ -3034,6 +3032,14 @@ repeat task.wait()
 until false
 end)
 	end    
+})
+
+BuffTab:AddButton({
+    Name = "Destroy TS UI",
+    Default = false,
+    Callback = function(Value)
+        game:GetService("CoreGui"):FindFirstChild("CDGui"):Destroy()
+    end    
 })
 
 BuffTab:AddSlider({
