@@ -1831,7 +1831,7 @@ LobbyTab:AddButton({
 LobbyTab:AddDropdown({
     Name = "Banner",
     Default = "Banner X",
-    Options = {"Banner W(W3)", "Banner X", "Banner Y", "Banner Z", "Gold Banner", "Special Banner Gohan", "Special Banner Diavolo", "Special Banner Ichigo", "Special Banner Katakuri"},
+    Options = {"Banner W(W3)", "Banner X", "Banner Y", "Banner Z", "Gold Banner", "Special Banner Ichigo", "Special Banner Katakuri", "Special Banner Mob"},
     Callback = function(Value)
     summonvalue = Value
     end
@@ -1856,17 +1856,14 @@ LobbyTab:AddButton({
 	    if summonvalue == "Gold Banner" then
 	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("GoldSummonStart")
 	    end
-	    if summonvalue == "Special Banner Gohan" then
-	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 1, "GohanBeast")
-	    end
-	    if summonvalue == "Special Banner Diavolo" then
-	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 1, "DiavoloBanner")
-	    end
 	    if summonvalue == "Special Banner Ichigo" then
 	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 1, "IchigoEraser")
 	    end
 	    if summonvalue == "Special Banner Katakuri" then
 	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 1, "AndroidKatakuri")
+	    end
+	    if summonvalue == "Special Banner Mob" then
+	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 1, "MobBanner")
 	    end
 	end    
 })
@@ -1890,17 +1887,14 @@ LobbyTab:AddButton({
 	    if summonvalue == "Gold Banner" then
 	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("GoldSummonStart10")
 	    end
-	    if summonvalue == "Special Banner Gohan" then
-	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 10, "GohanBeast")
-	    end
-	    if summonvalue == "Special Banner Diavolo" then
-	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 10, "DiavoloBanner")
-	    end
 	    if summonvalue == "Special Banner Ichigo" then
 	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 10, "IchigoEraser")
 	    end
 	    if summonvalue == "Special Banner Katakuri" then
 	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 10, "AndroidKatakuri")
+	    end
+	    if summonvalue == "Special Banner Mob" then
+	        game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("BannerSummon", 10, "MobBanner")
 	    end
 	end    
 })
