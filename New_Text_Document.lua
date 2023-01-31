@@ -150,7 +150,7 @@ _G.SettingsTable = {
     autoupgrade = false,
     autojoin = false,
     mode = "",
-    storylevel = "",
+    storylevel = nil,
     inflevel = "",
     hidenick = false,
     shiftlock = false,
@@ -173,13 +173,13 @@ _G.SettingsTable = {
     autotpw3 = false,
     messageerror = "",
     tctoggle = false,
-    autotswave = "",
+    autotswave = nil,
     autots = false,
     clocktime = 1,
     changeclocktime = false, 
     autoexecute = false, 
     deleteenemy = false,
-    W3storylevel = "",
+    W3storylevel = nil,
     deletecooleraura = false,
     autoskip = false,
     autonext = false,
@@ -210,7 +210,8 @@ _G.SettingsTable = {
     autoskipon = false,
     autoskiponwave = 1,
     autoskipoffwave1 = true,
-    autoskiponwave1 = true
+    autoskiponwave1 = true,
+    summondelaywait = nil
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -589,7 +590,9 @@ function playback()
 local playbackended = false
 checkplayback = true
 coroutine.resume(coroutine.create(function()
+if _G.SettingsTable.timer then
 repeat wait() until tonumber(timer) > 0
+end
 repeat wait()
 coroutine.resume(coroutine.create(function()
 for i = 1, #Summon do
@@ -658,7 +661,7 @@ if selling == false then
 Event:FireServer("Summon", 	{ ["Rotation"] = 0, 
 	["cframe"] = CFrame.new(table.unpack(string.split(Summon[i]["Summon"][3], ", "))),
 	["Unit"] = Summon[i]["Summon"][4] } )
-wait(.5)
+wait(_G.SettingsTable.summondelaywait)
 end
 until idvalue == tonumber(Summon[i]["Summon"][2]) or _G.SettingsTable.autoplayback == false
 break
@@ -2724,6 +2727,16 @@ MacroTab:AddToggle({
 
 MacroTab:AddSection({
 	Name = "  Playback starts after vote mode frame"
+})
+
+MacroTab:AddTextbox({
+    Name = "Summon Delay in seconds",
+    Default = _G.SettingsTable.summondelaywait,
+    TextDisappear = false,
+    Callback = function(Value)
+	_G.SettingsTable.summondelaywait = tonumber(Value)
+        SaveSettings()
+    end
 })
 
 MacroTab:AddToggle({
