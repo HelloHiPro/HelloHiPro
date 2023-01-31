@@ -2895,7 +2895,7 @@ local actoggle = BuffTab:AddToggle({
                 pcall(function()
             coroutine.resume(coroutine.create(function()
             for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.MouseButton1Click)) do
-                repeat task.wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Visible and game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Preview.Character:FindFirstChild("Six Eyes Gojo")
+                repeat task.wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.Visible and game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Visible and game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Preview.Character:FindFirstChild("Six Eyes Gojo")
                 if _G.acts then
                     v:Fire()
                 end
@@ -2906,7 +2906,7 @@ local actoggle = BuffTab:AddToggle({
             repeat task.wait() actstime = tick() - acts
             until tonumber(actstime) > tonumber(actsdelay)
             for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.MouseButton1Click)) do
-                repeat task.wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Visible and game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Preview.Character:FindFirstChild("Six Eyes Gojo")
+                repeat task.wait() until game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.SpecialButton.Visible and game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Visible and game:GetService("Players").LocalPlayer.PlayerGui.HUD.UpgradeV2.Character.Preview.Character:FindFirstChild("Six Eyes Gojo")
                 if _G.acts then
                     v:Fire()
                 end
@@ -2917,6 +2917,7 @@ local actoggle = BuffTab:AddToggle({
         end
 	end    
 })
+
 
 BuffTab:AddBind({
 	Name = "Autoclick TS Toggle",
