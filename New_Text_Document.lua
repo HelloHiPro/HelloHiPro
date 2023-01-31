@@ -4216,13 +4216,21 @@ SettingsTab:AddToggle({
 	pcall(function()
 	for i,v in pairs(game:GetService("Workspace").AlliesPath:GetChildren()) do
 	pcall(function()
-	v.Torso.Attachment.FireAura:Destroy()
+	v.Torso.Attachment:Destroy()
+	v.Torso["banana man by tally hall"]:Destroy()
+	v.Torso.glow:Destroy()
+	v.Torso["SSJAuraP"]:Destroy()
+	v.Torso["Super Sayain 2's Aura"]:Destroy()
 	end)
 	end
 	for i,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
 	if v.Name == 'Metal Cooler' then
 	pcall(function()
-	v.Torso.Attachment.FireAura:Destroy()
+	v.Torso.Attachment:Destroy()
+	v.Torso["banana man by tally hall"]:Destroy()
+	v.Torso.glow:Destroy()
+	v.Torso["SSJAuraP"]:Destroy()
+	v.Torso["Super Sayain 2's Aura"]:Destroy()
 	end)
 	end
 	end
