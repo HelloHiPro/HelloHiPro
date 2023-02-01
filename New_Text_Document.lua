@@ -963,12 +963,11 @@ function autoextreme()
 SaveSettings()
 if _G.SettingsTable.autoextreme then
 SaveSettings()
-repeat wait() until game:IsLoaded()
 local Event = game:GetService("ReplicatedStorage"):WaitForChild("Remotes").Input
 coroutine.resume(coroutine.create(function()
 pcall(function()
 repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild('HUD'):WaitForChild('ModeVoteFrame').Visible
-repeat wait(5)
+repeat wait()
 pcall(function()
 for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.HUD.ModeVoteFrame.Extreme.TextButton.MouseButton1Click)) do
 v.Function()
