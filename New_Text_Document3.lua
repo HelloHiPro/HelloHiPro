@@ -1,1 +1,1 @@
-return {}
+return {"bob", "ross", "is", "boss"}
