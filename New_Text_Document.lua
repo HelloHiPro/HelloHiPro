@@ -1627,9 +1627,37 @@ local joey = WhTab:AddLabel(bobby)
 coroutine.resume(coroutine.create(function()
     pcall(function()
     repeat task.wait()
-        joey:Set("Timer: "..string.format("%.01f", tick() - bobby1))
+        joey:Set("Real Time: "..string.format("%.01f", tick() - bobby1))
     until false
     end)
+end))
+
+local joe1 = WhTab:AddLabel("0")
+timer69 = 0
+timer96 = 0
+
+coroutine.resume(coroutine.create(function()
+    speedupvalue = game:GetService("ReplicatedStorage").SpeedUP.Value
+    bobeh = tick()
+    repeat task.wait()
+        while game:GetService("ReplicatedStorage").SpeedUP.Value == speedupvalue do
+            task.wait()
+        end
+        timer69 = timer69 + (tick() - bobeh)*speedupvalue
+        bobeh = tick()
+        speedupvalue = game:GetService("ReplicatedStorage").SpeedUP.Value
+        timer96 = timer69
+        joe1:Set("(Predicted) SpeedUP Time:"..string.format("%.01f", timer69))
+    until false
+end))
+
+coroutine.resume(coroutine.create(function()
+    repeat task.wait()
+    coroutine.resume(coroutine.create(function()
+    timer96 = timer69 + (tick() - bobeh)*game:GetService("ReplicatedStorage").SpeedUP.Value
+    joe1:Set("(Predicted) SpeedUP Time:"..string.format("%.01f", timer96))
+    end))
+    until false
 end))
 
 local countmob = MobCounterTab:AddLabel(#game.Workspace.Enemies:GetChildren().."/"..tostring(require(game.ReplicatedStorage.HealthUpdate).MaxCantSkip()))
@@ -4446,6 +4474,5 @@ WhTab:AddButton({
         end
     end    
 })
-
 
 OrionLib:Init()
