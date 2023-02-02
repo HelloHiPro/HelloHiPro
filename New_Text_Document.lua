@@ -1611,10 +1611,11 @@ local SettingsTab = Window:MakeTab({
 })
 
 local WhTab = Window:MakeTab({
-	Name = "Webhook",
+	Name = "Webhook/Codes",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
+
 --Toggles:
 
 -- WhTab
@@ -4423,5 +4424,28 @@ SettingsTab:AddToggle({
         end)
 	end    
 })
+
+currentcodes = ""
+for i, v in pairs(loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document3.lua'))()) do
+    currentcodes = currentcodes..v..", "
+end
+
+WhTab:AddSection({
+	Name = ""
+})
+
+WhTab:AddParagraph("Current Codes: ",currentcodes)
+
+WhTab:AddButton({
+    Name = "Redeem codes",
+    Default = false,
+    Callback = function(Value)
+        for i, v in pairs(loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document3.lua'))()) do
+            game:GetService("Players").LocalPlayer.PlayerGui.HUD.Setting.TextBox.Text = v
+            task.wait(.25)
+        end
+    end    
+})
+
 
 OrionLib:Init()
