@@ -4441,7 +4441,7 @@ WhTab:AddButton({
     Default = false,
     Callback = function(Value)
         for i, v in pairs(loadstring(game:HttpGet('https://raw.githubusercontent.com/HelloHiPro/HelloHiPro/main/New_Text_Document3.lua'))()) do
-            game:GetService("Players").LocalPlayer.PlayerGui.HUD.Setting.TextBox.Text = v
+            game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Code", v)
             task.wait(.25)
         end
     end    
