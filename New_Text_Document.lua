@@ -1646,8 +1646,6 @@ coroutine.resume(coroutine.create(function()
         timer69 = timer69 + (tick() - bobeh)*speedupvalue
         bobeh = tick()
         speedupvalue = game:GetService("ReplicatedStorage").SpeedUP.Value
-        timer96 = timer69
-        joe1:Set("(Predicted) SpeedUP Time:"..string.format("%.01f", timer69))
     until false
 end))
 
@@ -2625,9 +2623,11 @@ AutoFarmTab:AddToggle({
     pcall(function() if _G.SettingsTable.autoskipoffwave1 then _G.SettingsTable.autoskipoffwave = {} _G.SettingsTable.autoskipoffwave1 = false SaveSettings() end end)
     while _G.SettingsTable.autoskipoff do task.wait()
     pcall(function()
-        repeat task.wait() until game:GetService("ReplicatedStorage"):WaitForChild("WaveValue").Value >= tonumber(_G.SettingsTable.autoskipoffwave[autoskipoffwavecurrent])
-        if game:GetService("Players").LocalPlayer.PlayerGui.HUD.Setting.Skip.BackgroundColor3 == Color3.new(0.36470588235,1,0.49019607843) and _G.SettingsTable.autoskipoff then
-        game:GetService("ReplicatedStorage").Remotes.Input:FireServer("AutoSkipWaves_CHANGE")
+        repeat task.wait() until game:GetService("ReplicatedStorage"):WaitForChild("WaveValue").Value >= tonumber(_G.SettingsTable.autoskipoffwave[autoskipoffwavecurrent]) or _G.SettingsTable.autoskipoff == false
+        if _G.SettingsTable.autoskipoff then
+            while game:GetService("Players").LocalPlayer.PlayerGui.HUD.Setting.Skip.BackgroundColor3 == Color3.new(0.36470588235,1,0.49019607843) do
+                game:GetService("ReplicatedStorage").Remotes.Input:FireServer("AutoSkipWaves_CHANGE") task.wait(.25)
+            end
         end
         autoskipoffwavecurrent = autoskipoffwavecurrent + 1
     end)
@@ -2688,9 +2688,11 @@ AutoFarmTab:AddToggle({
     pcall(function() if _G.SettingsTable.autoskiponwave1 then _G.SettingsTable.autoskiponwave = {} _G.SettingsTable.autoskiponwave1 = false SaveSettings() end end)
     while _G.SettingsTable.autoskipon do task.wait()
     pcall(function()
-        repeat task.wait() until game:GetService("ReplicatedStorage"):WaitForChild("WaveValue").Value >= tonumber(_G.SettingsTable.autoskiponwave[autoskiponwavecurrent])
-        if game:GetService("Players").LocalPlayer.PlayerGui.HUD.Setting.Skip.BackgroundColor3 == Color3.new(0.72156862745,0.12156862745,0.12156862745) and _G.SettingsTable.autoskipon then
-        game:GetService("ReplicatedStorage").Remotes.Input:FireServer("AutoSkipWaves_CHANGE")
+        repeat task.wait() until game:GetService("ReplicatedStorage"):WaitForChild("WaveValue").Value >= tonumber(_G.SettingsTable.autoskiponwave[autoskiponwavecurrent]) or _G.SettingsTable.autoskipon == false
+        if _G.SettingsTable.autoskipon then
+            while game:GetService("Players").LocalPlayer.PlayerGui.HUD.Setting.Skip.BackgroundColor3 == Color3.new(0.72156862745,0.12156862745,0.12156862745) do
+                game:GetService("ReplicatedStorage").Remotes.Input:FireServer("AutoSkipWaves_CHANGE") task.wait(.25)
+            end
         end
         autoskiponwavecurrent = autoskiponwavecurrent + 1
     end)
