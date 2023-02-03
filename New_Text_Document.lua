@@ -211,7 +211,10 @@ _G.SettingsTable = {
     autoskiponwave = 1,
     autoskipoffwave1 = true,
     autoskiponwave1 = true,
-    summondelaywait = nil
+    summondelaywait = nil,
+    tsgojoslider = 8,
+    tsgojotext = 11,
+    tsgojo = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -3482,6 +3485,66 @@ AbilityTab:AddTextbox({
         _G.SettingsTable.autotswave = Value
 	    SaveSettings()
         end
+	end    
+})
+
+local tsgojo = {}
+
+AbilityTab:AddToggle({
+	Name = "Preplaced gojo ts",
+	Default = _G.SettingsTable.tsgojo,
+	Callback = function(Value)
+        _G.SettingsTable.tsgojo = Value
+        SaveSettings()
+coroutine.resume(coroutine.create(function()
+pcall(function()
+repeat task.wait(.25)
+table.clear(tsgojo)
+for i, v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+    if v.Name == "Six Eyes Gojo" and v:WaitForChild("Owner").Value == me then
+        table.insert(tsgojo, v)
+    end
+end
+until #tsgojo >= _G.SettingsTable.tsgojoslider
+while #tsgojo > _G.SettingsTable.tsgojoslider do
+    table.remove(tsgojo, #tsgojo)
+end
+
+while _G.SettingsTable.tsgojo do
+for _,v in pairs(tsgojo) do
+    if v.Name == "Six Eyes Gojo" and v.Owner.Value == me and v.SpecialMove.Special_Enabled2.Value == false then
+        repeat remote:FireServer('UseSpecialMove', v) task.wait() until v.SpecialMove.Special_Enabled2.Value
+        break
+    end
+end
+task.wait(_G.SettingsTable.tsgojotext)
+end
+end)
+end))
+	end    
+})
+
+AbilityTab:AddSlider({
+	Name = "Number of preplaced gojos",
+	Min = 1,
+	Max = 8,
+	Default = _G.SettingsTable.tsgojoslider,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	Callback = function(Value)
+		_G.SettingsTable.tsgojoslider = Value
+		SaveSettings()
+	end    
+})
+
+AbilityTab:AddTextbox({
+	Name = "Gojo SPA (Seconds)",
+	Default = _G.SettingsTable.tsgojotext,
+	TextDisappear = false,
+	Increment = 1,
+	Callback = function(Value)
+	    _G.SettingsTable.tsgojotext = Value
+	    SaveSettings()
 	end    
 })
 
