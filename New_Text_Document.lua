@@ -214,7 +214,8 @@ _G.SettingsTable = {
     summondelaywait = nil,
     tsgojoslider = 8,
     tsgojotext = 11,
-    tsgojo = false
+    tsgojo = false,
+    autokisuke = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -758,6 +759,71 @@ function automerlin()
                 wait(.5) 
             end
         until y == a1 or _G.SettingsTable.automerlintoggle == false
+        y = 0
+        x = x + joe
+        if x > 4 then
+            x = 1
+        end
+        end
+    end))
+end
+end
+
+function autokisuke()
+    SaveSettings()
+    if _G.SettingsTable.autokisuke then
+        SaveSettings()
+        repeat wait() until game:IsLoaded()
+        wait(1)
+        local order2 = {2, 4, 1, 3}
+        local x = 1
+        local y = 0
+        local mano = false
+        local a1 = 54
+        local joe = 2
+        local kisuke = {}
+        coroutine.resume(coroutine.create(function()
+        repeat wait()
+            table.clear(kisuke)
+            for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+                if v.Name == 'Kisuke6' and v:WaitForChild("Owner").Value == me and v:WaitForChild("UpgradeTag").Value == v.MaxUpgradeTag.Value then
+                    table.insert(kisuke, v)
+                end
+            end
+        until #kisuke > 1 or _G.SettingsTable.autokisuke == false
+                if #kisuke > 3 then joe = 1 a1 = 30 mano = true end
+                while _G.SettingsTable.autokisuke do
+                if mano == false then table.clear(kisuke) end
+                for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+                    if mano == true then break end
+                    if v.Name == 'Kisuke6' and v:WaitForChild("Owner").Value == me and v:WaitForChild("UpgradeTag").Value == v.MaxUpgradeTag.Value then
+                        table.insert(kisuke, v)
+                    end
+                    if #kisuke > 3 then joe = 1 a1 = 24 mano = true end
+                end
+                pcall(function()
+                    repeat task.wait() until kisuke[order2[x]].Head.EffectBBGUI.Frame.AttackImage.Visible == false
+                    repeat remote:FireServer('UseSpecialMove', kisuke[order2[x]]) task.wait() until kisuke[order2[x]].SpecialMove.Special_Enabled2.Value == true
+                    coroutine.resume(coroutine.create(function()
+                        while game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MultipleAbilities") do
+                            local Buttonkisuke = game:GetService("Players").LocalPlayer.PlayerGui.MultipleAbilities.Frame.ImageButton
+                            local eventskisuke = {"MouseButton1Click", "MouseButton1Down", "Activated"}
+                            for i, v in next, eventskisuke do firesignal(Buttonkisuke[v]) end
+                            task.wait()
+                        end
+                    end))
+                end)
+        repeat y = y + 1
+            if game.ReplicatedStorage.SpeedUP.Value == 3 then 
+                task.wait(.1) 
+            end 
+            if game.ReplicatedStorage.SpeedUP.Value == 2 then 
+                task.wait(.2) 
+            end 
+            if game.ReplicatedStorage.SpeedUP.Value == 1 then 
+                task.wait(.4) 
+            end
+        until y == a1 or _G.SettingsTable.autokisuke == false
         y = 0
         x = x + joe
         if x > 4 then
@@ -2882,6 +2948,15 @@ MacroTab:AddDropdown({
 
 
 --SupportTab
+
+BuffTab:AddToggle({
+	Name = "Kisuke 6",
+	Default = _G.SettingsTable.autokisuke,
+	Callback = function(Value)
+        _G.SettingsTable.autokisuke = Value
+        autokisuke()
+	end    
+})
 
 BuffTab:AddToggle({
 	Name = "Brook/Erwin",
