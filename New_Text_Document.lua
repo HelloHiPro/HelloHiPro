@@ -805,6 +805,7 @@ function autokisuke()
                     repeat task.wait() until kisuke[order2[x]].Head.EffectBBGUI.Frame.AttackImage.Visible == false
                     repeat remote:FireServer('UseSpecialMove', kisuke[order2[x]]) task.wait() until kisuke[order2[x]].SpecialMove.Special_Enabled2.Value == true
                     coroutine.resume(coroutine.create(function()
+                        game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MultipleAbilities"):WaitForChild("Frame")
                         while game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MultipleAbilities") do
                             local Buttonkisuke = game:GetService("Players").LocalPlayer.PlayerGui.MultipleAbilities.Frame.ImageButton
                             local eventskisuke = {"MouseButton1Click", "MouseButton1Down", "Activated"}
@@ -3621,6 +3622,49 @@ AbilityTab:AddTextbox({
 	    _G.SettingsTable.tsgojotext = Value
 	    SaveSettings()
 	end    
+})
+
+AbilityTab:AddSection({
+	Name = ""
+})
+
+AbilityTab:AddToggle({
+	Name = "Kisuke FV",
+	Default = false,
+	Callback = function(Value)
+        _G.kisukefv = Value
+	end    
+})
+
+AbilityTab:AddBind({
+	Name = "Kisuke FV Bind",
+	Default = "",
+	Hold = false,
+	Callback = function()
+    if _G.kisukefv then
+    for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
+        if v.Name == "Kisuke6" and v.Owner.Value == me and v.SpecialMove.Special_Enabled2.Value == false then
+                repeat remote:FireServer('UseSpecialMove', v) task.wait() until v.SpecialMove.Special_Enabled2.Value == true
+                game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MultipleAbilities"):WaitForChild("Frame")
+                kisuke2fv = 1
+                for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MultipleAbilities.Frame:GetChildren()) do
+                    if v.Name == "ImageButton" then
+                        if kisuke2fv == 2 then
+                            kisukefvpath = v
+                        end
+                        kisuke2fv = kisuke2fv + 1
+                    end
+                end
+                while game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MultipleAbilities") do
+                    local eventskisuke = {"MouseButton1Click", "MouseButton1Down", "Activated"}
+                    for i, v in next, eventskisuke do firesignal(kisukefvpath[v]) end
+                    task.wait()
+                end
+                break
+            end
+        end
+    end
+end    
 })
 
 AbilityTab:AddSection({
