@@ -215,7 +215,8 @@ _G.SettingsTable = {
     tsgojoslider = 8,
     tsgojotext = 11,
     tsgojo = false,
-    autokisuke = false
+    autokisuke = false,
+    hidekisukegui = false,
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -776,6 +777,7 @@ function autokisuke()
         repeat wait() until game:IsLoaded()
         wait(1)
         local order2 = {2, 4, 1, 3}
+        local order3 = {1, 3, 2, 4}
         local x = 1
         local y = 0
         local mano = false
@@ -802,17 +804,16 @@ function autokisuke()
                     if #kisuke > 3 then joe = 1 a1 = 24 mano = true end
                 end
                 pcall(function()
-                    repeat task.wait() until kisuke[order2[x]].Head.EffectBBGUI.Frame.AttackImage.Visible == false
                     repeat remote:FireServer('UseSpecialMove', kisuke[order2[x]]) task.wait() until kisuke[order2[x]].SpecialMove.Special_Enabled2.Value == true
-                    coroutine.resume(coroutine.create(function()
-                        game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MultipleAbilities"):WaitForChild("Frame")
-                        while game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MultipleAbilities") do
-                            local Buttonkisuke = game:GetService("Players").LocalPlayer.PlayerGui.MultipleAbilities.Frame.ImageButton
-                            local eventskisuke = {"MouseButton1Click", "MouseButton1Down", "Activated"}
-                            for i, v in next, eventskisuke do firesignal(Buttonkisuke[v]) end
-                            task.wait()
+                    repeat task.wait() until kisuke[order2[x]].Head.EffectBBGUI.Frame.AttackImage.Visible == false
+                    repeat task.wait()
+                        pcall(function()
+                            firesignal(game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MultipleAbilities"):FindFirstChild("Frame"):FindFirstChild('ImageButton').Activated)
+                        end)
+                        if kisuke[order2[x]].SpecialMove.Special_Enabled2.Value == false then
+                            repeat remote:FireServer('UseSpecialMove', kisuke[order2[x]]) task.wait() until kisuke[order2[x]].SpecialMove.Special_Enabled2.Value == true
                         end
-                    end))
+                    until kisuke[order3[x]].Head.EffectBBGUI.Frame.AttackImage.Visible
                 end)
         repeat y = y + 1
             if game.ReplicatedStorage.SpeedUP.Value == 3 then 
@@ -2955,7 +2956,25 @@ BuffTab:AddToggle({
 	Default = _G.SettingsTable.autokisuke,
 	Callback = function(Value)
         _G.SettingsTable.autokisuke = Value
+        SaveSettings()
         autokisuke()
+	end    
+})
+
+BuffTab:AddToggle({
+	Name = "Hide Kisuke GUI",
+	Default = _G.SettingsTable.hidekisukegui,
+	Callback = function(Value)
+        _G.SettingsTable.hidekisukegui = Value
+        SaveSettings()
+        if _G.SettingsTable.hidekisukegui then
+            coroutine.resume(coroutine.create(function()
+                repeat task.wait()
+                    game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MultipleAbilities"):WaitForChild("Frame").Visible = false
+                until _G.SettingsTable.hidekisukegui == false
+                game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MultipleAbilities"):WaitForChild("Frame").Visible = true
+            end))
+        end
 	end    
 })
 
@@ -3642,28 +3661,34 @@ AbilityTab:AddBind({
 	Hold = false,
 	Callback = function()
     if _G.kisukefv then
+    if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MultipleAbilities") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MultipleAbilities"):FindFirstChild("Frame"):GetChildren()[3]:FindFirstChild('Frame') == nil then
+        pcall(function()
+        firesignal(game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MultipleAbilities"):FindFirstChild("Frame"):GetChildren()[3].Activated) 
+        end)
+    else
+        pcall(function()
+            firesignal(game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MultipleAbilities"):FindFirstChild("Frame"):GetChildren()[3].Activated)
+        end)
     for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
         if v.Name == "Kisuke6" and v.Owner.Value == me and v.SpecialMove.Special_Enabled2.Value == false then
-                repeat remote:FireServer('UseSpecialMove', v) task.wait() until v.SpecialMove.Special_Enabled2.Value == true
+                repeat remote:FireServer('UseSpecialMove', v) task.wait() until v.SpecialMove.Special_Enabled2.Value
                 game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MultipleAbilities"):WaitForChild("Frame")
-                kisuke2fv = 1
                 for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MultipleAbilities.Frame:GetChildren()) do
-                    if v.Name == "ImageButton" then
-                        if kisuke2fv == 2 then
-                            kisukefvpath = v
+                    if v.TextLabel.Text == "FV Ability" then
+                        if v:FindFirstChild('Frame') == nil then
+                            repeat task.wait()
+                                pcall(function()
+                                firesignal(v.Activated)
+                                end)
+                            until v:FindFirstChild('Frame') or _G.kisukefv == false
+                            break
                         end
-                        kisuke2fv = kisuke2fv + 1
                     end
                 end
-                while game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MultipleAbilities") do
-                    local eventskisuke = {"MouseButton1Click", "MouseButton1Down", "Activated"}
-                    for i, v in next, eventskisuke do firesignal(kisukefvpath[v]) end
-                    task.wait()
-                end
-                break
             end
         end
     end
+end
 end    
 })
 
