@@ -217,6 +217,7 @@ _G.SettingsTable = {
     tsgojo = false,
     autokisuke = false,
     hidekisukegui = false,
+    deletekisukesheet = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -3669,16 +3670,12 @@ AbilityTab:AddBind({
         if v.Name == "Kisuke6" and v.Owner.Value == me and v.SpecialMove.Special_Enabled2.Value == false then
                 repeat remote:FireServer('UseSpecialMove', v) task.wait() until v.SpecialMove.Special_Enabled2.Value
                 game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MultipleAbilities"):WaitForChild("Frame")
-                for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MultipleAbilities.Frame:GetChildren()) do
-                    if v:WaitForChild('TextLabel').Text == "FV Ability" then
-                        if v:FindFirstChild('Frame') == nil then
-                            repeat task.wait()
-                                pcall(function()
-                                firesignal(v.Activated)
-                                end)
-                            until v:FindFirstChild('Frame') or _G.kisukefv == false
-                            break
-                        end
+                if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MultipleAbilities"):FindFirstChild("Frame"):GetChildren()[3]:FindFirstChild('Frame') == nil then
+                        pcall(function()
+                            firesignal(game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MultipleAbilities"):FindFirstChild("Frame"):GetChildren()[3].Activated)
+                        end)
+                    if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MultipleAbilities"):FindFirstChild("Frame"):GetChildren()[3]:FindFirstChild('Frame') then
+                        break
                     end
                 end
             end
@@ -4478,6 +4475,28 @@ SettingsTab:AddToggle({
 	until _G.SettingsTable.deletecooleraura == false
 	end
 	end))
+	end
+})
+
+SettingsTab:AddToggle({
+	Name = "Delete Kisuke Fv sheet",
+	Default = _G.SettingsTable.deletekisukesheet,
+	Callback = function(Value)
+	    _G.SettingsTable.deletekisukesheet = Value
+	    SaveSettings()
+        if _G.SettingsTable.deletekisukesheet then
+            coroutine.resume(coroutine.create(function()
+            repeat task.wait() 
+                pcall(function()
+                    for _,v in ipairs(workspace.Unit:GetChildren()) do
+                        if v:FindFirstChild('FBXImportGeneric') then
+                            v.FBXImportGeneric:Destroy()
+                        end
+                    end
+                end)
+            until _G.SettingsTable.deletekisukesheet == false
+            end))
+        end
 	end
 })
 
