@@ -771,11 +771,7 @@ end
 end
 
 function autokisuke()
-    SaveSettings()
     if _G.SettingsTable.autokisuke then
-        SaveSettings()
-        repeat wait() until game:IsLoaded()
-        wait(1)
         local order2 = {2, 4, 1, 3}
         local order3 = {1, 3, 2, 4}
         local x = 1
