@@ -3670,7 +3670,7 @@ AbilityTab:AddBind({
                 repeat remote:FireServer('UseSpecialMove', v) task.wait() until v.SpecialMove.Special_Enabled2.Value
                 game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MultipleAbilities"):WaitForChild("Frame")
                 for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MultipleAbilities.Frame:GetChildren()) do
-                    if v.TextLabel.Text == "FV Ability" then
+                    if v:WaitForChild('TextLabel').Text == "FV Ability" then
                         if v:FindFirstChild('Frame') == nil then
                             repeat task.wait()
                                 pcall(function()
