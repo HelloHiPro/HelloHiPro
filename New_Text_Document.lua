@@ -4144,13 +4144,11 @@ local unslowgojo = {}
 workspace.Enemies.ChildAdded:Connect(function(child)
     if _G.unslowautots then
         pcall(function()
-
         child:WaitForChild("PathNumber")
         child:WaitForChild("Head")
         repeat wait() until child.PathNumber.Value > unslowedpath
         if not child.Head:FindFirstChild("EffectBBGUI") and child.PathNumber.Value < unslowedpath + 150 then
             for _,v in pairs(unslowgojo) do
-                print(v)
                 if v.SpecialMove.Special_Enabled2.Value == false then
                     repeat wait()
                         remote:FireServer('UseSpecialMove', v)
@@ -4250,6 +4248,97 @@ MobCounterTab:AddSlider({
 	Increment = 1,
 	Callback = function(Value)
 		unslowgojo1 = Value
+	end    
+})
+
+replacegojonow = true
+
+local replacegojo = MobCounterTab:AddToggle({
+	Name = "Replace Gojo In CD",
+	Default = false,
+	Callback = function(Value)
+        _G.replacegojo = Value
+        while _G.replacegojo do task.wait()
+            if replacegojonow then
+            for _,v in pairs(unslowgojo) do
+                if v.SpecialMove.Special_Enabled2.Value == true then
+                    replacegojonow = false
+                    pcall(function()
+                    local gojocframe = v.HumanoidRootPart.CFrame
+                    for i = 1, #unslowgojo do
+                        if unslowgojo[i] == v then
+                            pcall(function()
+                            repeat task.wait()
+                            while _G.replacegojo == false do
+                                task.wait()
+                            end
+                                game:GetService("ReplicatedStorage").Remotes.Input:FireServer("Sell", v)
+                            until v.SoldBoolean.Value
+                            end)
+                            table.remove(unslowgojo, i)
+                        end
+                    end
+                    local unitgojo = #game:GetService("Workspace").Unit:GetChildren()
+                    repeat task.wait()
+                    repeat task.wait()
+                        while _G.replacegojo == false do
+                            task.wait()
+                        end
+                        local args = {[1] = "Summon",[2] = {["Rotation"] = 0,["cframe"] = gojocframe,["Unit"] = "Six Eyes Gojo"}}
+                        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Input"):FireServer(unpack(args))
+                    until #game:GetService("Workspace").Unit:GetChildren() > unitgojo
+                    local unitgojo = #game:GetService("Workspace").Unit:GetChildren()
+                    local gojo = game:GetService("Workspace").Unit:GetChildren()[#game:GetService("Workspace").Unit:GetChildren()]
+                    until gojo.Name == "Six Eyes Gojo" and gojo:WaitForChild("Owner").Value == me
+                    local gojo = game:GetService("Workspace").Unit:GetChildren()[#game:GetService("Workspace").Unit:GetChildren()]
+                    if gojo.Name == "Six Eyes Gojo" and gojo:WaitForChild("Owner").Value == me then
+                        repeat task.wait()
+                            while _G.replacegojo == false do
+                                task.wait()
+                            end
+                            game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", gojo)
+                        until gojo:WaitForChild("UpgradeTag").Value == gojo:WaitForChild("MaxUpgradeTag").Value
+                    end
+                    table.insert(unslowgojo, gojo)
+                    local espframe1 = Instance.new("BillboardGui",gojo.HumanoidRootPart)
+                    espframe1.Name = "ElectricPPPGUI"
+                    espframe1.Size = UDim2.new(2.4,0, 2.4,0)
+                    espframe1.AlwaysOnTop = true
+                    local espframe = Instance.new("Frame",espframe1)
+                    espframe.Size = UDim2.new(1,0, 1,0)
+                    espframe.BackgroundTransparency = 0.5
+                    espframe.BorderSizePixel = 0
+                    espframe.BackgroundColor3 = Color3.fromRGB( 0, 0, 139) 
+                    end)
+                    replacegojonow = true
+                    break
+                end
+            end
+            end
+        end
+	end    
+})
+
+MobCounterTab:AddBind({
+	Name = "Replace Gojo Bind",
+	Default = "",
+	Hold = false,
+	Callback = function()
+	    if _G.replacegojo then 
+            OrionLib:MakeNotification({
+                Name = "Stopped",
+                Content = "Waiting...",
+                Time = 2
+            }) 
+            replacegojo:Set(false)
+        else
+            OrionLib:MakeNotification({
+                Name = "Starting..",
+                Content = "Replacing Gojos",
+                Time = 2
+            }) 
+            replacegojo:Set(true)
+        end
 	end    
 })
 
