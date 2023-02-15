@@ -4150,10 +4150,19 @@ workspace.Enemies.ChildAdded:Connect(function(child)
         if not child.Head:FindFirstChild("EffectBBGUI") and child.PathNumber.Value < unslowedpath + 150 then
             for _,v in pairs(unslowgojo) do
                 if v.SpecialMove.Special_Enabled2.Value == false then
+                    if _G.replacegojo1 then
+                    _G.replacegojo1 = false
                     repeat wait()
                         remote:FireServer('UseSpecialMove', v)
                     until v.SpecialMove["Special_Enabled2"].Value == true
+                    _G.replacegojo1 = true
                     break
+                    else
+                    repeat wait()
+                    remote:FireServer('UseSpecialMove', v)
+                    until v.SpecialMove["Special_Enabled2"].Value == true
+                    break
+                    end
                 end
             end
         end
@@ -4258,8 +4267,10 @@ local replacegojo = MobCounterTab:AddToggle({
 	Default = false,
 	Callback = function(Value)
         _G.replacegojo = Value
+        _G.replacegojo1 = Value
+        if replacegojonow then
         while _G.replacegojo do task.wait()
-            if replacegojonow then
+            pcall(function()
             for _,v in pairs(unslowgojo) do
                 if v.SpecialMove.Special_Enabled2.Value == true then
                     replacegojonow = false
@@ -4269,9 +4280,7 @@ local replacegojo = MobCounterTab:AddToggle({
                         if unslowgojo[i] == v then
                             pcall(function()
                             repeat task.wait()
-                            while _G.replacegojo == false do
-                                task.wait()
-                            end
+                            repeat task.wait() until _G.replacegojo1
                                 game:GetService("ReplicatedStorage").Remotes.Input:FireServer("Sell", v)
                             until v.SoldBoolean.Value
                             end)
@@ -4281,9 +4290,7 @@ local replacegojo = MobCounterTab:AddToggle({
                     local unitgojo = #game:GetService("Workspace").Unit:GetChildren()
                     repeat task.wait()
                     repeat task.wait()
-                        while _G.replacegojo == false do
-                            task.wait()
-                        end
+                        repeat task.wait() until _G.replacegojo1
                         local args = {[1] = "Summon",[2] = {["Rotation"] = 0,["cframe"] = gojocframe,["Unit"] = "Six Eyes Gojo"}}
                         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Input"):FireServer(unpack(args))
                     until #game:GetService("Workspace").Unit:GetChildren() > unitgojo
@@ -4293,9 +4300,7 @@ local replacegojo = MobCounterTab:AddToggle({
                     local gojo = game:GetService("Workspace").Unit:GetChildren()[#game:GetService("Workspace").Unit:GetChildren()]
                     if gojo.Name == "Six Eyes Gojo" and gojo:WaitForChild("Owner").Value == me then
                         repeat task.wait()
-                            while _G.replacegojo == false do
-                                task.wait()
-                            end
+                        repeat task.wait() until _G.replacegojo1
                             game:GetService("ReplicatedStorage").Remotes.Server:InvokeServer("Upgrade", gojo)
                         until gojo:WaitForChild("UpgradeTag").Value == gojo:WaitForChild("MaxUpgradeTag").Value
                     end
@@ -4314,7 +4319,8 @@ local replacegojo = MobCounterTab:AddToggle({
                     break
                 end
             end
-            end
+            end)
+        end
         end
 	end    
 })
