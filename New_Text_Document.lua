@@ -1701,18 +1701,22 @@ coroutine.resume(coroutine.create(function()
 end))
 
 local joe1 = WhTab:AddLabel("0")
+timerskip = 0
 timer69 = 0
 timer96 = 0
 
 coroutine.resume(coroutine.create(function()
     speedupvalue = game:GetService("ReplicatedStorage").SpeedUP.Value
     bobeh = tick()
+    bobeh2 = tick()
     repeat task.wait()
         while game:GetService("ReplicatedStorage").SpeedUP.Value == speedupvalue do
             task.wait()
         end
         timer69 = timer69 + (tick() - bobeh)*speedupvalue
+        timerskip = timerskip + (tick() - bobeh2)*speedupvalue
         bobeh = tick()
+        bobeh2 = tick()
         speedupvalue = game:GetService("ReplicatedStorage").SpeedUP.Value
     until false
 end))
@@ -1721,7 +1725,27 @@ coroutine.resume(coroutine.create(function()
     repeat task.wait()
     coroutine.resume(coroutine.create(function()
     timer96 = timer69 + (tick() - bobeh)*game:GetService("ReplicatedStorage").SpeedUP.Value
-    joe1:Set("(Predicted) SpeedUP Time:"..string.format("%.01f", timer96))
+    joe1:Set("(Predicted) SpeedUP Timer: "..string.format("%.01f", timer96))
+    end))
+    until false
+end))
+
+local joey3 = WhTab:AddLabel("Bugged")
+
+coroutine.resume(coroutine.create(function()
+    repeat task.wait()
+    local currentwave = game:GetService("ReplicatedStorage").WaveValue.Value
+    repeat task.wait() until game:GetService("ReplicatedStorage").WaveValue.Value > currentwave
+    timerskip = 0
+    bobeh2 = tick()
+    until false
+end))
+
+coroutine.resume(coroutine.create(function()
+    repeat task.wait()
+    coroutine.resume(coroutine.create(function()
+    timerskip2 = timerskip + (tick() - bobeh2)*game:GetService("ReplicatedStorage").SpeedUP.Value
+    joey3:Set("(Predicted) Time Until Skip: "..string.format("%.01f", 36 - timerskip2))
     end))
     until false
 end))
