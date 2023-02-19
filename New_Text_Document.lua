@@ -1101,14 +1101,11 @@ if _G.priority then
 Joe = 1
 for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
     if v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.One.Unit.Value and v.Owner.Value == me and _G.unit1 and _G.priority then
-        if v.PriorityAttack.Value == priorityvalue then
-            OrionLib:MakeNotification({
-            Name = "Unit Skipped",
-            Content = "Already at the priority",
-            Time = 2
-            })
-        else
-        repeat remote:FireServer('ChangePriority', v) wait(.1) until v.PriorityAttack.Value == priorityvalue 
+        if v.PriorityAttack.Value ~= priorityvalue then
+        while v.PriorityAttack.Value ~= priorityvalue do
+            remote:FireServer('ChangePriority', v)
+            task.wait()
+        end
             OrionLib:MakeNotification({
             Name = "Changing Priority...",
             Content = "Finished Unit: "..Joe,
@@ -1117,15 +1114,12 @@ for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
             Joe = Joe + 1
         end
     elseif v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Two.Unit.Value and v.Owner.Value == me and _G.unit2 and _G.priority then
-        if v.PriorityAttack.Value == priorityvalue then
-            OrionLib:MakeNotification({
-            Name = "Unit Skipped",
-            Content = "Already at the priority",
-            Time = 2
-            })
-        else
-        repeat remote:FireServer('ChangePriority', v) wait(.1) until v.PriorityAttack.Value == priorityvalue 
-            OrionLib:MakeNotification({
+        if v.PriorityAttack.Value ~= priorityvalue then
+        while v.PriorityAttack.Value ~= priorityvalue do
+            remote:FireServer('ChangePriority', v)
+            task.wait()
+        end
+        OrionLib:MakeNotification({
             Name = "Changing Priority...",
             Content = "Finished Unit: "..Joe,
             Time = 2
@@ -1133,15 +1127,12 @@ for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
             Joe = Joe + 1
         end
     elseif v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Three.Unit.Value and v.Owner.Value == me and _G.unit3 and _G.priority then
-        if v.PriorityAttack.Value == priorityvalue then
-            OrionLib:MakeNotification({
-            Name = "Unit Skipped",
-            Content = "Already at the priority",
-            Time = 2
-            })
-        else
-        repeat remote:FireServer('ChangePriority', v) wait(.1) until v.PriorityAttack.Value == priorityvalue 
-            OrionLib:MakeNotification({
+        if v.PriorityAttack.Value ~= priorityvalue then
+        while v.PriorityAttack.Value ~= priorityvalue do
+            remote:FireServer('ChangePriority', v)
+            task.wait()
+        end
+        OrionLib:MakeNotification({
             Name = "Changing Priority...",
             Content = "Finished Unit: "..Joe,
             Time = 2
@@ -1149,15 +1140,12 @@ for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
             Joe = Joe + 1
         end
     elseif v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Four.Unit.Value and v.Owner.Value == me and _G.unit4 and _G.priority then
-        if v.PriorityAttack.Value == priorityvalue then
-            OrionLib:MakeNotification({
-            Name = "Unit Skipped",
-            Content = "Already at the priority",
-            Time = 2
-            })
-        else
-        repeat remote:FireServer('ChangePriority', v) wait(.1) until v.PriorityAttack.Value == priorityvalue 
-            OrionLib:MakeNotification({
+        if v.PriorityAttack.Value ~= priorityvalue then
+        while v.PriorityAttack.Value ~= priorityvalue do
+            remote:FireServer('ChangePriority', v)
+            task.wait()
+        end
+        OrionLib:MakeNotification({
             Name = "Changing Priority...",
             Content = "Finished Unit: "..Joe,
             Time = 2
@@ -1165,15 +1153,12 @@ for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
             Joe = Joe + 1
         end
     elseif v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Five.Unit.Value and v.Owner.Value == me and _G.unit5 and _G.priority then
-        if v.PriorityAttack.Value == priorityvalue then
-            OrionLib:MakeNotification({
-            Name = "Unit Skipped",
-            Content = "Already at the priority",
-            Time = 2
-            })
-        else
-        repeat remote:FireServer('ChangePriority', v) wait(.1) until v.PriorityAttack.Value == priorityvalue 
-            OrionLib:MakeNotification({
+        if v.PriorityAttack.Value ~= priorityvalue then
+        while v.PriorityAttack.Value ~= priorityvalue do
+            remote:FireServer('ChangePriority', v)
+            task.wait()
+        end
+        OrionLib:MakeNotification({
             Name = "Changing Priority...",
             Content = "Finished Unit: "..Joe,
             Time = 2
@@ -1181,15 +1166,12 @@ for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
             Joe = Joe + 1
         end
     elseif v.Name == game:GetService("Players").LocalPlayer.PlayerGui.HUD.Unit.Six.Unit.Value and v.Owner.Value == me and _G.unit6 and _G.priority then
-        if v.PriorityAttack.Value == priorityvalue then
-            OrionLib:MakeNotification({
-            Name = "Unit Skipped",
-            Content = "Already at the priority",
-            Time = 2
-            })
-        else
-        repeat remote:FireServer('ChangePriority', v) wait(.1) until v.PriorityAttack.Value == priorityvalue 
-            OrionLib:MakeNotification({
+        if v.PriorityAttack.Value ~= priorityvalue then
+        while v.PriorityAttack.Value ~= priorityvalue do
+            remote:FireServer('ChangePriority', v)
+            task.wait()
+        end
+        OrionLib:MakeNotification({
             Name = "Changing Priority...",
             Content = "Finished Unit: "..Joe,
             Time = 2
@@ -1198,6 +1180,12 @@ for _,v in pairs(game:GetService("Workspace").Unit:GetChildren()) do
         end
     end
 end
+prioritytab:Set(false)
+OrionLib:MakeNotification({
+    Name = "Finished Priority",
+    Content = "Finished "..Joe.." Units",
+    Time = 4
+})
 end
 end
 
@@ -1684,71 +1672,15 @@ local WhTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
+local TimeTab = Window:MakeTab({
+	Name = "Time",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
 --Toggles:
 
 -- WhTab
-
-bobby1 = tick()
-
-local joey = WhTab:AddLabel(bobby)
-
-coroutine.resume(coroutine.create(function()
-    pcall(function()
-    repeat task.wait()
-        joey:Set("Real Time: "..string.format("%.01f", tick() - bobby1))
-    until false
-    end)
-end))
-
-local joe1 = WhTab:AddLabel("0")
-timerskip = 0
-timer69 = 0
-timer96 = 0
-
-coroutine.resume(coroutine.create(function()
-    speedupvalue = game:GetService("ReplicatedStorage").SpeedUP.Value
-    bobeh = tick()
-    bobeh2 = tick()
-    repeat task.wait()
-        while game:GetService("ReplicatedStorage").SpeedUP.Value == speedupvalue do
-            task.wait()
-        end
-        timer69 = timer69 + (tick() - bobeh)*speedupvalue
-        timerskip = timerskip + (tick() - bobeh2)*speedupvalue
-        bobeh = tick()
-        bobeh2 = tick()
-        speedupvalue = game:GetService("ReplicatedStorage").SpeedUP.Value
-    until false
-end))
-
-coroutine.resume(coroutine.create(function()
-    repeat task.wait()
-    coroutine.resume(coroutine.create(function()
-    timer96 = timer69 + (tick() - bobeh)*game:GetService("ReplicatedStorage").SpeedUP.Value
-    joe1:Set("(Predicted) SpeedUP Timer: "..string.format("%.01f", timer96))
-    end))
-    until false
-end))
-
-local joey3 = WhTab:AddLabel("Bugged")
-
-coroutine.resume(coroutine.create(function()
-    repeat task.wait()
-    local currentwave = game:GetService("ReplicatedStorage").WaveValue.Value
-    repeat task.wait() until game:GetService("ReplicatedStorage").WaveValue.Value > currentwave
-    timerskip = 0
-    bobeh2 = tick()
-    until false
-end))
-
-coroutine.resume(coroutine.create(function()
-    repeat task.wait()
-    coroutine.resume(coroutine.create(function()
-    timerskip2 = timerskip + (tick() - bobeh2)*game:GetService("ReplicatedStorage").SpeedUP.Value
-    joey3:Set("(Predicted) Time Until Skip: "..string.format("%.01f", 36 - timerskip2))
-    end))
-    until false
-end))
 
 local countmob = MobCounterTab:AddLabel(#game.Workspace.Enemies:GetChildren().."/"..tostring(require(game.ReplicatedStorage.HealthUpdate).MaxCantSkip()))
 
@@ -2160,7 +2092,7 @@ LobbyTab:AddDropdown({
 
 -- PriorityTab
 
-PriorityTab:AddToggle({
+prioritytab = PriorityTab:AddToggle({
 	Name = "Change Priority",
 	Default = false,
 	Callback = function(Value)
@@ -4817,5 +4749,202 @@ WhTab:AddButton({
         end
     end    
 })
+
+--Time Tab
+
+bobby1 = tick()
+
+local joey = TimeTab:AddLabel(bobby)
+
+coroutine.resume(coroutine.create(function()
+    pcall(function()
+    repeat task.wait()
+        joey:Set("Real Time: "..string.format("%.01f", tick() - bobby1))
+    until false
+    end)
+end))
+
+local joe1 = TimeTab:AddLabel("0")
+local joey3 = TimeTab:AddLabel("Bugged")
+local joey33 = TimeTab:AddLabel("Bugged")
+local joey4 = TimeTab:AddLabel("Bugged")
+local joey5 = TimeTab:AddLabel("Bugged")
+local joey6 = TimeTab:AddLabel("Bugged")
+timerskip = 0
+rimurucd = 480
+fvcd = 351
+diocd = 420
+timer69 = 0
+timer96 = 0
+
+coroutine.resume(coroutine.create(function()
+    speedupvalue = game:GetService("ReplicatedStorage").SpeedUP.Value
+    bobeh = tick()
+    bobeh2 = tick()
+    rimurucd1 = tick()
+    fvcd1 = tick()
+    diocd1 = tick()
+    repeat task.wait()
+        while game:GetService("ReplicatedStorage").SpeedUP.Value == speedupvalue do
+            task.wait()
+        end
+        timer69 = timer69 + (tick() - bobeh)*speedupvalue
+        timerskip = timerskip + (tick() - bobeh2)*speedupvalue
+        rimurucd = rimurucd + (tick() - rimurucd1)*speedupvalue
+        fvcd = fvcd + (tick() - fvcd1)*speedupvalue
+        diocd = diocd + (tick() - diocd1)*speedupvalue
+        bobeh = tick()
+        bobeh2 = tick()
+        rimurucd1 = tick()
+        fvcd1 = tick()
+        diocd1 = tick()
+        speedupvalue = game:GetService("ReplicatedStorage").SpeedUP.Value
+    until false
+end))
+
+coroutine.resume(coroutine.create(function()
+    repeat task.wait()
+    coroutine.resume(coroutine.create(function()
+    timer96 = timer69 + (tick() - bobeh)*game:GetService("ReplicatedStorage").SpeedUP.Value
+    joe1:Set("(Predicted) SpeedUP Timer: "..string.format("%.01f", timer96))
+    end))
+    until false
+end))
+
+coroutine.resume(coroutine.create(function()
+    repeat task.wait()
+    local currentwave = game:GetService("ReplicatedStorage").WaveValue.Value
+    repeat task.wait() until game:GetService("ReplicatedStorage").WaveValue.Value > currentwave
+    timerskip = 0
+    bobeh2 = tick()
+    until false
+end))
+
+coroutine.resume(coroutine.create(function()
+    while task.wait() do
+    repeat task.wait()
+    coroutine.resume(coroutine.create(function()
+    timerskip2 = timerskip + (tick() - bobeh2)*game:GetService("ReplicatedStorage").SpeedUP.Value
+    if timerskip2 <= 31 then
+        joey33:Set("(31s) Time Until Skip Notification: "..string.format("%.01f", 31 - timerskip2))
+    elseif timerskip2 >= 31 then
+        joey33:Set("(31s) Time Until Skip Notification: Ready")
+    end
+    joey3:Set("(35s) Time Until Skip (Auto Skip): "..string.format("%.01f", 35 - timerskip2))
+    end))
+    until 35 - timerskip2 <= 0
+    joey3:Set("(35s) Time Until Skip (Auto Skip): Ready")
+    repeat task.wait() 
+        timerskip2 = timerskip + (tick() - bobeh2)*game:GetService("ReplicatedStorage").SpeedUP.Value 
+    until 35 - timerskip2 >= 0
+    end
+end))
+
+game.Workspace.Unit.ChildAdded:Connect(function(child)
+    if child.Name == "Rimuru Tempest" then
+        child:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
+            if Value == true then
+                if 480 - rimurucd2 <= 10 then
+                    rimurucd1 = tick()
+                    rimurucd = 0
+                end
+            end
+        end)
+    elseif child.Name == "Funny Valentine" then
+        child:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
+            if Value == true then
+                if 351 - fvcd2 <= 10 then
+                    fvcd1 = tick()
+                    fvcd = 0
+                end
+            end
+        end)
+    elseif child.Name == "DIO OH" then
+        child:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
+            if Value == true then
+                if 420 - diocd2 <= 10 then
+                    diocd1 = tick()
+                    diocd = 0
+                end
+            end
+        end)
+    end  
+end)
+
+for i, v in pairs(game.Workspace.Unit:GetChildren()) do
+    if v.Name == "Rimuru Tempest" then
+        v:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
+            if Value == true then
+                if 480 - rimurucd2 <= 10 then
+                    rimurucd1 = tick()
+                    rimurucd = 0
+                end
+            end
+        end)
+    elseif v.Name == "Funny Valentine" then
+        v:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
+            if Value == true then
+                if 351 - fvcd2 <= 10 then
+                    fvcd1 = tick()
+                    fvcd = 0
+                end
+            end
+        end)
+    elseif v.Name == "DIO OH" then
+        v:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
+            if Value == true then
+                if 420 - diocd2 <= 10 then
+                    diocd1 = tick()
+                    diocd = 0
+                end
+            end
+        end)
+    end
+end
+
+coroutine.resume(coroutine.create(function()
+    while task.wait() do
+    repeat task.wait()
+    coroutine.resume(coroutine.create(function()
+    rimurucd2 = rimurucd + (tick() - rimurucd1)*game:GetService("ReplicatedStorage").SpeedUP.Value
+    joey4:Set("(480s) Rimuru CD: "..string.format("%.01f", 480 - rimurucd2))
+    end))
+    until 480 - rimurucd2 <= 0
+    joey4:Set("(480s) Rimuru CD: Ready")
+    repeat task.wait() 
+        rimurucd2 = rimurucd + (tick() - rimurucd1)*game:GetService("ReplicatedStorage").SpeedUP.Value 
+    until 480 - rimurucd2 >= 0
+    end
+end))
+
+coroutine.resume(coroutine.create(function()
+    while task.wait() do
+    repeat task.wait()
+    coroutine.resume(coroutine.create(function()
+    fvcd2 = fvcd + (tick() - fvcd1)*game:GetService("ReplicatedStorage").SpeedUP.Value
+    joey5:Set("(351s) FV CD: "..string.format("%.01f", 351 - fvcd2))
+    end))
+    until 351 - fvcd2 <= 0
+    joey5:Set("(351s) FV CD: Ready")
+    repeat task.wait() 
+        fvcd2 = fvcd + (tick() - fvcd1)*game:GetService("ReplicatedStorage").SpeedUP.Value 
+    until 351 - fvcd2 >= 0
+    end
+end))
+
+coroutine.resume(coroutine.create(function()
+    while task.wait() do
+    repeat task.wait()
+    coroutine.resume(coroutine.create(function()
+    diocd2 = diocd + (tick() - diocd1)*game:GetService("ReplicatedStorage").SpeedUP.Value
+    joey6:Set("(420s) Dio OH CD: "..string.format("%.01f", 420 - diocd2))
+    end))
+    until 420 - diocd2 <= 0
+    joey6:Set("(420s) Dio OH CD: Ready")
+    repeat task.wait() 
+        diocd2 = diocd + (tick() - diocd1)*game:GetService("ReplicatedStorage").SpeedUP.Value 
+    until 420 - diocd2 >= 0
+    end
+end))
 
 OrionLib:Init()
