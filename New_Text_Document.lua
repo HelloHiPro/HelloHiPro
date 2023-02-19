@@ -4765,15 +4765,19 @@ coroutine.resume(coroutine.create(function()
 end))
 
 local joe1 = TimeTab:AddLabel("0")
-local joey3 = TimeTab:AddLabel("Bugged")
-local joey33 = TimeTab:AddLabel("Bugged")
-local joey4 = TimeTab:AddLabel("Bugged")
-local joey5 = TimeTab:AddLabel("Bugged")
-local joey6 = TimeTab:AddLabel("Bugged")
+local joey3 = TimeTab:AddLabel("Bugged if not changing")
+local joey33 = TimeTab:AddLabel("Bugged if not changing")
+local joey4 = TimeTab:AddLabel("Bugged if not changing")
+local joey5 = TimeTab:AddLabel("Bugged if not changing")
+local joey6 = TimeTab:AddLabel("Bugged if not changing")
+
+OrionLib:Init()
+
 timerskip = 0
 rimurucd = 480
 fvcd = 351
 diocd = 420
+diacd = 750
 timer69 = 0
 timer96 = 0
 
@@ -4784,6 +4788,7 @@ coroutine.resume(coroutine.create(function()
     rimurucd1 = tick()
     fvcd1 = tick()
     diocd1 = tick()
+    diacd1 = tick()
     repeat task.wait()
         while game:GetService("ReplicatedStorage").SpeedUP.Value == speedupvalue do
             task.wait()
@@ -4793,11 +4798,13 @@ coroutine.resume(coroutine.create(function()
         rimurucd = rimurucd + (tick() - rimurucd1)*speedupvalue
         fvcd = fvcd + (tick() - fvcd1)*speedupvalue
         diocd = diocd + (tick() - diocd1)*speedupvalue
+        diacd = diacd + (tick() - diacd1)*speedupvalue
         bobeh = tick()
         bobeh2 = tick()
         rimurucd1 = tick()
         fvcd1 = tick()
         diocd1 = tick()
+        diacd1 = tick()
         speedupvalue = game:GetService("ReplicatedStorage").SpeedUP.Value
     until false
 end))
@@ -4840,6 +4847,7 @@ coroutine.resume(coroutine.create(function()
     end
 end))
 
+coroutine.resume(coroutine.create(function()
 game.Workspace.Unit.ChildAdded:Connect(function(child)
     if child.Name == "Rimuru Tempest" then
         child:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
@@ -4862,15 +4870,26 @@ game.Workspace.Unit.ChildAdded:Connect(function(child)
     elseif child.Name == "DIO OH" then
         child:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
             if Value == true then
-                if 420 - diocd2 <= 10 then
+                if 420 - diocd2 <= 10 and 750 - diacd2 <= 10 then
                     diocd1 = tick()
                     diocd = 0
                 end
             end
         end)
+    elseif child.Name == "Diavolo" then
+        child:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
+            if Value == true then
+                if 750 - diacd2 <= 10 and 420 - diocd2 <= 10 then
+                    diacd1 = tick()
+                    diacd = 0
+                end
+            end
+        end)
     end  
 end)
+end))
 
+coroutine.resume(coroutine.create(function()
 for i, v in pairs(game.Workspace.Unit:GetChildren()) do
     if v.Name == "Rimuru Tempest" then
         v:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
@@ -4893,14 +4912,33 @@ for i, v in pairs(game.Workspace.Unit:GetChildren()) do
     elseif v.Name == "DIO OH" then
         v:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
             if Value == true then
-                if 420 - diocd2 <= 10 then
+                if 420 - diocd2 <= 10 and 750 - diacd2 <= 10 then
                     diocd1 = tick()
                     diocd = 0
                 end
             end
         end)
+    elseif v.Name == "Diavolo" then
+        v:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
+            if Value == true then
+                if 750 - diacd2 <= 10 and 420 - diocd2 <= 10 then
+                    diacd1 = tick()
+                    diacd = 0
+                end
+            end
+        end)
     end
 end
+end))
+
+coroutine.resume(coroutine.create(function()
+game.Workspace:WaitForChild("Camera").ChildAdded:Connect(function(child)
+    if child.Name == "buff" then
+        fvcd1 = tick()
+        fvcd = 0
+    end
+end)
+end))
 
 coroutine.resume(coroutine.create(function()
     while task.wait() do
@@ -4940,11 +4978,24 @@ coroutine.resume(coroutine.create(function()
     joey6:Set("(420s) Dio OH CD: "..string.format("%.01f", 420 - diocd2))
     end))
     until 420 - diocd2 <= 0
-    joey6:Set("(420s) Dio OH CD: Ready")
+    joey6:Set("(420/750s) Dio OH CD: Ready")
     repeat task.wait() 
         diocd2 = diocd + (tick() - diocd1)*game:GetService("ReplicatedStorage").SpeedUP.Value 
-    until 420 - diocd2 >= 0
+    until 420 - diocd2 >= 0 
     end
 end))
 
-OrionLib:Init()
+coroutine.resume(coroutine.create(function()
+    while task.wait() do
+    repeat task.wait()
+    coroutine.resume(coroutine.create(function()
+    diacd2 = diacd + (tick() - diacd1)*game:GetService("ReplicatedStorage").SpeedUP.Value
+    joey6:Set("(750s) Dio OH CD: "..string.format("%.01f", 750 - diacd2))
+    end))
+    until 750 - diacd2 <= 0
+    joey6:Set("(420/750s) Dio OH CD: Ready")
+    repeat task.wait() 
+        diacd2 = diacd + (tick() - diacd1)*game:GetService("ReplicatedStorage").SpeedUP.Value 
+    until 750 - diacd2 >= 0 
+    end
+end))
