@@ -3180,7 +3180,7 @@ RewindImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 RewindImage.BackgroundTransparency = 1.000
 RewindImage.Size = UDim2.new(0.100000001, 0, 1, 0)
 RewindImage.Visible = false
-RewindImage.Image = "rbxassetid://12547235093"
+RewindImage.Image = "rbxassetid://12554338075"
 
 UIListLayout.Parent = Frame
 UIListLayout.FillDirection = Enum.FillDirection.Horizontal
@@ -3193,7 +3193,7 @@ DiavoloImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 DiavoloImage.BackgroundTransparency = 1.000
 DiavoloImage.Size = UDim2.new(0.100000001, 0, 1, 0)
 DiavoloImage.Visible = false
-DiavoloImage.Image = "rbxassetid://12547180647"
+DiavoloImage.Image = "rbxassetid://12554343542"
 
 LawImage.Name = "LawImage"
 LawImage.Parent = Frame
@@ -3201,7 +3201,7 @@ LawImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 LawImage.BackgroundTransparency = 1.000
 LawImage.Size = UDim2.new(0.100000001, 0, 1, 0)
 LawImage.Visible = false
-LawImage.Image = "rbxassetid://12546417443"
+LawImage.Image = "rbxassetid://12554347225"
 
 for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
     local newbbgui = EffectBBGUI:Clone()
