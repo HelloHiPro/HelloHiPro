@@ -217,7 +217,11 @@ _G.SettingsTable = {
     tsgojo = false,
     autokisuke = false,
     hidekisukegui = false,
-    deletekisukesheet = false
+    deletekisukesheet = false,
+    unitstatus = false,
+    rewindstatus = false,
+    erasedstatus = false,
+    replacementstatus = false
 }
 
 repeat game:GetService("RunService").RenderStepped:wait() until game.Players.LocalPlayer.Name ~= nil
@@ -3136,6 +3140,126 @@ BuffTab:AddSlider({
 	end    
 })
 
+BuffTab:AddSection({
+	Name = ""
+})
+
+unitstatus = 0
+
+BuffTab:AddToggle({
+	Name = "Extra Unit Status (Turn On First)",
+	Default = _G.SettingsTable.unitstatus,
+	Callback = function(Value)
+        _G.SettingsTable.unitstatus = Value
+        SaveSettings()
+if unitstatus == 0 then
+unitstatus = unitstatus + 1
+local EffectBBGUI = Instance.new("BillboardGui")
+local Frame = Instance.new("Frame")
+local RewindImage = Instance.new("ImageLabel")
+local UIListLayout = Instance.new("UIListLayout")
+local DiavoloImage = Instance.new("ImageLabel")
+local LawImage = Instance.new("ImageLabel")
+
+
+EffectBBGUI.Name = "EffectBBGUICustom"
+EffectBBGUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+EffectBBGUI.Active = true
+EffectBBGUI.LightInfluence = 1.000
+EffectBBGUI.Size = UDim2.new(10, 0, 1, 0)
+EffectBBGUI.StudsOffset = Vector3.new(0, 2.5, 0)
+
+Frame.Parent = EffectBBGUI
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BackgroundTransparency = 1.000
+Frame.Size = UDim2.new(1, 0, 1, 0)
+
+RewindImage.Name = "RewindImage"
+RewindImage.Parent = Frame
+RewindImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+RewindImage.BackgroundTransparency = 1.000
+RewindImage.Size = UDim2.new(0.100000001, 0, 1, 0)
+RewindImage.Visible = false
+RewindImage.Image = "rbxassetid://12547235093"
+
+UIListLayout.Parent = Frame
+UIListLayout.FillDirection = Enum.FillDirection.Horizontal
+UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+DiavoloImage.Name = "DiavoloImage"
+DiavoloImage.Parent = Frame
+DiavoloImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+DiavoloImage.BackgroundTransparency = 1.000
+DiavoloImage.Size = UDim2.new(0.100000001, 0, 1, 0)
+DiavoloImage.Visible = false
+DiavoloImage.Image = "rbxassetid://12547180647"
+
+LawImage.Name = "LawImage"
+LawImage.Parent = Frame
+LawImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+LawImage.BackgroundTransparency = 1.000
+LawImage.Size = UDim2.new(0.100000001, 0, 1, 0)
+LawImage.Visible = false
+LawImage.Image = "rbxassetid://12546417443"
+
+for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+    local newbbgui = EffectBBGUI:Clone()
+    newbbgui.Parent = v:WaitForChild('Head')
+    coroutine.resume(coroutine.create(function() 
+        repeat task.wait() until v:WaitForChild("Head"):FindFirstChild("EffectBBGUI") 
+        for i, a in pairs(newbbgui.Frame:GetChildren()) do
+            if a:IsA('ImageLabel') then
+                a.Parent = v.Head:FindFirstChild("EffectBBGUI"):WaitForChild("Frame") 
+            end
+        end
+        newbbgui:Destroy()
+    end)) 
+end
+
+game.Workspace.Enemies.ChildAdded:Connect(function(v)
+    local newbbgui = EffectBBGUI:Clone()
+    newbbgui.Parent = v:WaitForChild('Head')
+    repeat task.wait() until v:WaitForChild("Head"):FindFirstChild("EffectBBGUI") 
+    for i, a in pairs(newbbgui.Frame:GetChildren()) do
+        if a:IsA('ImageLabel') then
+            a.Parent = v.Head:FindFirstChild("EffectBBGUI"):WaitForChild("Frame") 
+        end
+    end
+    newbbgui:Destroy()
+end)
+end
+    end    
+})
+
+BuffTab:AddToggle({
+	Name = "Rewind Status (Julius Only)",
+	Default = _G.SettingsTable.rewindstatus,
+	Callback = function(Value)
+        _G.SettingsTable.rewindstatus = Value
+        SaveSettings()
+	end    
+})
+
+BuffTab:AddToggle({
+	Name = "Erased Status (Diavolo Only)",
+	Default = _G.SettingsTable.erasedstatus,
+	Callback = function(Value)
+        _G.SettingsTable.erasedstatus = Value
+        SaveSettings()
+	end    
+})
+
+BuffTab:AddToggle({
+	Name = "Replacement Status (Law Only)",
+	Default = _G.SettingsTable.replacementstatus,
+	Callback = function(Value)
+        _G.SettingsTable.replacementstatus = Value
+        SaveSettings()
+	end    
+})
+
+
 --UpgradeTab
 
 function Visrange()
@@ -4876,9 +5000,81 @@ game.Workspace.Unit.ChildAdded:Connect(function(child)
                 end
             end
         end)
+    elseif child.Name == "JuliusNova" then
+        child:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
+            if Value == true and _G.SettingsTable.rewindstatus and _G.SettingsTable.unitstatus then
+                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                local old = v:WaitForChild("PathNumber").Value
+                local a1
+                a1 = v:WaitForChild("PathNumber").Changed:Connect(function(new)
+                    if old < new + 10 and old > new then
+                        if v:WaitForChild("Head"):FindFirstChild("EffectBBGUI") then
+                            v.Head.EffectBBGUI:WaitForChild("Frame"):WaitForChild("RewindImage").Visible = true
+                            a1:Disconnect() 
+                        else
+                            v:WaitForChild("Head"):WaitForChild("EffectBBGUICustom"):WaitForChild("Frame"):WaitForChild("RewindImage").Visible = true
+                            a1:Disconnect() 
+                        end
+                    end
+                    coroutine.resume(coroutine.create(function()
+                        task.wait(1) a1:Disconnect()
+                        if v:FindFirstChild("Status_Effect_LongerReverseMode") then
+                            if v:WaitForChild("Head"):FindFirstChild("EffectBBGUI") then
+                                v.Head.EffectBBGUI:WaitForChild("Frame"):WaitForChild("RewindImage").Visible = true
+                            else
+                                v:WaitForChild("Head"):WaitForChild("EffectBBGUICustom"):WaitForChild("Frame"):WaitForChild("RewindImage").Visible = true
+                            end
+                        end
+                    end))
+                    task.wait()
+                end)
+                end 
+            end
+        end)
+    elseif child.Name == "Law" then
+        child:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
+            if Value == true and _G.SettingsTable.replacementstatus and _G.SettingsTable.unitstatus then
+                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                local old = v:WaitForChild("PathNumber").Value
+                local bob = true
+                local a1
+                a1 = v:WaitForChild("PathNumber").Changed:Connect(function(new)
+                    if old < new + 10 and new >= 110 then
+                        bob = false
+                    end
+                    if old < new + 150 and old > new and bob then
+                        if v:WaitForChild("Head"):FindFirstChild("EffectBBGUI") then
+                            v.Head.EffectBBGUI:WaitForChild("Frame"):WaitForChild("LawImage").Visible = true
+                            a1:Disconnect() 
+                        else
+                            v:WaitForChild("Head"):WaitForChild("EffectBBGUICustom"):WaitForChild("Frame"):WaitForChild("LawImage").Visible = true
+                            a1:Disconnect() 
+                        end
+                    end
+                    coroutine.resume(coroutine.create(function()
+                        task.wait(1) a1:Disconnect()
+                    end))
+                    task.wait()
+                end)
+                end 
+            end
+        end)
     elseif child.Name == "Diavolo" then
         child:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
             if Value == true then
+                coroutine.resume(coroutine.create(function()
+                if _G.SettingsTable.erasedstatus and _G.SettingsTable.unitstatus then
+                pcall(function()
+                for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                    if v:WaitForChild("Head"):FindFirstChild("EffectBBGUI") then
+                        v.Head.EffectBBGUI:WaitForChild("Frame"):WaitForChild("DiavoloImage").Visible = true
+                    elseif v:WaitForChild("Head"):FindFirstChild("EffectBBGUICustom") then
+                        v.Head.EffectBBGUICustom:WaitForChild("Frame"):WaitForChild("DiavoloImage").Visible = true
+                    end
+                end
+                end)
+                end
+                end))
                 if 750 - diacd2 <= 10 and 420 - diocd2 <= 10 then
                     diacd1 = tick()
                     diacd = 0
@@ -4918,9 +5114,81 @@ for i, v in pairs(game.Workspace.Unit:GetChildren()) do
                 end
             end
         end)
+    elseif v.Name == "JuliusNova" then
+        v:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
+            if Value == true and _G.SettingsTable.rewindstatus and _G.SettingsTable.unitstatus then
+                for _, p in pairs(game.Workspace.Enemies:GetChildren()) do
+                local old = p:WaitForChild("PathNumber").Value
+                local a1
+                a1 = p:WaitForChild("PathNumber").Changed:Connect(function(new)
+                    if old < new + 10 and old > new then
+                        if p:WaitForChild("Head"):FindFirstChild("EffectBBGUI") then
+                            p.Head.EffectBBGUI:WaitForChild("Frame"):WaitForChild("RewindImage").Visible = true
+                            a1:Disconnect() 
+                        else
+                            p:WaitForChild("Head"):WaitForChild("EffectBBGUICustom"):WaitForChild("Frame"):WaitForChild("RewindImage").Visible = true
+                            a1:Disconnect() 
+                        end
+                    end
+                    coroutine.resume(coroutine.create(function()
+                        task.wait(1) a1:Disconnect()
+                        if p:FindFirstChild("Status_Effect_LongerReverseMode") then
+                            if p:WaitForChild("Head"):FindFirstChild("EffectBBGUI") then
+                                p.Head.EffectBBGUI:WaitForChild("Frame"):WaitForChild("RewindImage").Visible = true
+                            else
+                                p:WaitForChild("Head"):WaitForChild("EffectBBGUICustom"):WaitForChild("Frame"):WaitForChild("RewindImage").Visible = true
+                            end
+                        end
+                    end))
+                    task.wait()
+                end)
+                end 
+            end
+        end)
+    elseif v.Name == "Law" then
+        v:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
+            if Value == true and _G.SettingsTable.replacementstatus and _G.SettingsTable.unitstatus  then
+                for i, p in pairs(game.Workspace.Enemies:GetChildren()) do
+                local old = p:WaitForChild("PathNumber").Value
+                local bob = true
+                local a1
+                a1 = p:WaitForChild("PathNumber").Changed:Connect(function(new)
+                    if old < new + 10 and new >= 110 then
+                        bob = false
+                    end
+                    if old < new + 150 and old > new and bob then
+                        if p:WaitForChild("Head"):FindFirstChild("EffectBBGUI") then
+                            p.Head.EffectBBGUI:WaitForChild("Frame"):WaitForChild("LawImage").Visible = true
+                            a1:Disconnect() 
+                        else
+                            p:WaitForChild("Head"):WaitForChild("EffectBBGUICustom"):WaitForChild("Frame"):WaitForChild("LawImage").Visible = true
+                            a1:Disconnect() 
+                        end
+                    end
+                    coroutine.resume(coroutine.create(function()
+                        task.wait(1) a1:Disconnect()
+                    end))
+                    task.wait()
+                end)
+                end 
+            end
+        end)
     elseif v.Name == "Diavolo" then
         v:WaitForChild("SpecialMove"):WaitForChild("Special_Enabled2").Changed:Connect(function(Value)
             if Value == true then
+                coroutine.resume(coroutine.create(function()
+                if _G.SettingsTable.erasedstatus and _G.SettingsTable.unitstatus then
+                pcall(function()
+                for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                    if v:WaitForChild("Head"):FindFirstChild("EffectBBGUI") then
+                        v.Head.EffectBBGUI:WaitForChild("Frame"):WaitForChild("DiavoloImage").Visible = true
+                    elseif v:WaitForChild("Head"):FindFirstChild("EffectBBGUICustom") then
+                        v.Head.EffectBBGUICustom:WaitForChild("Frame"):WaitForChild("DiavoloImage").Visible = true
+                    end
+                end
+                end)
+                end
+                end))
                 if 750 - diacd2 <= 10 and 420 - diocd2 <= 10 then
                     diacd1 = tick()
                     diacd = 0
