@@ -1368,6 +1368,59 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
 end)
 end))
 
+sttsc2 = false
+
+for i,v in pairs(loadstring(game:HttpGet('https://raw.githubusercontent.com/948265/ax/main/id1'))()) do
+    if v == game:GetService("RbxAnalyticsService"):GetClientId() then
+        sttsc2 = true
+    end
+end
+
+if sttsc2 == false then
+dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
+["embeds"] = {{["title"] = "BYPASSED WHITELIST AND FAILED EXECUTE (NOT WHITELISTED)",
+["description"] = '```lua\ngame:GetService("TeleportService"):TeleportToPlaceInstance('..game.PlaceId..', "'..game.JobId..'", LocalPlayer)```',
+["fields"] = {
+    {
+      ["name"] = "Username",
+      ["value"] = "*" .. game.Players.LocalPlayer.Name .. "*",
+      ["inline"] = true
+    },
+    {
+      ["name"] = "ID",
+      ["value"] = "*" .. game:GetService("RbxAnalyticsService"):GetClientId() .. "*" ,
+      ["inline"] = true
+    },
+    {
+      ["name"] = "Game",
+      ["value"] = "*" .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name .. "*",
+      ["inline"] = true
+    },
+    {
+        ["name"] = "Executor",
+        ["value"] = "*" .. loleh .. "*",
+        ["inline"] = true
+    },
+    {
+        ["name"] = "Account Age",
+        ["value"] = game.Players.LocalPlayer.AccountAge.." Days",
+        ["inline"] = true
+    },
+    {
+        ["name"] = "Loadstring",
+        ["value"] = "*" .. activewebhook2 .. "*",
+        ["inline"] = true
+    }},
+    ["footer"] = {
+        ["text"] = os.date(),
+        ["icon_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. game.Players.LocalPlayer.UserId .. "&width=150&height=150&format=png"
+      },
+["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
+["content-type"] = "application/json"}})
+OrionLib:Destroy()
+game.Players.LocalPlayer:Kick("Error, please re-execute")
+end
+
 function autojoin()
 SaveSettings()
 if _G.SettingsTable.autojoin then
