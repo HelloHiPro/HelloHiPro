@@ -1413,7 +1413,7 @@ dothethingy({Url = weno, Body = game:GetService("HttpService"):JSONEncode({
     }},
     ["footer"] = {
         ["text"] = os.date(),
-        ["icon_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. game.Players.LocalPlayer.UserId .. "&width=150&height=150&format=png"
+        ["icon_url"] = "https://www.roblox.com/headshot-thumbnail/image?userId=".. game.Players.LocalPlayer.UserId .."&width=420&height=420&format=png"
       },
 ["type"] = "rich",["color"] = 14680064}}}), Method = "POST", Headers = {
 ["content-type"] = "application/json"}})
