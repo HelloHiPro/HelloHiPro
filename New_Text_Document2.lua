@@ -1,5 +1,5 @@
 --ongoing message settings
-local message = "PLS TELA PLS ISUXHEIAIIAIAOXI"
+local message = ""
 local automessage = false
 
 --script
