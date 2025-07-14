@@ -35,23 +35,20 @@ end
 
 --Leaves if player is disconnected or kicked
 task.spawn(function()
-    game.Players.PlayerRemoving:connect(function(plr)
-        if plr == game.Players.LocalPlayer then
-            while task.wait(2) do
-                local embed = {
-                ["title"] = game.Players.LocalPlayer.Name,
-                ["description"] = "Attempting rejoin; Roblox Kick",
-                ["color"] = 65280,
-                ["footer"] = {
-                ["text"] = ""
-                }}
-                SendMessageEMBED(webhookURL, embed)
-            	local TeleportService = game:GetService("TeleportService")
-                local placeId = 17687504411
-                TeleportService:Teleport(placeId)
-            end
-        end
-    end)
+    game.CoreGui:WaitForChild("RobloxPromptGui"):WaitForChild("promptOverlay"):WaitForChild("ErrorPrompt")
+    while task.wait(2) do
+        local embed = {
+        ["title"] = game.Players.LocalPlayer.Name,
+        ["description"] = "Attempting rejoin; Roblox Kick",
+        ["color"] = 65280,
+        ["footer"] = {
+        ["text"] = ""
+        }}
+        SendMessageEMBED(webhookURL, embed)
+    	local TeleportService = game:GetService("TeleportService")
+        local placeId = 17687504411
+        TeleportService:Teleport(placeId)
+    end
 end)
 
 --leaves after "leaveDelay" seconds in case you bug out
