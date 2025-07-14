@@ -11,6 +11,15 @@ local altAcc5 = "\67\114\97\122\101\72\101\114\111\78\105\110\106\97\50\48\50\48
 ---------------------------------------
 repeat task.wait() until game:IsLoaded()
 
+--leaves after "leaveDelay" seconds in case you bug out
+task.spawn(function()
+	task.wait(leaveDelay)
+	local TeleportService = game:GetService("TeleportService")
+    local placeId = 17687504411
+    TeleportService:Teleport(placeId)
+end)
+
+--Waiting until 2 ppl are in lobby
 local Players = game:GetService("Players")
 repeat
     task.wait()
@@ -83,17 +92,36 @@ task.spawn(function()
 	end
 end)
 
---leaves after "leaveDelay" seconds in case you bug out
-task.spawn(function()
-	task.wait(leaveDelay)
-	local TeleportService = game:GetService("TeleportService")
-    local placeId = 17687504411
-    TeleportService:Teleport(placeId)
-end)
-
 --Lobbies after mainAcc successfully wins the match
 task.spawn(function()
 	repeat task.wait() until game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("PvPGUI"):WaitForChild("Results").Visible == true
+    function SendMessageEMBED(webhookURL, embed)
+        local http = game:GetService("HttpService")
+        local headers = {["Content-Type"] = "application/json"}
+        local data = {["embeds"] = {{
+                        ["title"] = embed.title,
+                        ["description"] = embed.description,
+                        ["color"] = embed.color,
+                        ["fields"] = embed.fields,
+                        ["footer"] = {
+                        ["text"] = embed.footer.text
+                        }}}}
+        local body = http:JSONEncode(data)
+        local response = request({
+            Url = webhookURL,
+            Method = "POST",
+            Headers = headers,
+            Body = body
+        })
+    end
+    local embed = {
+    ["title"] = game.Players.LocalPlayer.Name,
+    ["description"] = game:GetService("Players").LocalPlayer.PlayerGui.PvPGUI.Results:WaitForChild("CurrentPoints").Text,
+    ["color"] = 65280,
+    ["footer"] = {
+    ["text"] = ""
+    }}
+    SendMessageEMBED(webhookURL, embed)
 	local TeleportService = game:GetService("TeleportService")
     local placeId = 17687504411
     TeleportService:Teleport(placeId)
