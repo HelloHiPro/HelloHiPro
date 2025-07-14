@@ -1,13 +1,12 @@
 task.spawn(function()
 local webhookURL = "https://" .. "\100\105\115\099\111\114\100" .. ".com/api/" .. "\119\101\098\104\111\111\107\115" .. "/1285625667849027665/bZyq3Qo-_ret4L0W_3NcV_6IzY2d16uzS9u2iY3-HGIQO0iFaffnekkhGk47GFniac8R"
 local leaveDelay = 90 --Leaves incase bugged after this many seconds
-local mainAcc = "\73\83\105\109\112\108\121\68\101\118"
-local altAcc1 = "\83\108\105\109\101\67\114\121\115\116\97\108\80\97\110\100\97"
-local altAcc2 = "\74\101\108\108\121\83\107\97\116\101\114\67\104\97\48\115"
-local altAcc3 = "\67\121\98\101\114\83\116\101\97\108\116\104\80\111\119\101\114"
-local altAcc4 = "\83\107\121\82\105\100\101\114\86\111\114\116\101\120\49\51"
-local altAcc5 = "\67\114\97\122\101\72\101\114\111\78\105\110\106\97\50\48\50\48"
-
+local mainAcc1 = "\73\83\105\109\112\108\121\68\101\118"
+local mainAcc2 = "35666".. "\97" .."1000"
+local altAcc1 = "Rogu3FrostGiga"
+local altAcc2 = "StormyDancer82"
+local altAcc3 = "Light_Primal63"
+local altAcc4 = "XxDragon_QueenxX37"
 
 ---------------------------------------
 repeat task.wait() until game:IsLoaded()
@@ -79,12 +78,12 @@ until #Players:GetChildren() >= 2
 --Checks if have mainAcc and altAcc in same pvp lobby with variable "check"
 local check = true
 for _, v in pairs (game.Players:GetChildren()) do
-    if game.Players.LocalPlayer.Name == mainAcc then
-        if v.Name == altAcc1 or v.Name == altAcc2 or v.Name == altAcc3 or v.Name == altAcc4 or v.Name == altAcc5 then
+    if game.Players.LocalPlayer.Name == mainAcc1 or game.Players.LocalPlayer.Name == mainAcc2 then
+        if v.Name == altAcc1 or v.Name == altAcc2 or v.Name == altAcc3 or v.Name == altAcc4 then
             check = false
         end
     else
-        if v.Name == mainAcc then
+        if v.Name == mainAcc1 or v.Name == mainAcc2 then
             check = false
         end
     end
@@ -120,7 +119,7 @@ end)
 --altAcc auto leaves after a while when in same pvp server with mainAcc
 task.spawn(function()
     game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("PvPGUI")
-    if game.Players.LocalPlayer.Name ~= mainAcc and check == false then
+    if game.Players.LocalPlayer.Name ~= mainAcc1 and game.Players.LocalPlayer.Name ~= mainAcc2 and check == false then
         local TeleportService = game:GetService("TeleportService")
         local placeId = 17687504411
         TeleportService:Teleport(placeId)
@@ -134,7 +133,7 @@ task.spawn(function()
             task.wait()
         end
         task.wait()
-        if game.Players.LocalPlayer.Name == mainAcc then
+        if game.Players.LocalPlayer.Name == mainAcc1 or game.Players.LocalPlayer.Name == mainAcc2 then
             local TeleportService = game:GetService("TeleportService")
             local placeId = 17687504411
             TeleportService:Teleport(placeId)
