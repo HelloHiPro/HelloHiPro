@@ -7,6 +7,7 @@ local altAcc1 = "PhoenixMysticCircuit"
 local altAcc2 = "StormyDancer82"
 local altAcc3 = "Light_Primal63"
 local altAcc4 = "XxDragon_QueenxX37"
+local altAcc5 = "Samuel_Block25"
 
 ---------------------------------------
 repeat task.wait() until game:IsLoaded()
@@ -79,7 +80,7 @@ until #Players:GetChildren() >= 2
 local check = true
 for _, v in pairs (game.Players:GetChildren()) do
     if game.Players.LocalPlayer.Name == mainAcc1 or game.Players.LocalPlayer.Name == mainAcc2 then
-        if v.Name == altAcc1 or v.Name == altAcc2 or v.Name == altAcc3 or v.Name == altAcc4 then
+        if v.Name == altAcc1 or v.Name == altAcc2 or v.Name == altAcc3 or v.Name == altAcc4  or v.Name == altAcc5 then
             check = false
         end
     else
@@ -116,9 +117,42 @@ task.spawn(function()
     end
 end)
 
+--altAcc auto leaves after a while when in same pvp server with mainAcc bit earlier
+task.spawn(function()
+    local frame1 = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("MessageUI"):WaitForChild("LeaderboardFrame"):WaitForChild("ExpandFrame"):WaitForChild("LeaderboardFrame"):WaitForChild("ListFrame"):WaitForChild("0000001"):WaitForChild("ExpandFrame")
+    local frame2 = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("MessageUI"):WaitForChild("LeaderboardFrame"):WaitForChild("ExpandFrame"):WaitForChild("LeaderboardFrame"):WaitForChild("ListFrame"):WaitForChild("0000002"):WaitForChild("ExpandFrame")
+    while frame1.BackgroundColor3 == Color3.fromRGB(0, 0, 0) do
+        task.wait()
+    end
+    while frame2.BackgroundColor3 == Color3.fromRGB(0, 0, 0) do
+        task.wait()
+    end
+    if game.Players.LocalPlayer.Name ~= mainAcc1 and game.Players.LocalPlayer.Name ~= mainAcc2 and check == false then
+        local TeleportService = game:GetService("TeleportService")
+        local placeId = 17687504411
+        TeleportService:Teleport(placeId)
+    end
+end)
+
+--altAcc auto leaves after a while when in same pvp server with mainAcc
+task.spawn(function()
+    game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("PvPGUI")
+    if game.Players.LocalPlayer.Name ~= mainAcc1 and game.Players.LocalPlayer.Name ~= mainAcc2 and check == false then
+        local TeleportService = game:GetService("TeleportService")
+        local placeId = 17687504411
+        TeleportService:Teleport(placeId)
+    end
+end)
+
 --mainAcc leaves if not in the same lobby as altAcc before losing elo
 task.spawn(function()
-	if game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("LoadUI"):WaitForChild("LoadFrame"):WaitForChild("Bottom"):WaitForChild("Middle"):WaitForChild("MapName").Text == "Overworld Arena" and check then
+	if game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("LoadUI"):WaitForChild("LoadFrame"):WaitForChild("Bottom"):WaitForChild("Middle"):WaitForChild("MapName").Text == "PVP" and check then
+	    task.spawn(function()
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SetEvent"):Destroy()
+        end)
+        task.spawn(function()
+            game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("MainUI"):Destroy()
+        end)
         while game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("LoadUI") do
             task.wait()
         end
