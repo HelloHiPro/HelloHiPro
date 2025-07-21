@@ -116,16 +116,6 @@ task.spawn(function()
     end
 end)
 
---altAcc auto leaves after a while when in same pvp server with mainAcc
-task.spawn(function()
-    game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("PvPGUI")
-    if game.Players.LocalPlayer.Name ~= mainAcc1 and game.Players.LocalPlayer.Name ~= mainAcc2 and check == false then
-        local TeleportService = game:GetService("TeleportService")
-        local placeId = 17687504411
-        TeleportService:Teleport(placeId)
-    end
-end)
-
 --mainAcc leaves if not in the same lobby as altAcc before losing elo
 task.spawn(function()
 	if game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("LoadUI"):WaitForChild("LoadFrame"):WaitForChild("Bottom"):WaitForChild("Middle"):WaitForChild("MapName").Text == "Overworld Arena" and check then
