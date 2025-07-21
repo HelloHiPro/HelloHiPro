@@ -157,11 +157,11 @@ task.spawn(function()
             task.wait()
         end
         task.wait()
-        if game.Players.LocalPlayer.Name == mainAcc1 or game.Players.LocalPlayer.Name == mainAcc2 then
+        
             local TeleportService = game:GetService("TeleportService")
             local placeId = 17687504411
             TeleportService:Teleport(placeId)
-        end
+
 	end
 end)
 
