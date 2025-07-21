@@ -91,7 +91,7 @@ end
 
 --Spams remote for pvp if in main lobby
 task.spawn(function()
-    if game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("LoadUI"):WaitForChild("LoadFrame"):WaitForChild("Bottom"):WaitForChild("Middle"):WaitForChild("MapName").Text ~= "Overworld Arena" then
+    if game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("LoadUI"):WaitForChild("LoadFrame"):WaitForChild("Bottom"):WaitForChild("Middle"):WaitForChild("MapName").Text ~= "PVP" then
         while task.wait() do
             pcall(function()
                 local args = {
